@@ -1,0 +1,16 @@
+header{
+    background-color: white;
+    color: blue;
+    text-align: center;
+}
+
+
+.forms{
+    background-color: gray;
+    text-align: center;
+}
+
+#salvar{
+    background-color: blue;
+    color: white;
+}
