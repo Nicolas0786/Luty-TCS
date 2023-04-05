@@ -23,15 +23,18 @@ export class AlaService {
   }
 
   findAll() {
-    return `This action returns all ala`;
+    return this.repositorioAla.find;
   }
 
   findOne(id: number) {
     return `This action returns a #${id} ala`;
   }
 
-  update(id: number, updateAlaDto: UpdateAlaDto) {
-    return `This action updates a #${id} ala`;
+  update(idAla: number, updateAlaDto: UpdateAlaDto) {
+    const ala = new Ala;
+    ala.descricao = updateAlaDto.descricao;
+
+    return this.repositorioAla.update(idAla, ala);
   }
 
   remove(id: number) {

@@ -1,5 +1,6 @@
 import { Produto } from "src/produto/entities/produto.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Usuario } from "src/usuario/entities/usuario.entity";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Ala {
@@ -11,4 +12,7 @@ export class Ala {
 
     @OneToMany(()=> Produto, (produto) => produto.alas)
     produtos: Produto[];
+
+    @ManyToOne(() => Usuario, (usuario)=> usuario.alas)
+    usuario: Usuario;
 }

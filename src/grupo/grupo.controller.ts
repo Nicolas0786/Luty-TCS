@@ -12,7 +12,7 @@ export class GrupoController {
     return this.grupoService.create(createGrupoDto);
   }
 
-  @Get()
+  @Get('buscarTodos')
   findAll() {
     return this.grupoService.findAll();
   }

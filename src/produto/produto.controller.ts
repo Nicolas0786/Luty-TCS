@@ -33,6 +33,10 @@ export class ProdutoController {
     return this.produtoService.update(+ idProduto, updateProdutoDto);
   }
 
+@Get('tes')
+tes(){
+  return this.produtoService.tes();
+}
 
   @Delete(':id')
   remove(@Param('id') id: string) {

@@ -40,7 +40,7 @@ export class GrupoService {
   }
 
   findAll() {
-    return this.repositorioGrupo.findOne;
+    return this.repositorioGrupo.find;
   }
 
   findOne(id: number) {
@@ -48,7 +48,10 @@ export class GrupoService {
   }
 
   update(idGrupo: number, updateGrupoDto: UpdateGrupoDto) {
-    return `This action updates a #${idGrupo} grupo`;
+    const grupo = new Grupo;
+    grupo.descricaoGrupo = updateGrupoDto.descricaoGrupo;
+
+    return this.repositorioGrupo.update(idGrupo, grupo);
   }
 
   remove(id: number) {

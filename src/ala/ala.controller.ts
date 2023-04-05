@@ -12,7 +12,7 @@ export class AlaController {
     return this.alaService.create(createAlaDto);
   }
 
-  @Get()
+  @Get('buscarTodas')
   findAll() {
     return this.alaService.findAll();
   }
@@ -22,9 +22,9 @@ export class AlaController {
     return this.alaService.findOne(+id);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAlaDto: UpdateAlaDto) {
-    return this.alaService.update(+id, updateAlaDto);
+  @Patch('atualizar/:idAla')
+  update(@Param('idAla') idAla: number, @Body() updateAlaDto: UpdateAlaDto) {
+    return this.alaService.update(+idAla, updateAlaDto);
   }
 
   @Delete(':id')

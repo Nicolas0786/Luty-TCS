@@ -2,18 +2,16 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { response } from 'express';
+import { createQuery } from 'mysql2/typings/mysql/lib/Connection';
 import { parse } from 'path';
-import { Repository } from 'typeorm';
+import { Grupo } from 'src/grupo/entities/grupo.entity';
+import { createQueryBuilder, getRepository, Repository } from 'typeorm';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { Produto } from './entities/produto.entity';
 
 @Injectable()
 export class ProdutoService {
-
-
-  
-
 
   constructor(
     @InjectRepository(Produto)
@@ -55,13 +53,22 @@ export class ProdutoService {
     produto.codigoEan = createProdutoDto.codigoEan;
     produto.descricaoProduto = createProdutoDto.descricaoProduto;
     produto.preco = precoo;
-    //produto.grupo = createProdutoDto.grupo;
-    //produto.ala = createProdutoDto.ala;
+    produto.grupos = createProdutoDto.grupos;
+    produto.alas = createProdutoDto.alas;
     produto.quantidade = createProdutoDto.quantidade;
     produto.custo = createProdutoDto.custo;
     produto.porcentagem = createProdutoDto.porcentagem;
     produto.grupos = createProdutoDto.grupos;
     produto.alas = createProdutoDto.alas;
+    produto.usuario = createProdutoDto.usuario;
+
+    if(createProdutoDto.statusProduto === undefined){
+      produto.statusProduto = 0;
+    } else{
+      produto.statusProduto = createProdutoDto.statusProduto
+    }
+
+    
 
     //console.log("novaPorce", novaPorcentagem);
     //console.log("custo", precoCusto)
@@ -71,10 +78,55 @@ export class ProdutoService {
     return this.repositorioProduto.save(produto);
   }
 
+  /*findAll(){
+    const query = createQuery('select idproduto from produto')
+    query.start
+  }*/
 
 
-  findAll() :Promise<Produto[]>  {
-    return this.repositorioProduto.find({
+    
+    findAll():Promise<Produto[]> {
+      return   this.repositorioProduto.find({
+        
+          select:{
+            idProduto: true,
+            codigoEan: true,
+            descricaoProduto: true,
+            quantidade: true,
+            preco: true,
+  
+          },
+          relations: {
+            grupos:true,
+         },
+      })
+
+      
+    }
+
+
+    tes(){
+
+      let ts = {} = this.repositorioProduto.find({
+        
+        select:{
+          idProduto: true,
+          codigoEan: true,
+          descricaoProduto: true,
+          quantidade: true,
+          preco: true,
+
+        },
+        relations: {
+          grupos:true,
+       },
+    })
+
+    console.log(ts)
+    }
+
+  /*findAll() :Promise<Produto[]>  {
+    /*return this.repositorioProduto.find({
       select: {
 
         idProduto: true,
@@ -86,7 +138,9 @@ export class ProdutoService {
         
       },
     });
-  }
+
+    
+  }*/
 
 
   findOne(codigoEan: string): Promise<Produto> {
@@ -167,35 +221,6 @@ if(updateProdutoDto.descricaoProduto === undefined){
     console.log(produto.preco)
 
 
-    /*
-    let porcen: number = updateProdutoDto.porcentagem;
-  
-    let novaPorcentagem: number = porcen/100;
-
-  
-    let precoCusto = updateProdutoDto.custo;
-    
-  
-    let precoo = (parseFloat(precoCusto) * novaPorcentagem) + parseFloat(precoCusto);
-
-    produto.preco = precoo;
-    produto.codigoEan = updateProdutoDto.codigoEan;
-    produto.descricaoProduto = updateProdutoDto.descricaoProduto;
-    produto.preco = precoo;
-    produto.grupo = updateProdutoDto.grupo;
-    produto.ala = updateProdutoDto.ala;
-    produto.quantidade = updateProdutoDto.quantidade;
-    produto.custo = updateProdutoDto.custo;
-    produto.porcentagem = updateProdutoDto.porcentagem;
-
-    const teste = JSON.stringify(produto);
-    const bla = JSON.parse(teste)
-
-    //console.log(updateProdutoDto.descricaoProduto)
-    if(updateProdutoDto.ala === undefined){
-      console.log('sim')
-    }
-    console.log(updateProdutoDto)*/
 
     return this.repositorioProduto.update(idProduto, produto);
   }
