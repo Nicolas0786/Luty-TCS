@@ -1,9 +1,11 @@
 import { Ala } from "src/ala/entities/ala.entity";
+
 import { Etiqueta } from "src/etiqueta/entities/etiqueta.entity";
 import { Grupo } from "src/grupo/entities/grupo.entity";
-import { integracao_produto_etiqueta } from "src/logs/entities/integracao_produto_etiqueta";
 import { Produto } from "src/produto/entities/produto.entity";
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { Role } from "./role.entity";
 
 @Entity()
 export class Usuario {
@@ -37,6 +39,6 @@ export class Usuario {
     @OneToMany(()=> Etiqueta, (etiqueta) => etiqueta.usuario)
     etiquetas: Etiqueta[];
 
-    @OneToMany(()=> integracao_produto_etiqueta, (integracao) => integracao.usuario)
-    integracao: integracao_produto_etiqueta[];
+    @ManyToOne(() => Role, (role)=> role.usuario)
+    role: Role;
 }

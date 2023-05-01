@@ -4,11 +4,13 @@ import { Grupo } from 'src/grupo/entities/grupo.entity';
 import { Ala } from 'src/ala/entities/ala.entity';
 import { Etiqueta } from 'src/etiqueta/entities/etiqueta.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
-import { integracao_produto_etiqueta } from 'src/logs/entities/integracao_produto_etiqueta';
+//import { Role } from 'src/role.enum';
 
 
 @Entity()
 export class Produto {
+  //roles: Role[];
+
   @PrimaryGeneratedColumn('increment')
   idProduto: number;
 
@@ -32,6 +34,10 @@ export class Produto {
 
   @Column('int')
   statusProduto: number;
+
+  // sim = 0 não = 1
+  @Column('int')
+  integroEtiqueta: number;
   
   @ManyToOne(()=> Grupo, (grupo) => grupo.produtos)
   grupos: Grupo;
@@ -42,7 +48,6 @@ export class Produto {
   @ManyToOne(() => Usuario, (usuario)=> usuario.produtos)
   usuario: Usuario;
 
-  @OneToMany(()=> integracao_produto_etiqueta, (integracao) => integracao.produto)
-  integracao: integracao_produto_etiqueta[];
+  
 }
 

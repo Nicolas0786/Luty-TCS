@@ -1,7 +1,5 @@
-import { integracao_produto_etiqueta } from "src/logs/entities/integracao_produto_etiqueta";
-import { Produto } from "src/produto/entities/produto.entity";
 import { Usuario } from "src/usuario/entities/usuario.entity";
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class Etiqueta {
@@ -17,11 +15,15 @@ export class Etiqueta {
     @Column('int')
     statusEtiqueta: number;
 
+    @Column('varchar', { length: 20})
+    respostaItegracaoProduto: string;
+
+    @Column('varchar', { length: 50})
+    hashEtiqueta: string;
+
     @ManyToOne(() => Usuario, (usuario)=> usuario.etiquetas)
     usuario: Usuario;
 
-    @OneToMany(()=> integracao_produto_etiqueta, (integracao) => integracao.etiqueta)
-    integracao: integracao_produto_etiqueta[];
     
 
 }

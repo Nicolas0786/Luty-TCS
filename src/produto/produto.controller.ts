@@ -1,9 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } from '@nestjs/common';
 import { ProdutoService } from './produto.service';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { Roles } from '../auth/roles.decorator'
+import { Role } from '../auth/role.enum';
+import { RolesGuard } from 'src/auth/roles.guard';
 
 @Controller('produto')
+@UseGuards(RolesGuard)
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
@@ -12,6 +17,8 @@ export class ProdutoController {
     return this.produtoService.create(createProdutoDto);
   }
 
+  @Roles(Role.Adm)
+  @UseGuards(JwtAuthGuard)
   @Get('buscarTodos')
   findAll() {
     return this.produtoService.findAll();
@@ -38,8 +45,5 @@ tes(){
   return this.produtoService.tes();
 }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.produtoService.remove(+id);
-  }
+  
 }

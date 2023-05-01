@@ -1,34 +1,37 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param} from '@nestjs/common';
 import { EtiquetaService } from './etiqueta.service';
 import { CreateEtiquetaDto } from './dto/create-etiqueta.dto';
 import { UpdateEtiquetaDto } from './dto/update-etiqueta.dto';
+
 
 @Controller('etiqueta')
 export class EtiquetaController {
   constructor(private readonly etiquetaService: EtiquetaService) {}
 
-  @Post()
+  @Post('cadastrar')
   create(@Body() createEtiquetaDto: CreateEtiquetaDto) {
     return this.etiquetaService.create(createEtiquetaDto);
+  
   }
-
-  @Get()
+  
+  @Get('buscarTodas')
   findAll() {
     return this.etiquetaService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.etiquetaService.findOne(+id);
+  @Get('buscarPorNome:nomeEtiqueta')
+  findOne(@Param('nomeEtiqueta') nomeEtiqueta: string) {
+    return this.etiquetaService.findOne(nomeEtiqueta);
   }
 
+  /*
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateEtiquetaDto: UpdateEtiquetaDto) {
     return this.etiquetaService.update(+id, updateEtiquetaDto);
   }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.etiquetaService.remove(+id);
-  }
+*/
+ 
 }
+
+
+

@@ -11,16 +11,20 @@ import { UsuarioModule } from './usuario/usuario.module';
 import { Etiqueta } from './etiqueta/entities/etiqueta.entity';
 import { Usuario } from './usuario/entities/usuario.entity';
 import { LogsModule } from './logs/logs.module';
-import { ala_log } from './logs/entities/ala_log.entity';
+
 import { etiqueta_log } from './logs/entities/etiqueta_log';
-import { grupo_log } from './logs/entities/grupo_log';
+
 import { produto_log } from './logs/entities/produto_log';
-import { usuario_log } from './logs/entities/usuario_log';
-import { integracao_produto_etiqueta } from './logs/entities/integracao_produto_etiqueta';
+import { AuthModule } from './auth/auth.module';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/roles.guard';
+import { Role } from './usuario/entities/role.entity';
+
 
 @Module({
   imports: [
     ProdutoModule,
+   
     TypeOrmModule.forRoot({
       type: 'mysql',
       host: 'localhost',
@@ -28,16 +32,17 @@ import { integracao_produto_etiqueta } from './logs/entities/integracao_produto_
       username: 'root',
       password: 'Nicolas0786345',
       database: 'luty',
-      entities: [Produto, Grupo, Ala, Etiqueta, Usuario, ala_log, etiqueta_log, grupo_log, produto_log, usuario_log, integracao_produto_etiqueta],
+      entities: [Produto, Grupo, Ala, Etiqueta, Usuario, etiqueta_log, produto_log, Role],
       synchronize: true,
     }),
     GrupoModule,
     AlaModule,
     EtiquetaModule,
-    UsuarioModule,
     LogsModule,
+    AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [ {provide: APP_GUARD,
+    useClass: RolesGuard},],
 })
 export class AppModule {}

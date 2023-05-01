@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { response } from 'express';
 import { createQuery } from 'mysql2/typings/mysql/lib/Connection';
 import { parse } from 'path';
+import { Etiqueta } from 'src/etiqueta/entities/etiqueta.entity';
 import { Grupo } from 'src/grupo/entities/grupo.entity';
 import { createQueryBuilder, getRepository, Repository } from 'typeorm';
 import { CreateProdutoDto } from './dto/create-produto.dto';
@@ -16,11 +17,13 @@ export class ProdutoService {
   constructor(
     @InjectRepository(Produto)
     private repositorioProduto: Repository<Produto>,
+    
+    @InjectRepository(Etiqueta)
+    private repositorioEtiqueta: Repository<Etiqueta>
   ) {}
 
 
   async create(createProdutoDto: CreateProdutoDto) {
-
 
     if(!Number(createProdutoDto.codigoEan)){
       throw new Error("So pode conter número no campo Código Ean");
@@ -164,7 +167,8 @@ export class ProdutoService {
        // ala: true, 
         quantidade: true,
         custo: true,
-        porcentagem: true
+        porcentagem: true,
+        statusProduto: true,
        
        }, where: {
           idProduto
@@ -200,6 +204,12 @@ if(updateProdutoDto.descricaoProduto === undefined){
 }else{
   produto.porcentagem = updateProdutoDto.porcentagem;
 
+}if(updateProdutoDto.statusProduto === undefined){
+  produto.statusProduto = coluns.statusProduto
+
+}else{
+  produto.statusProduto = updateProdutoDto.statusProduto;
+
 }
 
     console.log(produto.descricaoProduto);
@@ -225,10 +235,17 @@ if(updateProdutoDto.descricaoProduto === undefined){
     return this.repositorioProduto.update(idProduto, produto);
   }
 
-  //remover do projeto
-  remove(id: number) {
-    return `This action removes a #${id} produto`;
-  }
+
+mandarParaEtiqueta(idProduto: number, idEtiqueta: number){
+
+
+
+  return 'this';
+}
+
+
+
+
 }
 
 

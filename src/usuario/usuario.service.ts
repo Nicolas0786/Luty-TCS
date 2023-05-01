@@ -4,23 +4,34 @@ import { Repository } from 'typeorm';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
+import * as bcrypt from 'bcrypt';
+import { Role } from '../auth/role.enum'
 
 @Injectable()
 export class UsuarioService {
+
+  //roles: Role[];
 
   constructor(
     @InjectRepository(Usuario)
     private repositorioUsuario: Repository<Usuario>,
   ) {}
 
-  create(createUsuarioDto: CreateUsuarioDto) {
+  async create(createUsuarioDto: CreateUsuarioDto) {
 
     const user = new Usuario;
+
+    const loginExists = await this.repositorioUsuario.findOneBy({login: createUsuarioDto.login});
+
+    if(loginExists){
+      throw new Error("Esse login já está sendo utilizado")
+    }
 
     user.nome = createUsuarioDto.nome;
     user.matricula = createUsuarioDto.matricula;
     user.login = createUsuarioDto.login;
-    user.senha = createUsuarioDto.senha;
+    user.senha = await bcrypt.hashSync(createUsuarioDto.senha, 10);
+    user.role = createUsuarioDto.role;
     
     
     if(createUsuarioDto.statusUsuario === undefined){
@@ -32,19 +43,98 @@ export class UsuarioService {
     return this.repositorioUsuario.save(user);
   }
 
-  findAll() {
-    return `This action returns all usuario`;
+  findAll():Promise<Usuario[]> {
+    return  this.repositorioUsuario.find({
+      select:{
+        nome: true,
+        login: true,
+        matricula: true
+      }, where:{
+        statusUsuario:0
+      }
+    });
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} usuario`;
+  findOne(nome: string) {
+    return this.repositorioUsuario.findOne({
+      select: {
+        nome: true, 
+        matricula: true,
+        login: true,
+        senha: true, 
+        statusUsuario: true
+
+      }, where:{
+        nome
+      }
+    });
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+  async update(idUsuario: number, updateUsuarioDto: UpdateUsuarioDto) {
+
+    const user = new Usuario;
+
+    const userOne = await this.repositorioUsuario.findOne({
+      select: {
+        nome: true, 
+        matricula: true,
+        login: true,
+        senha: true, 
+        statusUsuario: true
+
+      }, where:{
+        idUsuario
+      }
+    }) 
+
+    //console.log(userOne);
+
+    if(updateUsuarioDto.nome === undefined){
+      user.nome = userOne.nome;
+    }else{
+      user.nome = updateUsuarioDto.nome;
+    }
+
+    if(updateUsuarioDto.matricula === undefined){
+      user.matricula = userOne.matricula;
+    }else{
+      user.matricula = updateUsuarioDto.matricula;
+    }
+
+    if(updateUsuarioDto.login === undefined){
+      user.login = userOne.login;
+    }else{
+      user.login = updateUsuarioDto.login;
+    }
+
+    if(updateUsuarioDto.senha === undefined){
+      user.senha = userOne.senha;
+    }else{
+      user.senha = updateUsuarioDto.senha;
+    }
+
+    if(updateUsuarioDto.statusUsuario === undefined){
+      user.statusUsuario = userOne.statusUsuario;
+    }else {
+      user.statusUsuario = updateUsuarioDto.statusUsuario;
+    }
+
+    return this.repositorioUsuario.update(idUsuario, user);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+
+  async findOneBy(login: string): Promise<Usuario | undefined> {
+    return await this.repositorioUsuario.findOne({
+      select:{
+        idUsuario: true,
+        login: true,
+        senha: true,
+      }, relations: {
+        role: true,
+      }, where:{
+        login
+      }
+    }   
+    );
   }
 }
