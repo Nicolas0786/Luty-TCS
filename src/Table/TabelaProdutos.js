@@ -6,7 +6,7 @@ import {useNavigate} from 'react-router-dom';
 import Axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import './TabelaProduto.css'
+import './Css/TabelaProduto.css'
 
 
 

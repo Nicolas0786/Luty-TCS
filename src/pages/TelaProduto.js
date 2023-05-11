@@ -30,7 +30,13 @@ const TelaProduto = () =>{
             //console.log(axi.data);
             
             setDadosProdutos(axi.data);
-            console.log(axi.data)
+            
+            //console.log(axi.data[0].grupos.descricaoGrupo)
+
+            const teste = axi.data.map((grup, i)=> {
+               console.log( grup.grupos.descricaoGrupo);
+               setDadosProdutos(grup.grupos.descricaoGrupo)
+            })
             
             
         
@@ -38,10 +44,6 @@ const TelaProduto = () =>{
         buscarDados()
     },[])
 
-    
-  
-
- 
 
     return(
         <div>

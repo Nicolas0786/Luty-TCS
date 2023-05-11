@@ -1,5 +1,5 @@
 
-import './TelaCadastrarProduto.css';
+
 import Axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import React, {useContext, useState} from 'react';
@@ -9,10 +9,9 @@ import Nav from 'react-bootstrap/Nav';
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
-
-
-import './TelaCadastrarProduto.css';
 import FormSelect from 'react-bootstrap/esm/FormSelect';
+import './Css/TelaCadastrarProduto.css'
+
 
 
 
