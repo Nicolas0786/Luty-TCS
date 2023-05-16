@@ -17,9 +17,11 @@ const TelaProduto = () =>{
         idProduto: 'Id',
         codigoEan: 'Código',
         descricaoProduto: 'Descrição',
-        grupo: 'Grupo',
         quantidade: 'Quantidade',
-        preco: 'Preço R$'
+        preco: 'Preço R$',
+        grupo: 'Grupo'
+        
+        
 
     }
 
@@ -33,13 +35,10 @@ const TelaProduto = () =>{
             
             //console.log(axi.data[0].grupos.descricaoGrupo)
 
-            const teste = axi.data.map((grup, i)=> {
+            /*const teste = axi.data.map((grup, i)=> {
                console.log( grup.grupos.descricaoGrupo);
                setDadosProdutos(grup.grupos.descricaoGrupo)
-            })
-            
-            
-        
+            })*/
         }
         buscarDados()
     },[])
@@ -51,10 +50,17 @@ const TelaProduto = () =>{
             <header>
 
             </header>
-            <Button id="novoProduto"  onClick={() => navigate('/TelaCadastrarProduto')}>Novo Produto</Button> 
+            <Button id="TelaUsuario"  onClick={() => navigate('/TelaUsuario')}>Usuário</Button>
+            <Button id="TelaProduto"  onClick={() => navigate('/TelaProduto')}>Produto</Button> 
+            <Button id="TelaEtiqueta">Etiqueta</Button>
             <div>
                 <Table dadosProdutos = {dadosProdutos} head={head} />
             </div>
+            <Button>Grupo +</Button>
+            <Button>Ala +</Button>
+
+            <Button id="novoProduto"  onClick={() => navigate('/TelaCadastrarProduto')}>Produto +</Button> 
+            <Button onClick={() => navigate('/TelaInicio')}>Fechar</Button>
         </div>
     );
 }

@@ -10,8 +10,8 @@ const TelaInicio = () =>{
                 
             </header>
             <main>
-                <Button onClick={navigate('/TelaUsuario')}>Usuário</Button>
-                <Button onClick={navigate('/TelaProduto')}>Produto</Button>
+                <Button href='/TelaUsuario'>Usuário</Button>
+                <Button href="/TelaProduto">Produto</Button>
                 <Button>Etiqueta</Button>
             </main>
         </body>

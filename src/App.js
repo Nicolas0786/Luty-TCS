@@ -14,24 +14,26 @@ import TelaEditarProduto from './pages/TelaEditarProduto';
 import  'bootstrap/dist/css/bootstrap.min.css' ;
 import TelaLogin from './pages/TelaLogin';
 import TelaInicio from './pages/TelaInicio';
+import TelaMandarEtiqueta from './pages/TelaMandarEtiqueta';
 
 
 function App() {
 
   const [codigoEan, setCodigoEan] = useState();
   const [descricaoProduto, setDescricaoProduto] = useState("");
-  const [grupo, setGrupo] = useState();
-  const [ala, setAla] = useState();
+  const [grupos, setGrupos] = useState();
+  const [alas, setAlas] = useState();
   const [quantidade, setQuantidade] = useState();
   const [custo, setCusto] = useState();
   const [porcentagem, setPorcentagem] = useState();
   const [preco, setPreco] = useState();
 
   const [editarr, setEditarr] = useState();
+  const [etq, setEtq] = useState([]);
 
 
   return (
-    <MyContext.Provider value={{editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem,  preco, setPreco}}>
+    <MyContext.Provider value={{etq, setEtq,  editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem,  preco, setPreco}}>
 
   <BrowserRouter>
     <Routes>
@@ -41,6 +43,7 @@ function App() {
       <Route path='/TelaUsuario' element={<TelaUsuario/>}/>
       <Route path='/TelaLogin' element={<TelaLogin/>}/>
       <Route path='/TelaInicio' element={<TelaInicio/>}/>
+      <Route path='/TelaMandarEtiqueta/:id' element={<TelaMandarEtiqueta/>}/>
     </Routes>
   </BrowserRouter>
   </MyContext.Provider>

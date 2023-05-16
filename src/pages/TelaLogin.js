@@ -7,7 +7,7 @@ import Axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
 import './Css/TelaLogin.css'
-
+import imgLog from '../imagens/imgLogin.png';
 
 const TelaLogin = () =>{
 
@@ -19,12 +19,9 @@ const TelaLogin = () =>{
     return(
         <body>
             <main>
-
-                <div>
-                    <Image></Image>
-                </div>
-
-            <Row className="mb-3">
+            <Image src={imgLog} rounded ></Image>
+            <Row className="mb-3" center>
+            
                         <Form.Group as={Col} md="4">
                             <Form.Control id="usuario" type="text" value={username} onChange ={(e)=> setUsername(e.target.value)}  placeholder= "Usuário"/>
                         
@@ -34,7 +31,7 @@ const TelaLogin = () =>{
                         </Form.Group>  
                         
             </Row>            
-            <Button id='entrar' onClick={entrar}>Entrar</Button>
+            <Button className='entrar' onClick={entrar}>Entrar</Button>
             </main>
         </body>
     );

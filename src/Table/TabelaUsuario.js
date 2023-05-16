@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
 import { useContext } from "react";
 import Axios from 'axios';
+import './TabelaUsuario.css'
 
 const Head = ({keys, head}) => {
     const tableHead = head || {}

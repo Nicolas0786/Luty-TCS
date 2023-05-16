@@ -5,7 +5,7 @@ import {useNavigate} from 'react-router-dom';
 import React, {useContext, useState} from 'react';
 import MyContext from "../contexts/myContext";
 import Button from 'react-bootstrap/Button';
-import Nav from 'react-bootstrap/Nav';
+
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -18,35 +18,44 @@ import './Css/TelaCadastrarProduto.css'
 const TelaCadastrarProduto = ()=>{
 
     const navigate = useNavigate();
-    const {editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem} = useContext(MyContext);
+    const {editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem} = useContext(MyContext);
 
-    const [test, setTest] = useState();
+    //window.location = window.location;
+    const [test, setTest] = useState([]);
+    const [test1, setTest1] = useState([]);
     //console.log(editarr);
-    console.log(grupo); 
 
     React.useEffect(()=>{
         async function buscarDados(){
     
-            const axi = await Axios.get('http://localhost:3000/produto/grupos')
+            const grupos = await Axios.get('http://localhost:3000/grupo/buscarTodos')
+            const alas = await Axios.get('http://localhost:3000/ala/buscarTodas')
             //console.log(axi.data);
             
-            setTest(axi.data);
-            console.log(axi.data);
+            setTest(grupos.data);
+        
+            setTest1(alas.data);
+            
         
         }
         buscarDados()
     },[])
 
 
+    //console.log(test)
+
+const grup = test.map((grupo) => <option value={grupo.idGrupo}  key={grupo.idGrupo}>{grupo.descricaoGrupo}</option>);
+
+const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.descricao}</option>);
 
 
 
 
    async function salvarProdutos(){
 
-         const dadosFront = {codigoEan, descricaoProduto, grupo, ala, quantidade, custo, porcentagem};
+         const dadosFront = {codigoEan, descricaoProduto, grupos, alas, quantidade, custo, porcentagem};
 
-         //console.log(dadosFront);
+         console.log(grupos)
 
          if(!Number(codigoEan)){
             window.alert("So pode conter números no campo Código Ean");
@@ -61,38 +70,12 @@ const TelaCadastrarProduto = ()=>{
             }
           
     }
-    }
+}
     
 
     return (
         <div>
             <header>
-                <Nav variant="tabs"  className="nav1" defaultActiveKey="/home">
-                    <Nav.Item>
-                        <Nav.Link href="/">Luty</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Cadastro</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Etiqueta Eletronica</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Estoque</Nav.Link>        
-                    </Nav.Item>
-                </Nav>
-
-                <Nav variant="tabs"  className="nav2" defaultActiveKey="/home">
-                    <Nav.Item>
-                        <Nav.Link >Cadastrar Usuario</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Cadastrar Produto</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Cadastrar Grupo/ala</Nav.Link>        
-                    </Nav.Item>
-                </Nav>
 
             </header>
             <br></br>
@@ -126,17 +109,22 @@ const TelaCadastrarProduto = ()=>{
                     <Row className="mb-3">
                          <Form.Group as={Col} md="4">
                             <Form.Label >Grupo</Form.Label>
-                            <Form.Control id="grupo" type="text" value={grupo} onChange ={(e)=> setGrupo(e.target.value)} placeholder= "Grupo" />
-                            <FormSelect onChange ={(e)=> setGrupo(e.target.value)}>
-                                <option></option>
-                                <option>ala</option>
-                                <option>alas</option>
+                            <FormSelect onChange ={(e)=> setGrupos(e.target.value)} placeholder="Grupo">
+                           <option></option>
+                           {grup}
+                
                             </FormSelect>
                         </Form.Group>
 
                         <Form.Group as={Col} md="4">
                             <Form.Label>Ala</Form.Label>
-                            <Form.Control id="ala" type="text" value={ala} onChange ={(e)=> setAla(e.target.value)} placeholder= "Ala" />
+                            <FormSelect onChange ={(e)=> setAlas(e.target.value)} placeholder="Ala">
+                           <option></option>
+                           {all}
+                
+                            </FormSelect>
+
+
                         </Form.Group>
                         
                         <Form.Group as={Col} md="4">
