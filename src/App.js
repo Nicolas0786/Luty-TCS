@@ -28,7 +28,7 @@ function App() {
   const [porcentagem, setPorcentagem] = useState();
   const [preco, setPreco] = useState();
 
-  const [editarr, setEditarr] = useState();
+  const [editarr, setEditarr] = useState([]);
   const [etq, setEtq] = useState([]);
 
 
@@ -39,7 +39,7 @@ function App() {
     <Routes>
       <Route path='/TelaProduto' element={<TelaProduto/>}/>  
       <Route path='/TelaCadastrarProduto' element={<TelaCadastrarProduto />}/>
-      <Route path='/TelaEditarProduto' element={<TelaEditarProduto/>}/>
+      <Route path='/TelaEditarProduto/:id' element={<TelaEditarProduto/>}/>
       <Route path='/TelaUsuario' element={<TelaUsuario/>}/>
       <Route path='/TelaLogin' element={<TelaLogin/>}/>
       <Route path='/TelaInicio' element={<TelaInicio/>}/>

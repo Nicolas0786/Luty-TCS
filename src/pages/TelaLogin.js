@@ -18,11 +18,11 @@ const TelaLogin = () =>{
     
     return(
         <body>
-            <main>
+            <main className='telLog'>
             <Image src={imgLog} rounded ></Image>
             <Row className="mb-3" center>
             
-                        <Form.Group as={Col} md="4">
+                        <Form.Group as={Col} md="12">
                             <Form.Control id="usuario" type="text" value={username} onChange ={(e)=> setUsername(e.target.value)}  placeholder= "Usuário"/>
                         
                         <br></br>

@@ -18,7 +18,9 @@ const TelaMandarEtiqueta = () =>{
 
     const navigate = useNavigate();
 
+    console.log(ip)
 
+    
     React.useEffect(()=>{
         async function buscarDados(){
 
@@ -34,7 +36,27 @@ const TelaMandarEtiqueta = () =>{
 
 
     async function alterarPreco(){
-        const res = await Axios.post('http://localhost:3000/etiqueta/alterar/'+ip+"/"+etq.idProduto)
+
+
+        try {
+            const idProduto = etq.idProduto;
+        const idEtiqueta = ip;
+        const dados = {idEtiqueta , idProduto};
+
+        console.log(dados);
+        const res = await Axios.post('http://localhost:3000/etiqueta/alterar/' , dados)
+
+        console.log(res)
+
+        window.alert(res.data);
+        navigate('/TelaProduto')
+        } catch (error) {
+            console.log(error.message)
+            window.alert("Verifique a comunicação")
+            
+        }
+        
+
     }
 
  const et = (tes || []).map((etiqueta) => <option value={etiqueta.idEtiqueta} key={etiqueta.idEtiqueta}>{etiqueta.ipEtiqueta}</option>);
@@ -42,6 +64,7 @@ const TelaMandarEtiqueta = () =>{
     return(
         <body>
             <main>
+                <div>
                 <Form>
                     <Row className="mb-3">
                             <Form.Group as={Col} md="1">
@@ -66,7 +89,8 @@ const TelaMandarEtiqueta = () =>{
 
                     </Row>    
                 </Form>
-
+            </div>       
+            <div>
                 <Form>
                     <Row className="mb-3">
 
@@ -100,7 +124,7 @@ const TelaMandarEtiqueta = () =>{
 
                     </Row>
                 </Form>
-
+                </div>
                 <Button onClick={alterarPreco}>Salvar</Button>
                 <Button onClick={()=> navigate('/TelaProduto')}>Fechar</Button>
             </main>

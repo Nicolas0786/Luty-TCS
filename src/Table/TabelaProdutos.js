@@ -66,7 +66,7 @@ const Row = ({record, columns}) => {
                 const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`)
                 console.log(back.data)
                setEditarr(back.data);
-               navigate('/TelaEditarProduto');
+               navigate(`/TelaEditarProduto/${record.idProduto}`);
               
             }}>editar</Button>
 

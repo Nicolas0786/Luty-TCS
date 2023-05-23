@@ -2,10 +2,13 @@ import Axios  from 'axios';
 import React, { useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from '../Table/TabelaUsuario';
+import {useNavigate} from 'react-router-dom';
 
 const TelaUsuario = () =>{
 
     const [dadosUsuario, setDadosUsuario] = useState([]);
+    const navigate = useNavigate();
+
 
     const head = {
         nome: 'Nome',
@@ -29,7 +32,7 @@ const TelaUsuario = () =>{
             </header>
             <nav>
                 <Button id='usuario'>Usuario</Button>{''}
-                <Button id='produto'>Produto</Button>{''}
+                <Button id='produto' onClick={()=> navigate('/TelaProduto')}>Produto</Button>{''}
                 <Button id='Etiqueta'>Etiqueta</Button>{''}
             </nav>
 
@@ -39,7 +42,7 @@ const TelaUsuario = () =>{
 
             <footer>
                 <Button id='novoUsuario'>Novo</Button>
-                <Button id='fechar'>Fechar</Button>
+                <Button id='fechar' onClick={()=> navigate('/TelaInicio')}>Fechar</Button>
             </footer>
         </body>
     );

@@ -9,11 +9,37 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import { useParams } from 'react-router-dom';
+
 const TelaEditarProduto = () => {
     const navigate = useNavigate();
+    const {id} = useParams();
+
+
 
     const {editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
  
+//console.log(editarr);
+
+React.useEffect(()=>{
+    async function buscarDados(){
+
+        
+    const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${id}`)
+
+    setEditarr(back.data)
+
+
+    
+
+    }
+    buscarDados()
+},[])
+
+//console.log(editarr)
+//editarr.map(ala => console.log(ala))
+
+
 
     async function atualizarProduto (){
 
@@ -24,36 +50,17 @@ const TelaEditarProduto = () => {
 
     }
 
+    const alaa = Object.values(editarr).map(tes => {return <option value={tes.idAla} key={tes.idAla}>{tes.descricao}</option>})
+
+    
+    const grupoo = Object.values(editarr).map(tess => {return <option key={tess.idGrupo}>{tess.descricaoGrupo}</option>})
+    
+
 
     return(
              <div>
                 <header>
-                <Nav variant="tabs"  className="nav1" defaultActiveKey="/home">
-                    <Nav.Item>
-                        <Nav.Link href="/">Luty</Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Cadastro</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Etiqueta Eletronica</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Estoque</Nav.Link>        
-                    </Nav.Item>
-                </Nav>
 
-                <Nav variant="tabs"  className="nav2" defaultActiveKey="/home">
-                    <Nav.Item>
-                        <Nav.Link >Cadastrar Usuario</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Cadastrar Produto</Nav.Link>        
-                    </Nav.Item>
-                    <Nav.Item>
-                        <Nav.Link >Cadastrar Grupo/ala</Nav.Link>        
-                    </Nav.Item>
-                </Nav>
                 </header>
                 <br></br>
 
@@ -68,7 +75,7 @@ const TelaEditarProduto = () => {
                     <Row className="mb-3">
                         <Form.Group as={Col} md="4">
                             <Form.Label>Descrição</Form.Label>
-                            <Form.Control id="descricao" type="text" defaultValue={editarr.descricaoProduto} onChange ={(e)=> setDescricaoProduto(e.target.value)} placeholder= "Descrição"/>
+                            <Form.Control id="descricao" type="text" defaultValue={editarr.descricaoProduto || []} onChange ={(e)=> setDescricaoProduto(e.target.value || [])} placeholder= "Descrição"/>
                         </Form.Group>
                         
                         <Form.Group as={Col} md="2">
@@ -88,17 +95,18 @@ const TelaEditarProduto = () => {
                     <Row className="mb-3">
                          <Form.Group as={Col} md="4">
                             <Form.Label>Grupo</Form.Label>
-                            <Form.Control id="grupo" type="text" defaultValue={editarr.grupo} onChange ={(e)=> setGrupo(e.target.value)} placeholder= "Grupo" />
                             <Form.Select onChange={(e)=> setGrupo(e.target.value)}>
-                                <option></option>
-                                <option>{editarr.grupo}</option>
-                                <option></option>
+                                {grupoo}
+                                
                             </Form.Select>
                         </Form.Group>
 
                         <Form.Group as={Col} md="3">
                             <Form.Label>Ala</Form.Label>
-                            <Form.Control id="ala" type="text" defaultValue={editarr.ala} onChange ={(e)=> setAla(e.target.value)} placeholder= "Ala" />
+                            <Form.Select onChange={(e)=> setAla(e.target.value)}>
+                                {alaa}
+                            </Form.Select>
+                            
                         </Form.Group>
                         
                         <Form.Group as={Col} md="3">
