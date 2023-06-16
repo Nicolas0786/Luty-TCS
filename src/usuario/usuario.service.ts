@@ -5,12 +5,10 @@ import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
-import { Role } from '../auth/role.enum'
 
 @Injectable()
 export class UsuarioService {
 
-  //roles: Role[];
 
   constructor(
     @InjectRepository(Usuario)
@@ -31,7 +29,7 @@ export class UsuarioService {
     user.matricula = createUsuarioDto.matricula;
     user.login = createUsuarioDto.login;
     user.senha = await bcrypt.hashSync(createUsuarioDto.senha, 10);
-    user.role = createUsuarioDto.role;
+    user.permissao = createUsuarioDto.permissao;
     
     
     if(createUsuarioDto.statusUsuario === undefined){
@@ -47,8 +45,9 @@ export class UsuarioService {
     return  this.repositorioUsuario.find({
       select:{
         nome: true,
+        matricula: true,
         login: true,
-        matricula: true
+        
       }, where:{
         statusUsuario:0
       }
@@ -61,13 +60,24 @@ export class UsuarioService {
         nome: true, 
         matricula: true,
         login: true,
-        senha: true, 
-        statusUsuario: true
-
       }, where:{
-        nome
+        nome,
+        statusUsuario:0
       }
     });
+  }
+
+  buscarLogin(login: string){
+    return this.repositorioUsuario.findOne({
+      select: {
+        nome: true, 
+        matricula: true,
+        login: true,
+      }, where:{
+        login,
+        statusUsuario:0
+      }
+    })
   }
 
   async update(idUsuario: number, updateUsuarioDto: UpdateUsuarioDto) {
@@ -130,7 +140,7 @@ export class UsuarioService {
         login: true,
         senha: true,
       }, relations: {
-        role: true,
+        permissao: true,
       }, where:{
         login
       }

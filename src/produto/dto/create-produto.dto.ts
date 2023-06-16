@@ -7,30 +7,29 @@ import { Usuario } from "src/usuario/entities/usuario.entity";
 
 export class CreateProdutoDto {
 
-    @IsNotEmpty()
+
     codigoEan: string;
 
-    @IsNotEmpty()
+
     descricaoProduto: string;
     
-    @IsNotEmpty()
+    
     quantidade: number;
     
-    @IsNotEmpty()
+    
     custo: string;
     
-    @IsNotEmpty()
+    
     porcentagem: number
 
     statusProduto: number;
 
-    @IsNotEmpty()
+    
     grupos: Grupo;
 
-    @IsNotEmpty()
+    
     alas: Ala;
 
-    @IsNotEmpty()
     usuario: Usuario;
 
 }

@@ -12,7 +12,7 @@ import { LocalStrategy } from './local.strategy';
     JwtModule.register({
       global: false,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '5d' }, // trocar o tempo depois
+      signOptions: { expiresIn: '1d' }, // trocar o tempo depois
     }),
   ],
   providers: [AuthService, LocalStrategy, JwtStrategy],

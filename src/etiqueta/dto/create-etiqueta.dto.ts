@@ -8,5 +8,9 @@ export class CreateEtiquetaDto {
 
     statusEtiqueta: number;
 
+    corredor: string;
+
+    pratilheira: string;
+
     usuario: Usuario;
 }

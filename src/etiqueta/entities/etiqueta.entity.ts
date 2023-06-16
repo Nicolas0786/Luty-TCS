@@ -15,12 +15,15 @@ export class Etiqueta {
     @Column('int')
     statusEtiqueta: number;
 
-    @Column('varchar', { length: 20})
-    respostaItegracaoProduto: string;
-
-    @Column('varchar', { length: 50})
+    @Column('varchar', { length: 250})
     hashEtiqueta: string;
 
+    @Column('varchar', { length: 80})
+    corredor: string;
+
+    @Column('varchar', { length:80})
+    pratilheira: string;
+    
     @ManyToOne(() => Usuario, (usuario)=> usuario.etiquetas)
     usuario: Usuario;
 

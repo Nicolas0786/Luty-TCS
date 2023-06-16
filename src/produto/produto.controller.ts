@@ -12,18 +12,27 @@ import { RolesGuard } from 'src/auth/roles.guard';
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  //@UseGuards(JwtAuthGuard)
   @Post('cadastrar')
   create(@Body() createProdutoDto: CreateProdutoDto) {
     return this.produtoService.create(createProdutoDto);
   }
 
-  @Roles(Role.Adm)
+ // @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+ // @Roles(Role.Funcionario)
   @UseGuards(JwtAuthGuard)
   @Get('buscarTodos')
   findAll() {
     return this.produtoService.findAll();
   }
 
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @Roles(Role.Funcionario)
+  @UseGuards(JwtAuthGuard)
   @Get('buscarPorEan/:codigoEan')
   findOne(@Param('codigoEan') codigoEan: string) {
     return this.produtoService.findOne(codigoEan);
@@ -34,7 +43,9 @@ export class ProdutoController {
     return this.produtoService.findOneBy(idProduto);
   }
   
-
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(JwtAuthGuard)
   @Patch('atualizar/:idProduto')
   update(@Param('idProduto') idProduto: number, @Body() updateProdutoDto: UpdateProdutoDto) {
     return this.produtoService.update(+ idProduto, updateProdutoDto);

@@ -27,7 +27,7 @@ export class AuthService {
         // TODO aqui é necessário ajustar o payload para ter os dados que vão ser necessário lá no RolesGuard 
         // por exemplo
 
-        const payload = { role: user.role, username: user.login, sub: user.idUsuario };
+        const payload = { permissao: user.permissao, username: user.login, sub: user.idUsuario };
         console.log(payload)
         console.log(user)
 

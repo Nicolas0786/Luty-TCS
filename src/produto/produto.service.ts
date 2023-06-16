@@ -18,8 +18,6 @@ export class ProdutoService {
     @InjectRepository(Produto)
     private repositorioProduto: Repository<Produto>,
     
-    @InjectRepository(Etiqueta)
-    private repositorioEtiqueta: Repository<Etiqueta>
   ) {}
 
 
@@ -70,6 +68,8 @@ export class ProdutoService {
     } else{
       produto.statusProduto = createProdutoDto.statusProduto
     }
+    
+    console.log(createProdutoDto.grupos)
 
     
 
@@ -78,7 +78,7 @@ export class ProdutoService {
     //console.log("preco", precoo)
 
 
-    return this.repositorioProduto.save(produto);
+   return this.repositorioProduto.save(produto);
   }
 
   /*findAll(){
@@ -152,7 +152,25 @@ export class ProdutoService {
 
 
   findOneBy(idProduto: number): Promise<Produto>{
-    return this.repositorioProduto.findOneBy({idProduto});
+    return this.repositorioProduto.findOne({
+      select:{
+        idProduto: true,
+        codigoEan: true,
+        descricaoProduto: true,
+        quantidade: true,
+        porcentagem: true,
+        custo: true,
+        preco: true,
+
+      },
+      relations: {
+        grupos:true,
+        alas: true,
+     },
+     where:{
+      idProduto
+     }
+    })
   }
   
   async update(idProduto: number, updateProdutoDto: UpdateProdutoDto) {
@@ -234,16 +252,6 @@ if(updateProdutoDto.descricaoProduto === undefined){
 
     return this.repositorioProduto.update(idProduto, produto);
   }
-
-
-mandarParaEtiqueta(idProduto: number, idEtiqueta: number){
-
-
-
-  return 'this';
-}
-
-
 
 
 }

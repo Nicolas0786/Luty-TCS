@@ -18,7 +18,8 @@ import { produto_log } from './logs/entities/produto_log';
 import { AuthModule } from './auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { RolesGuard } from './auth/roles.guard';
-import { Role } from './usuario/entities/role.entity';
+import { Permissao } from './usuario/entities/permissao.entity';
+import { ProdutoEtiqueta } from './etiqueta/entities/produtoEtiqueta';
 
 
 @Module({
@@ -32,7 +33,7 @@ import { Role } from './usuario/entities/role.entity';
       username: 'root',
       password: 'Nicolas0786345',
       database: 'luty',
-      entities: [Produto, Grupo, Ala, Etiqueta, Usuario, etiqueta_log, produto_log, Role],
+      entities: [Produto, Grupo, Ala, Etiqueta, Usuario, etiqueta_log, produto_log, Permissao, ProdutoEtiqueta],
       synchronize: true,
     }),
     GrupoModule,

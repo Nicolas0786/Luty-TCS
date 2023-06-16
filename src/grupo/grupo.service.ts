@@ -13,23 +13,6 @@ export class GrupoService {
   ){}
 
 
-  /*buscaGrupo() :Promise<Produto[]> {
-    return this.repositorioProduto.find({
-      select: {
-
-        idProduto: false,
-        codigoEan: false,
-        descricaoProduto: false,
-        //grupo: true,
-        quantidade: false,
-        preco: false
-        
-      },
-    });
-  }*/
-
-
-
   create(createGrupoDto: CreateGrupoDto) {
 
     const Grup = new Grupo;
@@ -40,7 +23,7 @@ export class GrupoService {
   }
 
   findAll() {
-    return this.repositorioGrupo.find;
+    return this.repositorioGrupo.find();
   }
 
   findOne(id: number) {
@@ -54,7 +37,4 @@ export class GrupoService {
     return this.repositorioGrupo.update(idGrupo, grupo);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} grupo`;
-  }
 }

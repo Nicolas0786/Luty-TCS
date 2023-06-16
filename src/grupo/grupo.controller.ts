@@ -1,12 +1,20 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { GrupoService } from './grupo.service';
 import { CreateGrupoDto } from './dto/create-grupo.dto';
 import { UpdateGrupoDto } from './dto/update-grupo.dto';
+import { RolesGuard } from 'src/auth/roles.guard';
+import { Roles } from 'src/auth/roles.decorator';
+import { Role } from 'src/auth/role.enum';
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
 @Controller('grupo')
+@UseGuards(RolesGuard)
 export class GrupoController {
   constructor(private readonly grupoService: GrupoService) {}
 
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(JwtAuthGuard)
   @Post('criar')
   create(@Body() createGrupoDto: CreateGrupoDto) {
     return this.grupoService.create(createGrupoDto);
@@ -27,8 +35,4 @@ export class GrupoController {
     return this.grupoService.update(+ idGrupo, updateGrupoDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.grupoService.remove(+id);
-  }
 }

@@ -32,8 +32,9 @@ export class RolesGuard implements CanActivate {
     const decode = jwt_decode(headers.authorization);
     console.log(decode);
 
-    const {role}:any = jwt_decode(headers.authorization);
-    const teste = role;
+    const {permissao}:any = jwt_decode(headers.authorization);
+    console.log(permissao)
+    const teste = permissao;
     return requiredRoles.some((role) => teste.cargo?.includes(role));
 
     //return requiredRoles.some((role) => [Role.Adm].includes(role));

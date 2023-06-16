@@ -1,5 +1,5 @@
 import internal from 'stream';
-import { Column, Entity, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Grupo } from 'src/grupo/entities/grupo.entity';
 import { Ala } from 'src/ala/entities/ala.entity';
 import { Etiqueta } from 'src/etiqueta/entities/etiqueta.entity';
@@ -35,15 +35,15 @@ export class Produto {
   @Column('int')
   statusProduto: number;
 
-  // sim = 0 não = 1
-  @Column('int')
-  integroEtiqueta: number;
-  
   @ManyToOne(()=> Grupo, (grupo) => grupo.produtos)
   grupos: Grupo;
 
-  @ManyToOne(()=> Ala, (ala) => ala.produtos)
-  alas: Ala;
+  //@ManyToOne(()=> Ala, (ala) => ala.produtos)
+  //alas: Ala;
+
+  @ManyToOne(() => Ala)
+@JoinColumn({ name: "idAla" })
+alas: Ala;
 
   @ManyToOne(() => Usuario, (usuario)=> usuario.produtos)
   usuario: Usuario;

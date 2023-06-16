@@ -4,10 +4,10 @@ import { UsuarioController } from './usuario.controller';
 import { Usuario } from './entities/usuario.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from 'src/auth/auth.module';
-import { Role } from './entities/role.entity';
+import { Permissao } from './entities/permissao.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Usuario, Role]), forwardRef(() => AuthModule)],
+  imports: [TypeOrmModule.forFeature([Usuario, Permissao ]), forwardRef(() => AuthModule)],
   controllers: [UsuarioController],
   providers: [UsuarioService],
   exports: [UsuarioService]

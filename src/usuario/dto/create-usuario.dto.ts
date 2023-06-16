@@ -1,5 +1,5 @@
 import { IsNotEmpty } from "class-validator";
-import { Role } from "../entities/role.entity";
+import { Permissao } from "../entities/permissao.entity";
 
 export class CreateUsuarioDto {
 
@@ -17,8 +17,10 @@ export class CreateUsuarioDto {
 
     statusUsuario: number;
 
-    @IsNotEmpty()
-    role: Role;
+   @IsNotEmpty()
+   permissao: Permissao;
+
+    //cargo: string;
 
     
 }

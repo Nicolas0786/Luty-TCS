@@ -23,7 +23,7 @@ export class AlaService {
   }
 
   findAll() {
-    return this.repositorioAla.find;
+    return this.repositorioAla.find();
   }
 
   findOne(id: number) {
@@ -37,7 +37,4 @@ export class AlaService {
     return this.repositorioAla.update(idAla, ala);
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} ala`;
-  }
 }
