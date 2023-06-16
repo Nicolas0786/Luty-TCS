@@ -1,0 +1,15 @@
+.entrar{
+    visibility: visible !important;
+    color: white !important;
+    background-color: blue !important;
+    --bs-btn-padding-x: 5.10rem;
+}
+
+.telLog{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;    
+    }
+
