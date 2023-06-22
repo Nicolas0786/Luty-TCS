@@ -14,7 +14,7 @@ const TelaInicio = () =>{
             <main>
                 <Button href='/TelaUsuario'>Usuário</Button>
                 <Button href="/TelaProduto">Produto</Button>
-                <Button>Etiqueta</Button>
+                <Button href="/TelaEtiqueta">Etiqueta</Button>
             </main>
         </body>
     );

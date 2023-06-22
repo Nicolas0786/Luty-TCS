@@ -18,7 +18,7 @@ const TelaLogin = () =>{
     
     return(
         <body>
-            <main className='telLog'>
+            <main className='telLog' id="inicializa">
             <Image src={imgLog} rounded ></Image>
             <Row className="mb-3" center>
             
@@ -41,7 +41,7 @@ const TelaLogin = () =>{
 
         try {
 
-            const response = await  Axios.post('http://localhost:3000/usuario/login', {username: username, password: password})
+            const response = await  Axios.post('http://localhost:3000/usuario/login', null, {params:{username, password}})
 
             //console.log(response.data.access_token);
 
