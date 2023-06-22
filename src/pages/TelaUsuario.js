@@ -17,8 +17,8 @@ const TelaUsuario = () =>{
 
     const head = {
         nome: 'Nome',
-        matricula: 'Matricula',
-        login: 'Login'
+        login: 'Login',
+        matricula: 'Matricula'
     }
 
     React.useEffect(()=>{
@@ -33,17 +33,18 @@ const TelaUsuario = () =>{
     return(
         <body>
             <header className='inicio'>
-            <Image src={imgIni} className = 'imgIni'></Image>
-            <IoMdExit  className=' exit'/>
+                <Image src={imgIni} className = 'imgIni'></Image>
+                <IoMdExit  className=' exit'/>
             </header>
 
             <main className='telaInicio'>
-
                 <div className='botoes'>
-                    <Button className='btUsuario' id='usuario'>Usuario</Button>{''}
+
+                    <Button className='btUsuario' id='usuario'>Usuário</Button>{''}
                     <Button className='btUsuario' id='produto' onClick={()=> navigate('/TelaProduto')}>Produto</Button>{''}
                     <Button className='btUsuario' id='Etiqueta'>Etiqueta</Button>{''}
                     <input className='btPesquisa' type='text' placeholder='Buscar...' ></input>
+                    
                     
                     <a class="botao-search" href="#">
                     <i class="fas fa-search"></i>
@@ -53,13 +54,16 @@ const TelaUsuario = () =>{
 
             <div className='inici'>
             <Table dadosUsuario = {dadosUsuario} head = {head}/>
-            </div>
             
+            </div>
+                <div className='btsBaixo'>
+                    <Button className='btBaixo' id='novoUsuario'>Novo</Button>
+                    <Button className='btBaixo' id='fechar' onClick={()=> navigate('/TelaInicio')}>Fechar</Button>
+                </div>
             </main>
 
             <footer>
-                <Button id='novoUsuario'>Novo</Button>
-                <Button id='fechar' onClick={()=> navigate('/TelaInicio')}>Fechar</Button>
+               
             </footer>
         </body>
     );

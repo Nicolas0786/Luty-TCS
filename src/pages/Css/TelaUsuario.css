@@ -9,9 +9,9 @@
     
   }
   .inici {
-    border-radius: 20px;
+    border-radius: 10px;
     width: 90%;
-    height: 700px;
+    height: 670px;
     background-repeat: no-repeat;
     background: #FCF4F4;
     background-size: 100%;
@@ -69,7 +69,7 @@
 }
 
 .btPesquisa{
-  border-radius: 10px;
+  border-radius: 6px;
   text-align: left;
   transform: translateX(80%);
   display: flex;
@@ -77,5 +77,26 @@
   height: 46px;
   margin-top: 1%;
   margin-bottom: 1%;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+  
+}
+
+.btsBaixo{
+	list-style: none;
+  display: flex;
+}
+.btBaixo{
+  display: flex;
+  margin: 0 1em; 
+  font-size: 20px;
+  width: 180px;
+  height: 46px;
+  transform: translateX(355%);
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+  margin-top: 2%;
+  margin-bottom: 1%;
+  background-color: #FCF4F4 !important;
+  color: black !important;
+  font-weight: bold !important;
 }
 

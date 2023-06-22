@@ -4,6 +4,10 @@ import {useNavigate} from 'react-router-dom';
 import Table from '../Table/TabelaProdutos';
 import Row from '../Table/TabelaProdutos';
 import Button from 'react-bootstrap/Button';
+import { IoMdExit } from "react-icons/io";
+import imgIni from '../imagens/ini.png';
+import Image from 'react-bootstrap/Image'
+import './Css/TelaProduto.css';
 
 
 
@@ -47,20 +51,34 @@ const TelaProduto = () =>{
     return(
         <div>
 
-            <header>
-
+            <header className='inicio'>
+                <Image src={imgIni} className = 'imgIni'></Image>
+                <IoMdExit  className=' exit'/>
             </header>
-            <Button id="TelaUsuario"  onClick={() => navigate('/TelaUsuario')}>Usuário</Button>
-            <Button id="TelaProduto"  onClick={() => navigate('/TelaProduto')}>Produto</Button> 
-            <Button id="TelaEtiqueta">Etiqueta</Button>
-            <div>
-                <Table dadosProdutos = {dadosProdutos} head={head} />
-            </div>
-            <Button>Grupo +</Button>
-            <Button>Ala +</Button>
 
-            <Button id="novoProduto"  onClick={() => navigate('/TelaCadastrarProduto')}>Produto +</Button> 
-            <Button onClick={() => navigate('/TelaInicio')}>Fechar</Button>
+            <main className='telaInicio'>
+                <div className='botoes'>
+
+                <Button className='btUsuario' id="TelaUsuario"  onClick={() => navigate('/TelaUsuario')}>Usuário</Button>
+                <Button className='btUsuario' id="TelaProduto"  onClick={() => navigate('/TelaProduto')}>Produto</Button> 
+                <Button className='btUsuario' id="TelaEtiqueta">Etiqueta</Button>
+                <input className='btPesquisa' type='text' placeholder='Buscar...' ></input>
+                </div>
+
+                <div className='inici'>
+                    <Table dadosProdutos = {dadosProdutos} head={head} />
+                </div>
+                <div className='btsBaixo'>
+                    
+                    <Button className='btGrupoAla'>Grupo +</Button>
+                    <Button className='btGrupoAla'>Ala +</Button>
+
+                    <Button className='btBaixoProduto' id="novoProduto"  onClick={() => navigate('/TelaCadastrarProduto')}>+ Produto</Button> 
+                    <Button className='btBaixoProduto' onClick={() => navigate('/TelaInicio')}>Fechar</Button>
+                </div>
+            </main>
+
+
         </div>
     );
 }
