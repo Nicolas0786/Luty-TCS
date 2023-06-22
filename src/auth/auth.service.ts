@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -14,13 +14,32 @@ export class AuthService {
         
         ) {}
 
-    async validarUsuario(login: string, senha: string): Promise<any> {
-        const usuario = await this.usuarioService.findOneBy(login);
-        if (usuario && bcrypt.compare(usuario.senha, senha)) {
-          const { senha, ...result } = usuario;
-          return result;
+    async validarUsuario(username: string, password: string): Promise<any> {
+        const usuario = await this.usuarioService.findOneBy(username);
+        //console.log('eu',usuario);
+
+        if(usuario == null){
+          throw new Error("Usuario não encontrado");
         }
-        return null;
+        if(username == usuario.login && await bcrypt.compare(password, usuario.senha)) {
+         /* const { senha, ...result } = usuario;
+          return result;*/
+          console.log('cert')
+          const payload = { permissao: usuario.permissao, username: usuario.login, sub: usuario.idUsuario };
+          console.log(payload)
+          //console.log(usuario)
+  
+          return {
+            access_token:  this.jwtService.sign(payload),
+          };
+
+        }else{
+          throw new UnauthorizedException();
+        }
+        //return null;
+
+      
+        
       }
       
       async login(user: any) {
@@ -32,7 +51,7 @@ export class AuthService {
         console.log(user)
 
         return {
-          access_token: this.jwtService.sign(payload),
+          access_token:  this.jwtService.sign(payload),
         };
       }
 }

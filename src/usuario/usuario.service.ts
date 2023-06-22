@@ -6,6 +6,10 @@ import { UpdateUsuarioDto } from './dto/update-usuario.dto';
 import { Usuario } from './entities/usuario.entity';
 import * as bcrypt from 'bcrypt';
 
+
+
+
+
 @Injectable()
 export class UsuarioService {
 
@@ -25,11 +29,14 @@ export class UsuarioService {
       throw new Error("Esse login já está sendo utilizado")
     }
 
+  
+
     user.nome = createUsuarioDto.nome;
     user.matricula = createUsuarioDto.matricula;
     user.login = createUsuarioDto.login;
-    user.senha = await bcrypt.hashSync(createUsuarioDto.senha, 10);
-    user.permissao = createUsuarioDto.permissao;
+   user.senha = await bcrypt.hashSync(createUsuarioDto.senha, 8);
+  
+   user.permissao = createUsuarioDto.permissao;
     
     
     if(createUsuarioDto.statusUsuario === undefined){
@@ -37,6 +44,7 @@ export class UsuarioService {
     }else{
       user.statusUsuario = createUsuarioDto.statusUsuario;
     }
+  
 
     return this.repositorioUsuario.save(user);
   }
@@ -133,7 +141,8 @@ export class UsuarioService {
   }
 
 
-  async findOneBy(login: string): Promise<Usuario | undefined> {
+  async findOneBy(username: string): Promise<Usuario | undefined> {
+    const login = username
     return await this.repositorioUsuario.findOne({
       select:{
         idUsuario: true,
@@ -146,5 +155,8 @@ export class UsuarioService {
       }
     }   
     );
+    
+    
+     
   }
 }

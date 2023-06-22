@@ -5,7 +5,8 @@ import { UpdateGrupoDto } from './dto/update-grupo.dto';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
+
 
 @Controller('grupo')
 @UseGuards(RolesGuard)
@@ -14,7 +15,7 @@ export class GrupoController {
 
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @Post('criar')
   create(@Body() createGrupoDto: CreateGrupoDto) {
     return this.grupoService.create(createGrupoDto);

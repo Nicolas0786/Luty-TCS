@@ -133,7 +133,7 @@ console.log("et",precoEtiqueta.idEtiqueta, "prod", precoEtiqueta.idProduto);
         console.log(etiq.idEtiqueta)
 
         try {
-          const ipp2 = 'http://'+etiq.ipEtiqueta+'/produto';
+          const ipp2:string = 'http://'+etiq.ipEtiqueta+'/produto';
          
         const tes = prod.descricaoProduto.toUpperCase() +","+ "R$ "+prod.preco +","+ etiq.hashEtiqueta; 
         console.log(tes);

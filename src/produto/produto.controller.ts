@@ -2,10 +2,11 @@ import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } fro
 import { ProdutoService } from './produto.service';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
 import { Roles } from '../auth/roles.decorator'
 import { Role } from '../auth/role.enum';
 import { RolesGuard } from 'src/auth/roles.guard';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('produto')
 @UseGuards(RolesGuard)
@@ -14,16 +15,16 @@ export class ProdutoController {
 
   //@Roles(Role.Gerente)
   //@Roles(Role.Coordenador)
-  //@UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @Post('cadastrar')
   create(@Body() createProdutoDto: CreateProdutoDto) {
     return this.produtoService.create(createProdutoDto);
   }
 
- // @Roles(Role.Gerente)
+  @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
- // @Roles(Role.Funcionario)
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Funcionario)
+  @UseGuards(AuthGuard)
   @Get('buscarTodos')
   findAll() {
     return this.produtoService.findAll();
@@ -32,7 +33,7 @@ export class ProdutoController {
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
   @Roles(Role.Funcionario)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @Get('buscarPorEan/:codigoEan')
   findOne(@Param('codigoEan') codigoEan: string) {
     return this.produtoService.findOne(codigoEan);
@@ -45,7 +46,7 @@ export class ProdutoController {
   
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @Patch('atualizar/:idProduto')
   update(@Param('idProduto') idProduto: number, @Body() updateProdutoDto: UpdateProdutoDto) {
     return this.produtoService.update(+ idProduto, updateProdutoDto);

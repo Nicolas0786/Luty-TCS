@@ -1,11 +1,12 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
+
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
 import { RolesGuard } from 'src/auth/roles.guard';
 import { AlaService } from './ala.service';
 import { CreateAlaDto } from './dto/create-ala.dto';
 import { UpdateAlaDto } from './dto/update-ala.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 @Controller('ala')
 @UseGuards(RolesGuard)
@@ -14,7 +15,7 @@ export class AlaController {
 
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
-  @UseGuards(JwtAuthGuard)
+  @UseGuards(AuthGuard)
   @Post('criar')
   create(@Body() createAlaDto: CreateAlaDto) {
     return this.alaService.create(createAlaDto);
