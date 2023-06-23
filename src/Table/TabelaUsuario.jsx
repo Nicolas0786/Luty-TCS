@@ -5,6 +5,7 @@ import { useContext } from "react";
 import Axios from 'axios';
 import './Css/TabelaUsuario.css';
 import {BiEdit} from "react-icons/bi";
+import {useNavigate} from 'react-router-dom';
 
 const Head = ({keys, head}) => {
     const tableHead = head || {}
@@ -22,6 +23,8 @@ const Head = ({keys, head}) => {
 const Row = ({record}) => {
     const keys = Object.keys(record)
     const {edt, setEdt} = useContext(MyContext);
+    const navigate = useNavigate();
+    
     return(
         
         
@@ -31,11 +34,11 @@ const Row = ({record}) => {
             }
             
             <Button  className="bteditarUsu" onClick={async () =>{
-                const dadosUsu = await Axios.get(`http://localhost:3000/usuario/buscarPorLogin/${record.login}`)
+               
+                navigate(`/TelaEditarUsuario/${record.login}`);
+                        console.log(record);
 
-                        //console.log(record);
-
-                        console.log(dadosUsu.data)
+                    
                        
             }}>Editar</Button>
             
