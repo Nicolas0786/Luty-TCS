@@ -25,8 +25,14 @@ export class UsuarioService {
 
     const loginExists = await this.repositorioUsuario.findOneBy({login: createUsuarioDto.login});
 
+    const matriculaExist = await this.repositorioUsuario.findOneBy({matricula: createUsuarioDto.matricula});
+
     if(loginExists){
       throw new Error("Esse login já está sendo utilizado")
+    }
+
+    if(matriculaExist){
+      throw new Error("Essa Matricula já está cadastrada");
     }
 
   
