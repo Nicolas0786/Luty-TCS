@@ -28,7 +28,7 @@ const Row = ({record}) => {
     return(
         
         
-        <tr key={record.id}> {''} 
+        <tr key={record.login}> {''} 
             {
                 keys.map(key => <td key={key}>{record[key]} </td>)
             }
@@ -36,7 +36,7 @@ const Row = ({record}) => {
             <Button  className="bteditarUsu" onClick={async () =>{
                
                 navigate(`/TelaEditarUsuario/${record.login}`);
-                        console.log(record);
+                        //console.log(record.login);
 
                     
                        

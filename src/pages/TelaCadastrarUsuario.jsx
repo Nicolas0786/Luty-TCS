@@ -69,6 +69,7 @@ const funcionario = ['Consultar Produto']
                 SetPermissao('');
                 SetSenha('')
                 SetConfirsenha('');
+                SetPermissoes('');
                 navigate('/TelaUsuario')
 
             }
@@ -78,8 +79,10 @@ const funcionario = ['Consultar Produto']
 
             if(error.response.status === 400){
                 window.alert("Preencha todos os Campos");
+            }else if(error.response.status === 403){
+                window.alert("Esse Login já está sendo utilizado");
             }else if(error.response.status === 500){
-                window.alert("Esse login já está sendo utilizado");
+                window.alert("Esse Matricula já está sendo utilizado");
             }
 
         }

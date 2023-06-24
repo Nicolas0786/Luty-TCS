@@ -28,7 +28,11 @@ const TelaProduto = () =>{
     React.useEffect(()=>{
         async function buscarDados(){
 
-            const axi = await Axios.get('http://localhost:3000/produto/buscarTodos')
+            const axi = await Axios.get('http://localhost:3000/produto/buscarTodos', {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                }
+            })
             //console.log(axi.data);
             
             setDadosProdutos(axi.data);
