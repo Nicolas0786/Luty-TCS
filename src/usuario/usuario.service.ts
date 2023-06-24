@@ -8,11 +8,8 @@ import * as bcrypt from 'bcrypt';
 
 
 
-
-
 @Injectable()
 export class UsuarioService {
-
 
   constructor(
     @InjectRepository(Usuario)
@@ -99,11 +96,15 @@ export class UsuarioService {
 
     const userOne = await this.repositorioUsuario.findOne({
       select: {
+        idUsuario: true,
         nome: true, 
         matricula: true,
         login: true,
         senha: true, 
         statusUsuario: true
+
+      }, relations:{
+        permissao: true,
 
       }, where:{
         idUsuario
@@ -111,6 +112,11 @@ export class UsuarioService {
     }) 
 
     //console.log(userOne);
+
+    const loginExists: Usuario = await this.repositorioUsuario.findOneBy({login: updateUsuarioDto.login});
+
+    const matriculaExist: Usuario = await this.repositorioUsuario.findOneBy({matricula: updateUsuarioDto.matricula});
+
 
     if(updateUsuarioDto.nome === undefined){
       user.nome = userOne.nome;
@@ -121,12 +127,18 @@ export class UsuarioService {
     if(updateUsuarioDto.matricula === undefined){
       user.matricula = userOne.matricula;
     }else{
+      if(matriculaExist){
+        throw new HttpException("Essa matricula já está sendo utilizada", HttpStatus.FORBIDDEN);
+      }
       user.matricula = updateUsuarioDto.matricula;
     }
 
     if(updateUsuarioDto.login === undefined){
       user.login = userOne.login;
     }else{
+      if(loginExists){
+        throw new HttpException("Esse login já está sendo utilizado", HttpStatus.FORBIDDEN);
+      }
       user.login = updateUsuarioDto.login;
     }
 
@@ -142,12 +154,18 @@ export class UsuarioService {
       user.statusUsuario = updateUsuarioDto.statusUsuario;
     }
 
+    if(updateUsuarioDto.permissao === undefined){
+      user.permissao = userOne.permissao;
+    }else{
+      user.permissao = updateUsuarioDto.permissao;
+    }
+
     return this.repositorioUsuario.update(idUsuario, user);
   }
 
 
   async findOneBy(username: string): Promise<Usuario | undefined> {
-    const login = username
+    const login: string = username
     return await this.repositorioUsuario.findOne({
       select:{
         idUsuario: true,
