@@ -7,6 +7,7 @@ import { RolesGuard } from 'src/auth/roles.guard';
 import { Roles } from 'src/auth/roles.decorator';
 import { Role } from 'src/auth/role.enum';
 import { PrecoEtiqueta } from './dto/preco-etiqueta.dto';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 
 @Controller('etiqueta')
@@ -14,32 +15,42 @@ import { PrecoEtiqueta } from './dto/preco-etiqueta.dto';
 export class EtiquetaController {
   constructor(private readonly etiquetaService: EtiquetaService) {}
 
-  //@Roles(Role.Gerente)
-  //@UseGuards(JwtAuthGuard)
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(AuthGuard)  
   @Post('cadastrar')
   create(@Body() createEtiquetaDto: CreateEtiquetaDto) {
-    return this.etiquetaService.create(createEtiquetaDto);
+    return this.etiquetaService.cadastrar(createEtiquetaDto);
   
   }
   
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(AuthGuard)  
   @Get('buscarTodas')
   findAll() {
     return this.etiquetaService.findAll();
   }
 
   @Roles(Role.Gerente)
-  //@UseGuards(JwtAuthGuard)
+  @Roles(Role.Coordenador)
+  @UseGuards(AuthGuard) 
   @Get('buscarPorNome/:nomeEtiqueta')
   findOne(@Param('nomeEtiqueta') nomeEtiqueta: string) {
     return this.etiquetaService.findOne(nomeEtiqueta);
   }
 
-  
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(AuthGuard) 
   @Patch('atualizar/:idEtiqueta')
   update(@Param('idEtiqueta') idEtiqueta: number, @Body() updateEtiquetaDto: UpdateEtiquetaDto) {
     return this.etiquetaService.update(+idEtiqueta, updateEtiquetaDto);
   }
 
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(AuthGuard)  
   @Post('alterar')
   manda(@Body() precoEtiqueta: PrecoEtiqueta){
  return this.etiquetaService.mandarPrecoEtiqueta(precoEtiqueta);

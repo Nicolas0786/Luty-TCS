@@ -1,35 +1,41 @@
-import internal from "stream";
-import { IsNotEmpty} from "class-validator";
+import { IsNotEmpty, IsNumber, IsNegative} from "class-validator";
 import { Grupo } from "src/grupo/entities/grupo.entity";
 import { Ala } from "src/ala/entities/ala.entity";
-import { Etiqueta } from "src/etiqueta/entities/etiqueta.entity";
 import { Usuario } from "src/usuario/entities/usuario.entity";
 
 export class CreateProdutoDto {
 
+    
+    @IsNumber()
+    @IsNotEmpty()
+    codigoEan: number;
 
-    codigoEan: string;
-
-
+    @IsNotEmpty()
     descricaoProduto: string;
     
     
+    @IsNumber()
+    @IsNotEmpty()
     quantidade: number;
     
+   
+    @IsNumber()
+    @IsNotEmpty()
+    custo: number;
     
-    custo: string;
-    
-    
+    @IsNumber()
+    @IsNotEmpty()
     porcentagem: number
 
     statusProduto: number;
 
-    
+    @IsNotEmpty()
     grupos: Grupo;
 
-    
+    @IsNotEmpty()
     alas: Ala;
 
+    @IsNotEmpty()
     usuario: Usuario;
 
 }

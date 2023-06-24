@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
@@ -23,19 +23,17 @@ export class UsuarioService {
 
     const user = new Usuario;
 
-    const loginExists = await this.repositorioUsuario.findOneBy({login: createUsuarioDto.login});
+    const loginExists: Usuario = await this.repositorioUsuario.findOneBy({login: createUsuarioDto.login});
 
-    const matriculaExist = await this.repositorioUsuario.findOneBy({matricula: createUsuarioDto.matricula});
+    const matriculaExist: Usuario = await this.repositorioUsuario.findOneBy({matricula: createUsuarioDto.matricula});
 
     if(loginExists){
-      throw new Error("Esse login já está sendo utilizado")
+      throw new HttpException("Esse login já está sendo utilizado", HttpStatus.FORBIDDEN);
     }
 
     if(matriculaExist){
       throw new Error("Essa Matricula já está cadastrada");
     }
-
-  
 
     user.nome = createUsuarioDto.nome;
     user.matricula = createUsuarioDto.matricula;
@@ -44,14 +42,12 @@ export class UsuarioService {
   
    user.permissao = createUsuarioDto.permissao;
     
-    
     if(createUsuarioDto.statusUsuario === undefined){
       user.statusUsuario = 0;
     }else{
       user.statusUsuario = createUsuarioDto.statusUsuario;
     }
   
-
     return this.repositorioUsuario.save(user);
   }
 
@@ -84,10 +80,13 @@ export class UsuarioService {
   buscarLogin(login: string){
     return this.repositorioUsuario.findOne({
       select: {
+        idUsuario: true,
         nome: true, 
         matricula: true,
         login: true,
-      }, where:{
+      },relations:{
+        permissao: true,
+      },where:{
         login,
         statusUsuario:0
       }
@@ -96,7 +95,7 @@ export class UsuarioService {
 
   async update(idUsuario: number, updateUsuarioDto: UpdateUsuarioDto) {
 
-    const user = new Usuario;
+    const user = new Usuario();
 
     const userOne = await this.repositorioUsuario.findOne({
       select: {

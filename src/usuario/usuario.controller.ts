@@ -13,14 +13,13 @@ import { AuthGuard } from 'src/auth/auth.guard';
 
 
 @Controller('usuario')
-//@UseGuards(RolesGuard)
+@UseGuards(RolesGuard)
 export class UsuarioController {
   
   constructor(
     private readonly usuarioService: UsuarioService,
     private authService: AuthService,
  
-
     ) {}
 
   
@@ -33,28 +32,24 @@ export class UsuarioController {
   //return this.authService.login(req.user);
   return this.authService.validarUsuario(req.query.username, req.query.password);
   
-
-
   }
  
 
-  //@Roles(Role.Gerente)
-  //@Roles(Role.Coordenador)
+  @Roles(Role.Gerente)
   @UseGuards(AuthGuard)
   @Post('criar')
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuarioService.create(createUsuarioDto);
   }
 
-  @Roles(Role.Coordenador)
   @Roles(Role.Gerente)
   @UseGuards(AuthGuard)
-  
   @Get('buscarTodos')
   findAll() {
     return this.usuarioService.findAll();
   }
-  @UseGuards(AuthGuard)
+
+
   @Roles(Role.Gerente)
   @UseGuards(AuthGuard)
   @Get('buscarPorNome/:nome')

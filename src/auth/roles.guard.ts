@@ -27,15 +27,15 @@ export class RolesGuard implements CanActivate {
     //return requiredRoles.some((role) => [Role.Funcionario].includes(role));
 
     const { headers } = context.switchToHttp().getRequest();
-    console.log("eu", headers.authorization)
+    //console.log("eu", headers.authorization)
 
     const decode = jwt_decode(headers.authorization);
-    console.log(decode);
+    //console.log(decode);
 
     const {permissao}:any = jwt_decode(headers.authorization);
-    console.log(permissao)
-    const teste = permissao;
-    return requiredRoles.some((role) => teste.cargo?.includes(role));
+    //console.log(permissao)
+    const per = permissao;
+    return requiredRoles.some((role) => per.cargo?.includes(role));
 
     //return requiredRoles.some((role) => [Role.Adm].includes(role));
 

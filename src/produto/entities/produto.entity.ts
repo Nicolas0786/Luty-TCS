@@ -1,21 +1,18 @@
-import internal from 'stream';
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Grupo } from 'src/grupo/entities/grupo.entity';
 import { Ala } from 'src/ala/entities/ala.entity';
-import { Etiqueta } from 'src/etiqueta/entities/etiqueta.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
-//import { Role } from 'src/role.enum';
+
 
 
 @Entity()
 export class Produto {
-  //roles: Role[];
-
   @PrimaryGeneratedColumn('increment')
   idProduto: number;
 
   @Column('varchar', { length: 13 })
-  codigoEan: string;
+  codigoEan: number;
 
   @Column('varchar', { length: 150 })
   descricaoProduto: string;
@@ -27,7 +24,7 @@ export class Produto {
   preco: number;
 
   @Column('decimal', { precision: 12, scale: 2 })
-  custo: string;
+  custo: number;
 
   @Column()
   porcentagem: number;
@@ -42,8 +39,8 @@ export class Produto {
   //alas: Ala;
 
   @ManyToOne(() => Ala)
-@JoinColumn({ name: "idAla" })
-alas: Ala;
+  @JoinColumn({ name: "idAla" })
+  alas: Ala;
 
   @ManyToOne(() => Usuario, (usuario)=> usuario.produtos)
   usuario: Usuario;

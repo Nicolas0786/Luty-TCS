@@ -1,5 +1,5 @@
 /* eslint-disable prefer-const */
-import { Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { response } from 'express';
 import { createQuery } from 'mysql2/typings/mysql/lib/Connection';
@@ -24,18 +24,32 @@ export class ProdutoService {
   async create(createProdutoDto: CreateProdutoDto) {
 
     if(!Number(createProdutoDto.codigoEan)){
-      throw new Error("So pode conter número no campo Código Ean");
+      throw new HttpException("So pode conter número no campo Código Ean", HttpStatus.BAD_REQUEST);
+    }else if(createProdutoDto.codigoEan < 0){
+      throw new HttpException("O codigo ean não pode ser negativo", HttpStatus.FORBIDDEN);
+    }else if(createProdutoDto.codigoEan.toString().length > 13){
+      throw new HttpException("O codigo ean não pode conter mais de 13 caracteres", HttpStatus.FORBIDDEN);
     }
 
-    const CodigoEanExists = await this.repositorioProduto.findOneBy({
+    if(createProdutoDto.custo <= 0 ){
+      throw new HttpException("O custo não pode ser negativo e nem zerado", HttpStatus.FORBIDDEN);
+    }
+
+    if(createProdutoDto.porcentagem <= 0){
+      throw new HttpException("A porcentagem não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
+    }
+    if(createProdutoDto.quantidade <=0){
+      throw new HttpException("A quantidade não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
+    }
+
+    const CodigoEanExists:Produto = await this.repositorioProduto.findOneBy({
       
         codigoEan: createProdutoDto.codigoEan
       
     }); 
 
     if(CodigoEanExists){
-     throw new Error("Produto ja existente");
-     //response.statusMessage = "Produto ja existente";
+     throw new HttpException("Já tem produto cadastrado com esse codigo Ean", HttpStatus.FORBIDDEN);
     }
 
     const produto = new Produto();
@@ -44,12 +58,9 @@ export class ProdutoService {
   
     let novaPorcentagem: number = porcen/100;
 
-  
-    let precoCusto = createProdutoDto.custo;
+    let precoCusto:number = createProdutoDto.custo;
     
-  
-    let precoo = (parseFloat(precoCusto) * novaPorcentagem) + parseFloat(precoCusto);
-
+    let precoo:number = precoCusto * novaPorcentagem + precoCusto;
 
     produto.codigoEan = createProdutoDto.codigoEan;
     produto.descricaoProduto = createProdutoDto.descricaoProduto;
@@ -69,25 +80,13 @@ export class ProdutoService {
       produto.statusProduto = createProdutoDto.statusProduto
     }
     
-    console.log(createProdutoDto.grupos)
-
-    
-
-    //console.log("novaPorce", novaPorcentagem);
-    //console.log("custo", precoCusto)
-    //console.log("preco", precoo)
+    this.repositorioProduto.save(produto)
 
 
-   return this.repositorioProduto.save(produto);
+   return new HttpException("Produto cadastrado com sucesso", HttpStatus.OK);
   }
 
-  /*findAll(){
-    const query = createQuery('select idproduto from produto')
-    query.start
-  }*/
 
-
-    
     findAll():Promise<Produto[]> {
       return   this.repositorioProduto.find({
         
@@ -101,6 +100,7 @@ export class ProdutoService {
           },
           relations: {
             grupos:true,
+            alas: true,
          },
       })
 
@@ -108,45 +108,8 @@ export class ProdutoService {
     }
 
 
-    tes(){
 
-      let ts = {} = this.repositorioProduto.find({
-        
-        select:{
-          idProduto: true,
-          codigoEan: true,
-          descricaoProduto: true,
-          quantidade: true,
-          preco: true,
-
-        },
-        relations: {
-          grupos:true,
-       },
-    })
-
-    console.log(ts)
-    }
-
-  /*findAll() :Promise<Produto[]>  {
-    /*return this.repositorioProduto.find({
-      select: {
-
-        idProduto: true,
-        codigoEan: true,
-        descricaoProduto: true,
-        //grupo: true,
-        quantidade: true,
-        preco: true
-        
-      },
-    });
-
-    
-  }*/
-
-
-  findOne(codigoEan: string): Promise<Produto> {
+  findOne(codigoEan: number): Promise<Produto> {
     return this.repositorioProduto.findOneBy({codigoEan});
   }
 
@@ -173,56 +136,93 @@ export class ProdutoService {
     })
   }
   
-  async update(idProduto: number, updateProdutoDto: UpdateProdutoDto) {
 
+  async update(idProduto: number, updateProdutoDto: UpdateProdutoDto) {
 
     const produto = new Produto();
 
-    const coluns = await this.repositorioProduto.findOne({
+    const coluns:Produto = await this.repositorioProduto.findOne({
       select: {
+        codigoEan: true,
         descricaoProduto: true,
-        //grupo: true,
-       // ala: true, 
         quantidade: true,
         custo: true,
         porcentagem: true,
         statusProduto: true,
        
+       }, relations: {
+        grupos: true,
+        alas: true,
+
        }, where: {
           idProduto
       }
     })
 
 
-console.log(coluns);
+    const codigoEanExists: Produto = await this.repositorioProduto.findOneBy({
+     codigoEan: updateProdutoDto.codigoEan
+    });
+
+//console.log(coluns);
+
+if(updateProdutoDto.codigoEan === undefined){
+  produto.codigoEan = coluns.codigoEan;
+}else{
+  if(codigoEanExists){
+    throw new HttpException("Esse codigo ean já esta sendo utilizado", HttpStatus.BAD_REQUEST);
+  }
+  if(!Number(updateProdutoDto.codigoEan)){
+    throw new HttpException("So pode conter número no campo Código Ean", HttpStatus.BAD_REQUEST);
+  }else if(updateProdutoDto.codigoEan < 0){
+    throw new HttpException("O codigo ean não pode ser negativo", HttpStatus.FORBIDDEN);
+  }else if(updateProdutoDto.codigoEan.toString().length > 13){
+    throw new HttpException("O codigo ean não pode conter mais de 13 caracteres", HttpStatus.FORBIDDEN);
+  }
+
+produto.codigoEan = updateProdutoDto.codigoEan;
+
+}
+
 
 if(updateProdutoDto.descricaoProduto === undefined){
   produto.descricaoProduto = coluns.descricaoProduto;
-  //console.log(produto.descricaoProduto);
 
 }else{
   produto.descricaoProduto = updateProdutoDto.descricaoProduto;
 
-}if(updateProdutoDto.quantidade === undefined){
+}
+if(updateProdutoDto.quantidade === undefined){
   produto.quantidade = coluns.quantidade;
-  //console.log('yes')
 
 }else{
+  if(updateProdutoDto.quantidade <=0){
+    throw new HttpException("A quantidade não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
+  }
   produto.quantidade = updateProdutoDto.quantidade;
 
-}if(updateProdutoDto.custo === undefined){
+}
+if(updateProdutoDto.custo === undefined){
   produto.custo = coluns.custo;
 
 }else{
+  if(updateProdutoDto.custo <= 0 ){
+    throw new HttpException("O custo não pode ser negativo e nem zerado", HttpStatus.FORBIDDEN);
+  }
   produto.custo = updateProdutoDto.custo;
 
-}if(updateProdutoDto.porcentagem === undefined){
+}
+if(updateProdutoDto.porcentagem === undefined){
   produto.porcentagem = coluns.porcentagem
 
 }else{
+  if(updateProdutoDto.porcentagem <= 0){
+    throw new HttpException("A porcentagem não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
+  }
   produto.porcentagem = updateProdutoDto.porcentagem;
 
-}if(updateProdutoDto.statusProduto === undefined){
+}
+if(updateProdutoDto.statusProduto === undefined){
   produto.statusProduto = coluns.statusProduto
 
 }else{
@@ -230,27 +230,32 @@ if(updateProdutoDto.descricaoProduto === undefined){
 
 }
 
-    console.log(produto.descricaoProduto);
-   // console.log(produto.ala);
-    //console.log(produto.grupo);
+if(updateProdutoDto.alas === undefined){
+  produto.alas = coluns.alas;
+}else{
+  produto.alas = updateProdutoDto.alas;
+}
 
+if(updateProdutoDto.grupos === undefined){
+  produto.grupos = coluns.grupos;
+}else{
+  produto.grupos = updateProdutoDto.grupos;
+}
 
-
+    
     let porcen: number = produto.porcentagem;
   
     let novaPorcentagem: number = porcen/100;
 
-    let precoCusto = produto.custo;
+    let precoCusto: number = produto.custo;
       
-    let precoo = (parseFloat(precoCusto) * novaPorcentagem) + parseFloat(precoCusto);
+    let precoo: number = precoCusto * novaPorcentagem + precoCusto;
 
     produto.preco = precoo;
 
-    console.log(produto.preco)
+    this.repositorioProduto.update(idProduto, produto);
 
-
-
-    return this.repositorioProduto.update(idProduto, produto);
+    return new HttpException("Produto alterado com sucesso", HttpStatus.OK);
   }
 
 

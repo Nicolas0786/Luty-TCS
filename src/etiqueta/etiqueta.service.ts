@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { ForbiddenException, Injectable, Logger } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AxiosError, AxiosResponse } from 'axios';
 import { catchError, lastValueFrom, map, Observable } from 'rxjs';
@@ -18,6 +18,7 @@ import { response } from 'express';
 
 @Injectable()
 export class EtiquetaService {
+  
   private readonly logger = new Logger(EtiquetaService.name);
   constructor(
     @InjectRepository(Etiqueta)
@@ -30,16 +31,14 @@ export class EtiquetaService {
   ){}
   
 
-  async create(createEtiquetaDto: CreateEtiquetaDto) {
+  async cadastrar(createEtiquetaDto: CreateEtiquetaDto) {
 
     const etiq = new Etiqueta();
 
     try {
-      const end = createEtiquetaDto.ipEtiqueta;
+      const end:string = createEtiquetaDto.ipEtiqueta;
 
-      const ipp = 'http://'+end;
-
-      const ipp2 = 'http://'+end+'/protect';
+      const ipp2:string = 'http://'+end+'/protect';
       //console.log(ipp2)
     
     //console.log(ipp);
@@ -51,17 +50,10 @@ export class EtiquetaService {
     console.log('Comunicação concluida')
     
     const chave = await bcrypt.hashSync(createEtiquetaDto.ipEtiqueta, 1);
-    console.log(chave)
+    //console.log(chave)
     const response = await this.http.post(ipp2, chave.toString()).toPromise();
     etiq.hashEtiqueta = chave.toString();
-    console.log(response.data);
-
-   }
-    } catch (error) {
-      console.log(error)
-      throw new Error('Verifique a comunicação com a Etiqueta');
-    }
-      
+    //console.log(response.data);
     etiq.nomeEtiqueta = createEtiquetaDto.nomeEtiqueta;
     etiq.corredor = createEtiquetaDto.corredor;
     etiq.pratilheira = createEtiquetaDto.pratilheira;
@@ -74,11 +66,19 @@ export class EtiquetaService {
 
     etiq.usuario = createEtiquetaDto.usuario;
 
+   }
+    } catch (error) {
+      console.log(error)
+      throw new HttpException('Verifique a comunicação com a Etiqueta', HttpStatus.FORBIDDEN);
+    }
 
-    return this.repositorioEtiqueta.save(etiq);
+    this.repositorioEtiqueta.save(etiq);
+
+    return new HttpException('Etiqueta Cadastrada com Sucesso', HttpStatus.OK);
   }
 
-  findAll():Promise<Etiqueta[]>{
+
+  findAll():Promise<Etiqueta[] | undefined>{
     return this.repositorioEtiqueta.find({
       select: {
         idEtiqueta: true,
@@ -103,49 +103,106 @@ export class EtiquetaService {
 
   async update(idEtiqueta: number, updateEtiquetaDto: UpdateEtiquetaDto) {
 
-    const oneEtiqueta = await this.repositorioEtiqueta.findOne({
+    const etiqueta = new Etiqueta();
+    const oneEtiqueta: Etiqueta = await this.repositorioEtiqueta.findOne({
       select:{
         ipEtiqueta: true,
         nomeEtiqueta: true,
         statusEtiqueta: true,
+        corredor: true,
+        pratilheira: true
+
       }, where:{
         idEtiqueta
       }
-    })
+    });
 
-    return `This action updates a #${idEtiqueta} etiqueta`;
+    try {
+      
+    if(updateEtiquetaDto.ipEtiqueta === undefined){
+      etiqueta.ipEtiqueta = oneEtiqueta.ipEtiqueta
+    }else{
+
+      try {
+        
+        const ipp2:string = 'http://'+updateEtiquetaDto.ipEtiqueta;+'/protect';
+
+        const response = await this.http.get(ipp2).toPromise();
+
+      if(response.status === 200){
+        etiqueta.ipEtiqueta = updateEtiquetaDto.ipEtiqueta;
+      }
+
+      } catch (error) {
+        console.log(error, "erro ao atualizar")
+        throw new HttpException('Verifique a comunicação com a Etiqueta', HttpStatus.FORBIDDEN);
+      }
+      
+    }
+
+    if(updateEtiquetaDto.nomeEtiqueta === undefined){
+      etiqueta.nomeEtiqueta = oneEtiqueta.nomeEtiqueta;
+    }else{
+      etiqueta.nomeEtiqueta = updateEtiquetaDto.nomeEtiqueta;
+    }
+
+    if(updateEtiquetaDto.statusEtiqueta === undefined){
+      etiqueta.statusEtiqueta = oneEtiqueta.statusEtiqueta;
+    }else{
+      etiqueta.statusEtiqueta = updateEtiquetaDto.statusEtiqueta;
+    }
+
+    if(updateEtiquetaDto.corredor === undefined){
+      etiqueta.corredor = oneEtiqueta.corredor;
+    }else{
+      etiqueta.corredor = updateEtiquetaDto.corredor;
+    }
+
+    if(updateEtiquetaDto.pratilheira === undefined){
+      etiqueta.pratilheira = oneEtiqueta.pratilheira;
+    }else{
+      etiqueta.pratilheira = updateEtiquetaDto.pratilheira;
+    }
+
+  } catch (error) {
+      throw new HttpException("Não foi possivel atualizar as informações da Etiqueta", HttpStatus.FORBIDDEN);
+  }
+
+  this.repositorioEtiqueta.update(idEtiqueta, etiqueta);
+
+    return new HttpException("Etiqueta Atualizada com Sucesso", HttpStatus.OK);
   }
 
 
-
-
+  
   async mandarPrecoEtiqueta(precoEtiqueta: PrecoEtiqueta){
 
-console.log("et",precoEtiqueta.idEtiqueta, "prod", precoEtiqueta.idProduto);
+      //console.log("et",precoEtiqueta.idEtiqueta, "prod", precoEtiqueta.idProduto);
 
-        const etiq = await this.repositorioEtiqueta.findOneBy({
+        const etiq: Etiqueta = await this.repositorioEtiqueta.findOneBy({
           idEtiqueta: precoEtiqueta.idEtiqueta
         });
 
-       const prod = await this.repositorioProduto.findOneBy({
+       const prod: Produto = await this.repositorioProduto.findOneBy({
           idProduto: precoEtiqueta.idProduto
         })
-        console.log(etiq.idEtiqueta)
+        //console.log(etiq.idEtiqueta)
 
         try {
           const ipp2:string = 'http://'+etiq.ipEtiqueta+'/produto';
          
-        const tes = prod.descricaoProduto.toUpperCase() +","+ "R$ "+prod.preco +","+ etiq.hashEtiqueta; 
-        console.log(tes);
+        const produto: string = prod.descricaoProduto.toUpperCase() +","+ "R$ "+prod.preco +","+ "Ean: "+prod.codigoEan +","+ etiq.hashEtiqueta; 
+        //console.log(produto);
 
-        const response = await this.http.post(ipp2, tes).toPromise()
+        const response = await this.http.post(ipp2, produto).toPromise()
 
        // const response = await Sttp.withHeaders({'}).post(ipp2, tes.toString())
-    return response.data;
+        return response.data;
         
-        console.log(response.data);
+        //console.log(response.data);
         } catch (error) {
-          throw new(error);
+          console.log(error);
+          throw new HttpException("Não foi possivel enviar o produto para a etiqueta", HttpStatus.FORBIDDEN);
         }
 
   }

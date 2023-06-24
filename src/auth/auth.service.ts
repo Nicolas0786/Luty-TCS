@@ -42,7 +42,7 @@ export class AuthService {
         
       }
       
-      async login(user: any) {
+      /*async login(user: any) {
         // TODO aqui é necessário ajustar o payload para ter os dados que vão ser necessário lá no RolesGuard 
         // por exemplo
 
@@ -53,5 +53,5 @@ export class AuthService {
         return {
           access_token:  this.jwtService.sign(payload),
         };
-      }
+      }*/
 }

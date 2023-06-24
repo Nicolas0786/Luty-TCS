@@ -16,7 +16,7 @@ export class AlaService {
 
   create(createAlaDto: CreateAlaDto) {
 
-    const Alaa = new Ala;
+    const Alaa = new Ala();
 
     Alaa.descricao = createAlaDto.descricao;
     return this.repositorioAla.save(Alaa);
@@ -24,10 +24,6 @@ export class AlaService {
 
   findAll() {
     return this.repositorioAla.find();
-  }
-
-  findOne(id: number) {
-    return `This action returns a #${id} ala`;
   }
 
   update(idAla: number, updateAlaDto: UpdateAlaDto) {

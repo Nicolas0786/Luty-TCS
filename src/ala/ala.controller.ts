@@ -26,12 +26,6 @@ export class AlaController {
     return this.alaService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.alaService.findOne(+id);
-  }
-
-  
   @Patch('atualizar/:idAla')
   update(@Param('idAla') idAla: number, @Body() updateAlaDto: UpdateAlaDto) {
     return this.alaService.update(+idAla, updateAlaDto);

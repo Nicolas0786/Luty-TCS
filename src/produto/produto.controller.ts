@@ -13,17 +13,15 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
-  //@Roles(Role.Gerente)
-  //@Roles(Role.Coordenador)
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
   @UseGuards(AuthGuard)
   @Post('cadastrar')
   create(@Body() createProdutoDto: CreateProdutoDto) {
     return this.produtoService.create(createProdutoDto);
   }
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
-  @Roles(Role.Funcionario)
+  @Roles(Role.Gerente, Role.Coordenador, Role.Funcionario)
   @UseGuards(AuthGuard)
   @Get('buscarTodos')
   findAll() {
@@ -35,7 +33,7 @@ export class ProdutoController {
   @Roles(Role.Funcionario)
   @UseGuards(AuthGuard)
   @Get('buscarPorEan/:codigoEan')
-  findOne(@Param('codigoEan') codigoEan: string) {
+  findOne(@Param('codigoEan') codigoEan: number) {
     return this.produtoService.findOne(codigoEan);
   }
 
@@ -51,11 +49,6 @@ export class ProdutoController {
   update(@Param('idProduto') idProduto: number, @Body() updateProdutoDto: UpdateProdutoDto) {
     return this.produtoService.update(+ idProduto, updateProdutoDto);
   }
-
-@Get('tes')
-tes(){
-  return this.produtoService.tes();
-}
 
   
 }
