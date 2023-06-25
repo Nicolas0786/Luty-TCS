@@ -32,12 +32,13 @@ function App() {
   const [editarr, setEditarr] = useState([]);
   const [etq, setEtq] = useState([]);
 
+  const [logado, setLogado] = useState(Boolean);
+
+
   
   return (
-    <MyContext.Provider value={{ etq, setEtq, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco }}>
-
-    
-
+    <>
+    <MyContext.Provider value={{logado, setLogado, etq, setEtq, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco }}>
       <BrowserRouter>
         <Routes>
           <Route path='/TelaProduto' element={<TelaProduto />} />
@@ -53,6 +54,8 @@ function App() {
         </Routes>
       </BrowserRouter>
     </MyContext.Provider>
+
+    </>
     
     
   );

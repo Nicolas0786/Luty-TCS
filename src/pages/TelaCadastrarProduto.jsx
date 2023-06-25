@@ -2,7 +2,7 @@
 
 import Axios from "axios";
 import {useNavigate} from 'react-router-dom';
-import React, {useContext, useState} from 'react';
+import React, {useContext, useState, useEffect} from 'react';
 import MyContext from "../contexts/myContext";
 import Button from 'react-bootstrap/Button';
 
@@ -10,7 +10,8 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import FormSelect from 'react-bootstrap/esm/FormSelect';
-import './Css/TelaCadastrarProduto.css'
+import './Css/TelaCadastrarProduto.css';
+
 
 
 
@@ -18,18 +19,37 @@ import './Css/TelaCadastrarProduto.css'
 const TelaCadastrarProduto = ()=>{
 
     const navigate = useNavigate();
-    const {editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem} = useContext(MyContext);
+    const {logado, setLogado, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem} = useContext(MyContext);
 
     //window.location = window.location;
     const [test, setTest] = useState([]);
     const [test1, setTest1] = useState([]);
     //console.log(editarr);
 
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+
+    if(logado === false && !token){
+        //console.log("não estou logado e não tem token")
+        //console.log(logado)
+        navigate('/TelaLogin');
+    }
+
+    },[]);
+
     React.useEffect(()=>{
         async function buscarDados(){
     
-            const grupos = await Axios.get('http://localhost:3000/grupo/buscarTodos')
-            const alas = await Axios.get('http://localhost:3000/ala/buscarTodas')
+            const grupos = await Axios.get('http://localhost:3000/grupo/buscarTodos', {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                }
+            })
+            const alas = await Axios.get('http://localhost:3000/ala/buscarTodas', {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                }
+            })
             //console.log(axi.data);
             
             setTest(grupos.data);
@@ -60,9 +80,13 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
          if(!Number(codigoEan)){
             window.alert("So pode conter números no campo Código Ean");
           }try {
-            await Axios.post("http://localhost:3000/produto/cadastrar", dadosFront)
+            await Axios.post("http://localhost:3000/produto/cadastrar", dadosFront, {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                }
+            })
           // console.log(post)        
-           navigate('/TelaProduto')
+           navigate('/TelaProduto');
          } catch (error) {
             console.log(error);
             if(error.response.status === 500){

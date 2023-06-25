@@ -1,11 +1,12 @@
 import Axios  from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Table from '../Table/TabelaUsuario';
 import {useNavigate} from 'react-router-dom';
 import {BiEdit} from "react-icons/bi";
 import {AiOutlineSetting} from "react-icons/ai";
 import './Css/TelaUsuario.css';
+import MyContext from '../contexts/myContext';
 
 
 
@@ -14,12 +15,24 @@ const TelaUsuario = () =>{
     const [dadosUsuario, setDadosUsuario] = useState([]);
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
+    const {logado, setLogado} =useContext(MyContext);
 
     const head = {
         nome: 'Nome',
         matricula: 'Matricula',
         login: 'Login'
     }
+
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+        
+        if(logado === false && !token){
+            //console.log("não estou logado e não tem token")
+            //console.log(logado)
+            navigate('/TelaLogin');
+        }
+        
+        },[]);
 
     React.useEffect(()=>{
         async function buscarUsuarios(){

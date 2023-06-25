@@ -1,17 +1,28 @@
 import Axios  from 'axios';
-import React, { useState } from 'react';
+import React, { useState, useEffect, useContext} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Table from '../Table/TabelaProdutos';
 import Row from '../Table/TabelaProdutos';
 import Button from 'react-bootstrap/Button';
-
-
+import MyContext from '../contexts/myContext';
 
 
 const TelaProduto = () =>{
 
     const navigate = useNavigate();
     const[dadosProdutos, setDadosProdutos] = useState([]);
+    const {logado, setLogado} =useContext(MyContext);
+
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+        
+        if(logado === false && !token){
+            //console.log("não estou logado e não tem token")
+            //console.log(logado)
+            navigate('/TelaLogin');
+        }
+        
+        },[]);
 
     const head = {
         idProduto: 'Id',
@@ -21,8 +32,6 @@ const TelaProduto = () =>{
         preco: 'Preço R$',
         grupo: 'Grupo'
         
-        
-
     }
 
     React.useEffect(()=>{

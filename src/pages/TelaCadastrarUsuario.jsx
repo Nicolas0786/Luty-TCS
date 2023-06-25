@@ -1,5 +1,5 @@
 import './Css/TelaCadastrarUsuario.css';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
@@ -8,6 +8,8 @@ import Button from 'react-bootstrap/esm/Button';
 
 import Axios from "axios";
 import {useNavigate} from 'react-router-dom';
+import MyContext from "../contexts/myContext";
+import {useContext } from 'react';
 
 
 const TelaCadastrarUsuario = () =>{
@@ -23,10 +25,23 @@ const TelaCadastrarUsuario = () =>{
     const [confirsenha, SetConfirsenha] = useState('');
     const [permissao, SetPermissao] = useState('');
     
+    const {logado, setLogado} =useContext(MyContext);
 
 const gerente = ['Cadastro Usuario', 'Cadastro Etiqueta', 'Cadastrar Produto', 'Consultar Produto', 'Atualizar Etiqueta', 'Cadastrar Grupo/Ala', 'Consultar Usuarios'];
 const coordenador = ['Atualizar Etiqueta', 'Cadastro Produto', 'Cadastro Grupo/Ala', 'Consultar Produto']
-const funcionario = ['Consultar Produto']
+const funcionario = ['Consultar Produto'];
+
+useEffect(() =>{
+    const token = sessionStorage.getItem('token');
+
+if(logado === false && !token){
+    //console.log("não estou logado e não tem token")
+    //console.log(logado)
+    navigate('/TelaLogin');
+}
+
+},[]);
+
 
     const handleChange = (e) =>{
          //console.log(e.target.name)

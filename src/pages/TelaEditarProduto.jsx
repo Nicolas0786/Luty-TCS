@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import MyContext from "../contexts/myContext";
 import Axios from 'axios';
@@ -15,22 +15,31 @@ const TelaEditarProduto = () => {
     const navigate = useNavigate();
     const {id} = useParams();
 
-
-
-    const {editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
+    const {logado, setLogado, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
  
 //console.log(editarr);
+useEffect(() =>{
+    const token = sessionStorage.getItem('token');
+
+if(logado === false && !token){
+    //console.log("não estou logado e não tem token")
+    //console.log(logado)
+    navigate('/TelaLogin');
+}
+
+},[]);
+
 
 React.useEffect(()=>{
     async function buscarDados(){
 
-        
-    const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${id}`)
+    const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${id}`, {
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+        }
+    })
 
     setEditarr(back.data)
-
-
-    
 
     }
     buscarDados()
@@ -43,7 +52,11 @@ React.useEffect(()=>{
 
     async function atualizarProduto (){
 
-    const alal = await Axios.patch("http://localhost:3000/produto/atualizar/"+ editarr.idProduto, {descricaoProduto, grupo, ala, quantidade, custo, porcentagem});
+    const alal = await Axios.patch("http://localhost:3000/produto/atualizar/"+ editarr.idProduto, {descricaoProduto, grupo, ala, quantidade, custo, porcentagem}, {
+        headers: {
+            'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+        }
+    });
     //console.log(alal)
 
      navigate('/TelaProduto')

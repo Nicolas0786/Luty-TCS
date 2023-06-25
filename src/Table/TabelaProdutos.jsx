@@ -63,7 +63,7 @@ const Row = ({record, columns}) => {
             }
             <Button className="bteditar" onClick={async () =>{
 
-                const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`)
+                const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`) //verificar se ta sendo usado
                 console.log(back.data)
                setEditarr(back.data);
                navigate(`/TelaEditarProduto/${record.idProduto}`);
@@ -71,7 +71,7 @@ const Row = ({record, columns}) => {
             }}>editar</Button>
 
             <Button className="btetiq" onClick={async () => {
-                const etqq = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`)
+                const etqq = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`) // verificar se ta sendo usado
                 
                 setEtq(etqq.data);
                 console.log(etq);

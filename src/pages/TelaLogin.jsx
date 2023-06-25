@@ -2,19 +2,24 @@ import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
 import Axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
 import './Css/TelaLogin.css'
 import imgLog from '../imagens/imgLogin.png';
 
-const TelaLogin = () =>{
+import MyContext from "../contexts/myContext";
+
+const TelaLogin = () =>{    
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const navigate = useNavigate();
 
+    const {logado, setLogado} =useContext(MyContext);
+
+   
     
     return(
         <body>
@@ -41,11 +46,12 @@ const TelaLogin = () =>{
 
         try {
 
-            const response = await  Axios.post('http://localhost:3000/usuario/login', null, {params:{username, password}})
+            const response = await  Axios.post('http://localhost:3000/usuario/login', null, {params:{username, password}});
 
             //console.log(response.data.access_token);
 
             sessionStorage.setItem("token", response.data.access_token);
+            setLogado(true);
 
             navigate('/TelaInicio')
             

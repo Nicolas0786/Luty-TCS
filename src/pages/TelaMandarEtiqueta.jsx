@@ -1,7 +1,7 @@
 import Form from 'react-bootstrap/Form';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import MyContext from '../contexts/myContext';
 import FormSelect from 'react-bootstrap/esm/FormSelect';
 import Axios  from 'axios';
@@ -17,9 +17,20 @@ const TelaMandarEtiqueta = () =>{
     const [tes, setTes] = useState([]);
 
     const navigate = useNavigate();
+    const {logado, setLogado} =useContext(MyContext);
+    
+    //console.log(ip)
 
-    console.log(ip)
-
+    useEffect(() =>{
+    const token = sessionStorage.getItem('token');
+    
+    if(logado === false && !token){
+        //console.log("não estou logado e não tem token")
+        //console.log(logado)
+        navigate('/TelaLogin');
+    }
+    
+    },[]);
     
     React.useEffect(()=>{
         async function buscarDados(){
@@ -44,7 +55,11 @@ const TelaMandarEtiqueta = () =>{
         const dados = {idEtiqueta , idProduto};
 
         console.log(dados);
-        const res = await Axios.post('http://localhost:3000/etiqueta/alterar/' , dados)
+        const res = await Axios.post('http://localhost:3000/etiqueta/alterar/' , dados, {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+            }
+        })
 
         console.log(res)
 
