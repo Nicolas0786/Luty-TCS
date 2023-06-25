@@ -91,6 +91,7 @@ export class UsuarioService {
   }
 
   async update(idUsuario: number, updateUsuarioDto: UpdateUsuarioDto) {
+    console.log('chegou', updateUsuarioDto)
 
     const user = new Usuario();
 
@@ -145,7 +146,7 @@ export class UsuarioService {
     if(updateUsuarioDto.senha === undefined){
       user.senha = userOne.senha;
     }else{
-      user.senha = updateUsuarioDto.senha;
+      user.senha = await bcrypt.hashSync(updateUsuarioDto.senha, 8);
     }
 
     if(updateUsuarioDto.statusUsuario === undefined){
