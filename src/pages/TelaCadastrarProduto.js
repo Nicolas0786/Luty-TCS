@@ -11,7 +11,8 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import FormSelect from 'react-bootstrap/esm/FormSelect';
 import './Css/TelaCadastrarProduto.css'
-
+import imgIni from '../imagens/ini.png';
+import Image from 'react-bootstrap/Image'
 
 
 
@@ -75,17 +76,22 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
 
     return (
         <div>
-            <header>
+            <body className="fundo">
 
+
+
+            <header className='inicio'>
+            <Image src={imgIni} className = 'imgIni'></Image>
             </header>
+
             <br></br>
-       <Button id="voltarPG" onClick={()=> navigate('/TelaProduto')}> Voltar</Button>
-           
+       
+       <Button className="voltar" id="voltarPG" onClick={()=> navigate('/TelaProduto')}> Voltar </Button>
+
            <div className="forms">
-            <h2>Produtos</h2>     
+            <h2>Cadastro de Produto</h2>     
                 <Form >
-                <h5>Cadastro</h5>
-                    <div>
+                    
                     <Row className="mb-3">
                         <Form.Group as={Col} md="4">
                             <Form.Label>Descrição</Form.Label>
@@ -103,7 +109,7 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
                          </Form.Group>
             
                     </Row>
-                    </div>
+                    
 
                     <div>
                     <Row className="mb-3">
@@ -142,12 +148,14 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
                     </div>
 
                     <br></br>
-                    <Button id="cancelar" onClick={()=> navigate('/TelaProduto')}>Cancelar</Button>
-                    <Button id="salvar" onClick={salvarProdutos}>Salvar</Button>
+                    
                 </Form>
                 </div>
-           
-        </div>    
+                </body>
+            <Button className="btBaixoCadastroProduto" id="cancelar" onClick={()=> navigate('/TelaProduto')}>X Cancelar</Button>
+            <Button className="btBaixoCadastroProduto" id="salvar" onClick={salvarProdutos}>Salvar</Button>
+        </div>   
+        
     );
 }
 
