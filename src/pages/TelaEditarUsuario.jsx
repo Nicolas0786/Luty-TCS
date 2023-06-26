@@ -18,12 +18,12 @@ const TelaEditarUsuario = () =>{
     const {logado, setLogado} =useContext(MyContext);
     const navigate = useNavigate();
 
-    const [nome, SetNome] = useState('');
-    const [loginn, SetLoginn] = useState('');
-    const [matricula, SetMatricula] = useState('');
-    const [senha, SetSenha] = useState('');
-    const [confirsenha, SetConfirsenha] = useState('');
-    const [permissao, SetPermissao] = useState('');
+    const [nome, SetNome] = useState(undefined);
+    const [loginn, SetLoginn] = useState(undefined);
+    const [matricula, SetMatricula] = useState(undefined);
+    const [senha, SetSenha] = useState(undefined);
+    const [confirsenha, SetConfirsenha] = useState(undefined);
+    const [permissao, SetPermissao] = useState(undefined);
 
     
 
@@ -85,20 +85,38 @@ const TelaEditarUsuario = () =>{
 
 
    async function editarUsu(){
-    const dadosUser = {nome, matricula, loginn, senha, permissao};
+    
+    const login = loginn;
 
     if(confirsenha !== senha){
         window.alert("As senhas são diferentes");
     }
 
-    
-       
-        const res = await Axios.patch("http://localhost:3000/usuario/atualizar/"+editUsu.idUsuario, {nome:nome, matricula:matricula, loginn:loginn, senha:senha, permissao:permissao}, {
+    try {
+           
+        const res = await Axios.put("http://localhost:3000/usuario/atualizar/"+editUsu.idUsuario, {nome, matricula, login, senha, permissao}, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             }
         })
-        console.log(res);     
+        console.log(res);   
+
+        if(res.status === 200){
+            window.alert("Usuario atualizado com Sucesso");
+            SetLoginn('');
+            SetNome('');
+            SetMatricula('');
+            SetPermissao('');
+            SetSenha('')
+            SetConfirsenha('');
+            SetPermissoes('');
+            navigate('/TelaUsuario')
+
+        }
+        
+    } catch (error) {
+        window.alert(error.response.data.message);
+    }
 
     
     

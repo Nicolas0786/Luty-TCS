@@ -16,6 +16,9 @@ import TelaMandarEtiqueta from './pages/TelaMandarEtiqueta';
 import TelaEtiqueta from './pages/TelaEtiqueta';
 import TelaCadastrarUsuario from "./pages/TelaCadastrarUsuario";
 import TelaEditarUsuario from "./pages/TelaEditarUsuario";
+import TelaCadastrarAla from "./pages/TelaCadastrarAla";
+import TelaCadastrarGrupo from "./pages/TelaCadastrarGrupo";
+import TelaCadastrarEtiqueta from "./pages/TelaCadastrarEtiqueta";
 
 
 function App() {
@@ -51,6 +54,9 @@ function App() {
           <Route path='/TelaEtiqueta' element={<TelaEtiqueta />} />
           <Route path='/TelaCadastrarUsuario' element={<TelaCadastrarUsuario/>}/>
           <Route path='/TelaEditarUsuario/:login' element={<TelaEditarUsuario/>}/>
+          <Route path="/TelaCadastrarAla" element={<TelaCadastrarAla/>}/>
+          <Route path="/TelaCadastrarGrupo" element={<TelaCadastrarGrupo/>}/>
+          <Route path="/TelaCadastrarEtiqueta" element={<TelaCadastrarEtiqueta/>}/>
         </Routes>
       </BrowserRouter>
     </MyContext.Provider>
