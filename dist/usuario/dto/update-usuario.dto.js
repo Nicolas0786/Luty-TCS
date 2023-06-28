@@ -22,8 +22,7 @@ __decorate([
 ], UpdateUsuarioDto.prototype, "nome", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], UpdateUsuarioDto.prototype, "matricula", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),

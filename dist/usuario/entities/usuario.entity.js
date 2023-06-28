@@ -28,7 +28,7 @@ __decorate([
 ], Usuario.prototype, "nome", void 0);
 __decorate([
     (0, typeorm_1.Column)('int'),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], Usuario.prototype, "matricula", void 0);
 __decorate([
     (0, typeorm_1.Column)('varchar', { length: 50 }),

@@ -3,14 +3,13 @@ import { CreateUsuarioDto } from './create-usuario.dto';
 import { Permissao } from '../entities/permissao.entity';
 import {IsNumber, IsOptional } from "class-validator";
 
-export class UpdateUsuarioDto extends PartialType(CreateUsuarioDto) {
-    
+export class UpdateUsuarioDto extends PartialType(CreateUsuarioDto  ){
+
     @IsOptional()
     nome: string;
 
     @IsOptional()
-    @IsNumber()
-    matricula: number;
+    matricula: string;
 
     @IsOptional()
     login: string;
@@ -23,4 +22,5 @@ export class UpdateUsuarioDto extends PartialType(CreateUsuarioDto) {
 
     @IsOptional()
    permissao: Permissao;
+
 }

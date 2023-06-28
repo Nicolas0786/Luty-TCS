@@ -16,7 +16,7 @@ export class Usuario {
     nome: string;
 
     @Column('int')
-    matricula: number;
+    matricula: string;
 
     @Column('varchar', { length: 50})
     login: string;

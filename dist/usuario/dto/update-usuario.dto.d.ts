@@ -3,7 +3,7 @@ import { Permissao } from '../entities/permissao.entity';
 declare const UpdateUsuarioDto_base: import("@nestjs/mapped-types").MappedType<Partial<CreateUsuarioDto>>;
 export declare class UpdateUsuarioDto extends UpdateUsuarioDto_base {
     nome: string;
-    matricula: number;
+    matricula: string;
     login: string;
     senha: string;
     statusUsuario: number;

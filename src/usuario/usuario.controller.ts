@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, UseGuards, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, UseGuards, Request, Put } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -66,7 +66,7 @@ export class UsuarioController {
 
   @Roles(Role.Gerente)
   @UseGuards(AuthGuard)
-  @Patch('atualizar/:idUsuario')
+  @Put('atualizar/:idUsuario')
   update(@Param('idUsuario') idUsuario: number, @Body() updateUsuarioDto: UpdateUsuarioDto) {
     return this.usuarioService.update(+idUsuario, updateUsuarioDto);
   }

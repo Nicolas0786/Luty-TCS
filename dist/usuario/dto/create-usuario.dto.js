@@ -19,9 +19,8 @@ __decorate([
     __metadata("design:type", String)
 ], CreateUsuarioDto.prototype, "nome", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", Number)
+    __metadata("design:type", String)
 ], CreateUsuarioDto.prototype, "matricula", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),

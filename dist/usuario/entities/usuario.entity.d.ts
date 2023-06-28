@@ -6,7 +6,7 @@ import { Permissao } from "./permissao.entity";
 export declare class Usuario {
     idUsuario: number;
     nome: string;
-    matricula: number;
+    matricula: string;
     login: string;
     senha: string;
     statusUsuario: number;

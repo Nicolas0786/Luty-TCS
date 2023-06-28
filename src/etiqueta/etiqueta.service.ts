@@ -14,6 +14,7 @@ import { PrecoEtiqueta } from './dto/preco-etiqueta.dto';
 import {Sttp} from '@supercharge/sttp';
 import { error } from 'console';
 import { response } from 'express';
+import { ProdutoEtiqueta } from './entities/produtoEtiqueta';
 
 
 @Injectable()
@@ -27,6 +28,9 @@ export class EtiquetaService {
 
     @InjectRepository(Produto)
     private repositorioProduto: Repository<Produto>,
+
+    @InjectRepository(ProdutoEtiqueta)
+    private repositorioProdutoEtiqueta: Repository<ProdutoEtiqueta>,
 
   ){}
   
@@ -45,10 +49,12 @@ export class EtiquetaService {
 
   const response = await this.http.get(ipp2).toPromise();
 
+    new HttpException("Comunicando com o Ip", HttpStatus.FORBIDDEN);
+
    if(response.status === 200){
     etiq.ipEtiqueta = createEtiquetaDto.ipEtiqueta;
-    console.log('Comunicação concluida')
-    
+    new HttpException("Comunicação concluida", HttpStatus.OK);
+
     const chave = await bcrypt.hashSync(createEtiquetaDto.ipEtiqueta, 1);
     //console.log(chave)
     const response = await this.http.post(ipp2, chave.toString()).toPromise();
@@ -179,6 +185,8 @@ export class EtiquetaService {
 
       //console.log("et",precoEtiqueta.idEtiqueta, "prod", precoEtiqueta.idProduto);
 
+      const prodEtiq = new ProdutoEtiqueta();
+
         const etiq: Etiqueta = await this.repositorioEtiqueta.findOneBy({
           idEtiqueta: precoEtiqueta.idEtiqueta
         });
@@ -198,6 +206,8 @@ export class EtiquetaService {
 
        // const response = await Sttp.withHeaders({'}).post(ipp2, tes.toString())
         return response.data;
+        
+  
         
         //console.log(response.data);
         } catch (error) {

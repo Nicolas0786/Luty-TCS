@@ -6,15 +6,15 @@ export class CreateUsuarioDto {
     @IsNotEmpty()
     nome: string;
 
-    @IsNumber()
     @IsNotEmpty()
-    matricula: number;
+    matricula: string;
 
     @IsNotEmpty()
     login: string;
 
     @IsNotEmpty()
     senha: string;
+
 
     statusUsuario: number;
 

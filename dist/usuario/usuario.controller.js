@@ -91,7 +91,7 @@ __decorate([
 __decorate([
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Patch)('atualizar/:idUsuario'),
+    (0, common_1.Put)('atualizar/:idUsuario'),
     __param(0, (0, common_1.Param)('idUsuario')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

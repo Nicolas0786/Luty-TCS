@@ -92,6 +92,7 @@ export class UsuarioService {
 
   async update(idUsuario: number, updateUsuarioDto: UpdateUsuarioDto) {
     console.log('chegou', updateUsuarioDto)
+    console.log('outro teste', updateUsuarioDto.matricula)
 
     const user = new Usuario();
 

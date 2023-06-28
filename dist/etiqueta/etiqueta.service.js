@@ -21,11 +21,13 @@ const typeorm_2 = require("typeorm");
 const etiqueta_entity_1 = require("./entities/etiqueta.entity");
 const bcrypt = require("bcrypt");
 const produto_entity_1 = require("../produto/entities/produto.entity");
+const produtoEtiqueta_1 = require("./entities/produtoEtiqueta");
 let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
-    constructor(repositorioEtiqueta, http, repositorioProduto) {
+    constructor(repositorioEtiqueta, http, repositorioProduto, repositorioProdutoEtiqueta) {
         this.repositorioEtiqueta = repositorioEtiqueta;
         this.http = http;
         this.repositorioProduto = repositorioProduto;
+        this.repositorioProdutoEtiqueta = repositorioProdutoEtiqueta;
         this.logger = new common_1.Logger(EtiquetaService_1.name);
     }
     async cadastrar(createEtiquetaDto) {
@@ -34,9 +36,10 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             const end = createEtiquetaDto.ipEtiqueta;
             const ipp2 = 'http://' + end + '/protect';
             const response = await this.http.get(ipp2).toPromise();
+            new common_1.HttpException("Comunicando com o Ip", common_1.HttpStatus.FORBIDDEN);
             if (response.status === 200) {
                 etiq.ipEtiqueta = createEtiquetaDto.ipEtiqueta;
-                console.log('Comunicação concluida');
+                new common_1.HttpException("Comunicação concluida", common_1.HttpStatus.OK);
                 const chave = await bcrypt.hashSync(createEtiquetaDto.ipEtiqueta, 1);
                 const response = await this.http.post(ipp2, chave.toString()).toPromise();
                 etiq.hashEtiqueta = chave.toString();
@@ -142,6 +145,7 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
         return new common_1.HttpException("Etiqueta Atualizada com Sucesso", common_1.HttpStatus.OK);
     }
     async mandarPrecoEtiqueta(precoEtiqueta) {
+        const prodEtiq = new produtoEtiqueta_1.ProdutoEtiqueta();
         const etiq = await this.repositorioEtiqueta.findOneBy({
             idEtiqueta: precoEtiqueta.idEtiqueta
         });
@@ -164,8 +168,10 @@ EtiquetaService = EtiquetaService_1 = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(etiqueta_entity_1.Etiqueta)),
     __param(2, (0, typeorm_1.InjectRepository)(produto_entity_1.Produto)),
+    __param(3, (0, typeorm_1.InjectRepository)(produtoEtiqueta_1.ProdutoEtiqueta)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         axios_1.HttpService,
+        typeorm_2.Repository,
         typeorm_2.Repository])
 ], EtiquetaService);
 exports.EtiquetaService = EtiquetaService;
