@@ -17,12 +17,12 @@ const TelaLogin = () =>{
     const [password, setPassword] = useState();
     const navigate = useNavigate();
 
-    const {logado, setLogado} =useContext(MyContext);
+    const {logado, setLogado, user, setUser} =useContext(MyContext);
 
    
     
     return(
-        <body>
+        <div className='fundo'> 
             <main className='telLog' id="inicializa">
             <Image src={imgLog} rounded ></Image>
             <Row className="mb-3" center>
@@ -38,7 +38,8 @@ const TelaLogin = () =>{
             </Row>            
             <Button className='entrar' onClick={entrar}>Entrar</Button>
             </main>
-        </body>
+            </div>
+        
     );
 
      async function entrar() {
@@ -52,6 +53,7 @@ const TelaLogin = () =>{
 
             sessionStorage.setItem("token", response.data.access_token);
             setLogado(true);
+            
 
             navigate('/TelaInicio')
             

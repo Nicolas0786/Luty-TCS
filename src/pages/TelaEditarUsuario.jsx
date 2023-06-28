@@ -36,16 +36,7 @@ const TelaEditarUsuario = () =>{
 
     
 
-    useEffect(() =>{
-        const token = sessionStorage.getItem('token');
     
-    if(logado === false && !token){
-        //console.log("não estou logado e não tem token")
-        //console.log(logado)
-        navigate('/TelaLogin');
-    }
-    
-    },[]);
 
 
     React.useEffect(()=>{

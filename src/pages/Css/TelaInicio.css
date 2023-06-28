@@ -1,0 +1,99 @@
+
+.inicio{
+  display: flex;
+	justify-content: space-between;
+	align-items: center;
+	height: 78px;
+	background-color: #FCF4F4;
+	box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+	padding: 0px 5%;
+  
+}
+
+.inicio-container {
+  width: 90%;
+  height: 845px;
+  background-repeat: no-repeat;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/imagens/ImgPrinc.png");
+  background-size: 100%;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+  /* -webkit-filter: blur(3px);
+  -moz-filter: blur(3px);
+  -o-filter: blur(3px);
+  -ms-filter: blur(3px);
+  filter: blur(3px);
+*/
+}
+
+.telaInicio {
+  display: flex;
+  position: absolute;
+  background-color: #091D66;
+  width: 100%;
+  height: 92vh;
+  flex-direction: column;
+  align-items: center;  
+  
+}
+
+.botaoIni {
+  font-size: 20px;
+  width: 180px;
+  height: 46px;
+  position: absolute;
+  left: 67%;
+  top: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  transition: all .3s;
+  border-radius: 10rem;
+  background: #091D66;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+  
+}
+
+.botaoIniic{
+  font-size: 20px;
+  width: 180px;
+  height: 46px;
+  position: absolute;
+  left: 51%;
+  top: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content: center;
+  transition: all .3s;
+  border-radius: 10rem;
+  background: #091D66;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+}
+
+.botaoInii{
+  font-size: 20px;
+  width: 180px;
+  height: 46px;
+  position: absolute;
+  left: 35%;
+  top: 50%;
+  transform: translateX(-50%);
+  justify-content: center;
+  transition: all .3s;
+  border-radius: 10rem;
+  background: #091D66;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+}
+
+.imgIni{
+	display: inline-block;            
+  width: 300px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.exit{
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+

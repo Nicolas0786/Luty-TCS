@@ -5,13 +5,17 @@ import Table from '../Table/TabelaProdutos';
 import Row from '../Table/TabelaProdutos';
 import Button from 'react-bootstrap/Button';
 import MyContext from '../contexts/myContext';
-
+import './Css/TelaProduto.css';
+import { IoMdExit } from "react-icons/io";
+import imgIni from '../imagens/ini.png';
+import Image from 'react-bootstrap/Image'
 
 const TelaProduto = () =>{
 
     const navigate = useNavigate();
     const[dadosProdutos, setDadosProdutos] = useState([]);
     const {logado, setLogado} =useContext(MyContext);
+    const [search, setSearch] = useState('');
 
     useEffect(() =>{
         const token = sessionStorage.getItem('token');
@@ -56,24 +60,34 @@ const TelaProduto = () =>{
         buscarDados()
     },[])
 
+    const filterDados = search.length > 0 ? dadosProdutos.filter(dadosPrp => dadosPrp.codigoEan.includes(search)) : [];
 
     return(
         <div>
 
-            <header>
-
+            <header className='inicio'>
+                <Image src={imgIni} className = 'imgIni'></Image>
+                <IoMdExit  className=' exit'/>
             </header>
+
+            <div className='botoes'>
             <Button id="TelaUsuario"  onClick={() => navigate('/TelaUsuario')}>Usuário</Button>
             <Button id="TelaProduto"  onClick={() => navigate('/TelaProduto')}>Produto</Button> 
             <Button id="TelaEtiqueta">Etiqueta</Button>
-            <div>
-                <Table dadosProdutos = {dadosProdutos} head={head} />
+            <input className='btPesquisa' type='text' placeholder='Buscar...' onChange={e => setSearch(e.target.value)} value={search}/>
             </div>
-            <Button>Grupo +</Button>
-            <Button>Ala +</Button>
 
-            <Button id="novoProduto"  onClick={() => navigate('/TelaCadastrarProduto')}>Produto +</Button> 
-            <Button onClick={() => navigate('/TelaInicio')}>Fechar</Button>
+            <div className='inici'>
+                <Table dadosProdutos = {dadosProdutos} head={head} filterDados={filterDados}/>
+            </div>
+
+            <div className='btsBaixo'>
+            <Button className='btGrupo' onClick={() => navigate('/TelaCadastrarGrupo')}>Grupo +</Button>
+            <Button className='btAla' onClick={() => navigate('/TelaCadastrarAla')}>Ala +</Button>
+
+            <Button className='btBaixoProduto' id="novoProduto"  onClick={() => navigate('/TelaCadastrarProduto')}>Produto +</Button> 
+            <Button className='btBaixoProduto' onClick={() => navigate('/TelaInicio')}>Fechar</Button>
+            </div>
         </div>
     );
 }

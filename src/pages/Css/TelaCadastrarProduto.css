@@ -11,6 +11,57 @@ header{
 }
 
 #salvar{
-    background-color: blue;
-    color: white;
+    background-color: blue !important;
+    color: white !important;
+}
+.voltar{
+    transform: translateX(43%);
+    display: flex;
+    margin: 0 1em; 
+    font-size: 20px;
+    width: 180px;
+    height: 46px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+    margin-bottom: 1%;
+    background-color: #FCF4F4 !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+.forms{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border-radius: 10px;
+    width: 90%;
+    height: 530px;
+    background-repeat: no-repeat;
+    background: #FCF4F4;
+    background-size: 100%;
+    position: absolute;
+    justify-content: space-evenly;
+    align-items: center;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+}
+body{
+    background: #091D66 !important;
+}
+
+.btBaixoCadastroProduto{
+    display: flex;
+    margin: 0 1em; 
+    font-size: 20px;
+    width: 180px;
+    height: 46px;
+    transform: translateX(355%);
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+    margin-top: 2%;
+    margin-bottom: 1%;
+    background-color: #FCF4F4 !important;
+    color: black !important;
+    font-weight: bold !important;
+    margin-top: 32%;
+    margin-left: 4%;
+}
+#cancelar{
+    color: silver !important;
 }

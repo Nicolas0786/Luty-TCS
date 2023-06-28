@@ -18,16 +18,7 @@ const TelaEditarProduto = () => {
     const {logado, setLogado, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
  
 //console.log(editarr);
-useEffect(() =>{
-    const token = sessionStorage.getItem('token');
 
-if(logado === false && !token){
-    //console.log("não estou logado e não tem token")
-    //console.log(logado)
-    navigate('/TelaLogin');
-}
-
-},[]);
 
 
 React.useEffect(()=>{

@@ -1,0 +1,29 @@
+.btBaixoProduto{
+  display: flex !important;
+  margin: 0 1em !important; 
+  font-size: 20px !important;
+  width: 180px !important;
+  height: 46px !important;
+  transform: translateX(238%) !important;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2) !important;
+  margin-top: 1% !important;
+  margin-bottom: 1% !important;
+  background-color: #FCF4F4 !important;
+  color: black !important;
+  font-weight: bold !important;
+}
+
+.btGrupoAla{
+  display: block !important;
+  margin: 0 1em !important; 
+  font-size: 20px !important;
+  width: 180px !important;
+  height: 46px !important;
+  transform: translateX(-238%) !important;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2) !important;
+  margin-top: 1% !important;
+  margin-bottom: 1% !important;
+  background-color: #FCF4F4 !important;
+  color: black !important;
+  font-weight: bold !important;
+}

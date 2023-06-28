@@ -1,7 +1,8 @@
 .entrar{
     visibility: visible !important;
     color: white !important;
-    background-color: blue !important; 
+    background-color: blue !important;
+    --bs-btn-padding-x: 5.10rem;
 }
 
 .telLog{
@@ -10,5 +11,5 @@
     align-items: center;
     justify-content: center;
     height: 100vh;    
+    background: rgb(255, 253, 249);
     }
-

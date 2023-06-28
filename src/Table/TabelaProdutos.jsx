@@ -85,7 +85,7 @@ const Row = ({record, columns}) => {
 }
 
 
-const table = ({dadosProdutos, head}) =>{
+const table = ({dadosProdutos, head, filterDados}) =>{
     console.log(dadosProdutos)
     const keys = Object.keys(head)
 
@@ -117,7 +117,7 @@ return(
                     <Head keys={keys} head={head}/>
                     <tbody>
                       
-                            {dadosProdutos.map((record)=> <Row key={record.idProduto} columns={columns} record={record}></Row>)}
+                            {filterDados == 0 ? dadosProdutos.map((record)=> <Row key={record.idProduto} columns={columns} record={record}></Row>): filterDados.map((record)=> <Row key={record.idProduto} columns={columns} record={record}></Row>)}
                             
                     </tbody>
 

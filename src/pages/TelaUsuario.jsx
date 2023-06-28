@@ -7,6 +7,9 @@ import {BiEdit} from "react-icons/bi";
 import {AiOutlineSetting} from "react-icons/ai";
 import './Css/TelaUsuario.css';
 import MyContext from '../contexts/myContext';
+import imgIni from '../imagens/ini.png';
+import Image from 'react-bootstrap/Image'
+import { IoMdExit } from "react-icons/io";
 
 
 
@@ -23,16 +26,7 @@ const TelaUsuario = () =>{
         login: 'Login'
     }
 
-    useEffect(() =>{
-        const token = sessionStorage.getItem('token');
-        
-        if(logado === false && !token){
-            //console.log("não estou logado e não tem token")
-            //console.log(logado)
-            navigate('/TelaLogin');
-        }
-        
-        },[]);
+    
 
     React.useEffect(()=>{
         async function buscarUsuarios(){
@@ -53,26 +47,36 @@ const TelaUsuario = () =>{
     //console.log(filterDados);
     return(
         <body>
-            <header>
-                <div>
-                    <h1>Luty</h1>
-                    <AiOutlineSetting />
-                </div>
+            <header className='inicio'>
+                {true && (
+                <Image src={imgIni} className = 'imgIni'></Image>                    
+                )}
+                <IoMdExit  className=' exit'/>
             </header>
-            <nav>
-                <Button id='produto' onClick={() => navigate('/TelaProduto')}>Produto</Button>{''}
-                <Button id='Etiqueta' onClick={() => navigate('/TelaEtiqueta')}>Etiqueta</Button>{''}
-                <input type='text' placeholder='Buscar' onChange={e => setSearch(e.target.value)} value={search}/>
-            </nav>
 
-            <main>
+            <main className='telaInicio'>
+            <div className='botoes'>
+                <Button className='btUsuario' id='produto' onClick={() => navigate('/TelaProduto')}>Produto</Button>{''}
+                <Button className='btUsuario' id='Etiqueta' onClick={() => navigate('/TelaEtiqueta')}>Etiqueta</Button>{''}
+                <input  className='btPesquisa' type='text' placeholder='Buscar' onChange={e => setSearch(e.target.value)} value={search}/>
+
+                <a class="botao-search" href="#">
+                <i class="fas fa-search"></i>
+                </a>
+            </div>
+
+           
+
+            <div className='inici'>
                 <Table dadosUsuario={dadosUsuario} head={head} filterDados={filterDados} />
-            </main>
+            </div>
+            <div className='btsBaixo'>
+                <Button className='btBaixo' id='novoUsuario' onClick={() => navigate('/TelaCadastrarUsuario')}>Novo</Button>
+                <Button className='btBaixo' id='fechar' onClick={() => navigate('/TelaInicio')}>Fechar</Button>
+            </div>
 
-            <footer>
-                <Button id='novoUsuario' onClick={() => navigate('/TelaCadastrarUsuario')}>Novo</Button>
-                <Button id='fechar' onClick={() => navigate('/TelaInicio')}>Fechar</Button>
-            </footer>
+            </main>
+           
 
         </body>
     );

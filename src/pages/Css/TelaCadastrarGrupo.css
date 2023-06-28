@@ -1,0 +1,10 @@
+.fundo{
+    background-color: rgb(255, 247, 247);
+    top: 50% !important;
+    left: 100 !important;
+    height: 250px;
+    width: 500px;
+    text-align: center;
+    display: block !important;
+    margin-right: 5%;
+}

@@ -31,16 +31,7 @@ const gerente = ['Cadastro Usuario', 'Cadastro Etiqueta', 'Cadastrar Produto', '
 const coordenador = ['Atualizar Etiqueta', 'Cadastro Produto', 'Cadastro Grupo/Ala', 'Consultar Produto']
 const funcionario = ['Consultar Produto'];
 
-useEffect(() =>{
-    const token = sessionStorage.getItem('token');
 
-if(logado === false && !token){
-    //console.log("não estou logado e não tem token")
-    //console.log(logado)
-    navigate('/TelaLogin');
-}
-
-},[]);
 
 
     const handleChange = (e) =>{

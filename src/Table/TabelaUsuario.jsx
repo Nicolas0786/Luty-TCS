@@ -51,7 +51,7 @@ const Row = ({record}) => {
 
 const table = ({filterDados, dadosUsuario, head}) =>{
     const keys = Object.keys(head)
-    console.log(filterDados)
+    
     
    
     return(
