@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { ForbiddenException, HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { ForbiddenException, HttpException, HttpStatus, Injectable, Ip, Logger } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { AxiosError, AxiosResponse } from 'axios';
 import { catchError, lastValueFrom, map, Observable } from 'rxjs';
@@ -40,16 +40,17 @@ export class EtiquetaService {
     const etiq = new Etiqueta();
 
     try {
-      const end:string = createEtiquetaDto.ipEtiqueta;
-
-      const ipp2:string = 'http://'+end+'/protect';
-      //console.log(ipp2)
-    
-    //console.log(ipp);
-
-  const response = await this.http.get(ipp2).toPromise();
-
-    new HttpException("Comunicando com o Ip", HttpStatus.FORBIDDEN);
+      
+      
+      const ipExistis = await this.repositorioEtiqueta.findOneBy({ipEtiqueta: createEtiquetaDto.ipEtiqueta});
+      if(ipExistis){
+        throw new HttpException("Esse iP já está sendo usado por outra Etiqueta", HttpStatus.FORBIDDEN);
+      }else{
+        
+        const ip:string = createEtiquetaDto.ipEtiqueta;
+        const ipp2:string = 'http://'+ip+'/protect';
+        const response = await this.http.get(ipp2).toPromise();
+        new HttpException("Comunicando com o Ip", HttpStatus.FORBIDDEN);
 
    if(response.status === 200){
     etiq.ipEtiqueta = createEtiquetaDto.ipEtiqueta;
@@ -71,6 +72,7 @@ export class EtiquetaService {
     }
 
     etiq.usuario = createEtiquetaDto.usuario;
+  }
 
    }
     } catch (error) {
@@ -90,6 +92,8 @@ export class EtiquetaService {
         idEtiqueta: true,
         ipEtiqueta: true,
         nomeEtiqueta: true,
+        corredor: true,
+        pratilheira: true
       }
     });
   }                     

@@ -1,12 +1,10 @@
-import { IsNotEmpty, IsNumber} from "class-validator";
+import { IsNotEmpty} from "class-validator";
 
 export class PrecoEtiqueta {
 
-    @IsNumber()
     @IsNotEmpty()
     idEtiqueta: number;
 
-    @IsNumber()
     @IsNotEmpty()
     idProduto: number;
 

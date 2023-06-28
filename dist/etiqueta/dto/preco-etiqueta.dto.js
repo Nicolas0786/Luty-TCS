@@ -14,12 +14,10 @@ const class_validator_1 = require("class-validator");
 class PrecoEtiqueta {
 }
 __decorate([
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], PrecoEtiqueta.prototype, "idEtiqueta", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], PrecoEtiqueta.prototype, "idProduto", void 0);

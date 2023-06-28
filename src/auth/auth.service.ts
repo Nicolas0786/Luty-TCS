@@ -25,7 +25,7 @@ export class AuthService {
          /* const { senha, ...result } = usuario;
           return result;*/
           console.log('cert')
-          const payload = { permissao: usuario.permissao, username: usuario.login, sub: usuario.idUsuario };
+          const payload = { permissao: usuario.permissao, username: usuario.login, idUsuario: usuario.idUsuario, sub: usuario.idUsuario };
           console.log(payload)
           //console.log(usuario)
   

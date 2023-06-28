@@ -33,26 +33,32 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
     async cadastrar(createEtiquetaDto) {
         const etiq = new etiqueta_entity_1.Etiqueta();
         try {
-            const end = createEtiquetaDto.ipEtiqueta;
-            const ipp2 = 'http://' + end + '/protect';
-            const response = await this.http.get(ipp2).toPromise();
-            new common_1.HttpException("Comunicando com o Ip", common_1.HttpStatus.FORBIDDEN);
-            if (response.status === 200) {
-                etiq.ipEtiqueta = createEtiquetaDto.ipEtiqueta;
-                new common_1.HttpException("Comunicação concluida", common_1.HttpStatus.OK);
-                const chave = await bcrypt.hashSync(createEtiquetaDto.ipEtiqueta, 1);
-                const response = await this.http.post(ipp2, chave.toString()).toPromise();
-                etiq.hashEtiqueta = chave.toString();
-                etiq.nomeEtiqueta = createEtiquetaDto.nomeEtiqueta;
-                etiq.corredor = createEtiquetaDto.corredor;
-                etiq.pratilheira = createEtiquetaDto.pratilheira;
-                if (createEtiquetaDto.statusEtiqueta === undefined) {
-                    etiq.statusEtiqueta = 0;
+            const ipExistis = await this.repositorioEtiqueta.findOneBy({ ipEtiqueta: createEtiquetaDto.ipEtiqueta });
+            if (ipExistis) {
+                throw new common_1.HttpException("Esse iP já está sendo usado por outra Etiqueta", common_1.HttpStatus.FORBIDDEN);
+            }
+            else {
+                const ip = createEtiquetaDto.ipEtiqueta;
+                const ipp2 = 'http://' + ip + '/protect';
+                const response = await this.http.get(ipp2).toPromise();
+                new common_1.HttpException("Comunicando com o Ip", common_1.HttpStatus.FORBIDDEN);
+                if (response.status === 200) {
+                    etiq.ipEtiqueta = createEtiquetaDto.ipEtiqueta;
+                    new common_1.HttpException("Comunicação concluida", common_1.HttpStatus.OK);
+                    const chave = await bcrypt.hashSync(createEtiquetaDto.ipEtiqueta, 1);
+                    const response = await this.http.post(ipp2, chave.toString()).toPromise();
+                    etiq.hashEtiqueta = chave.toString();
+                    etiq.nomeEtiqueta = createEtiquetaDto.nomeEtiqueta;
+                    etiq.corredor = createEtiquetaDto.corredor;
+                    etiq.pratilheira = createEtiquetaDto.pratilheira;
+                    if (createEtiquetaDto.statusEtiqueta === undefined) {
+                        etiq.statusEtiqueta = 0;
+                    }
+                    else {
+                        etiq.statusEtiqueta = createEtiquetaDto.statusEtiqueta;
+                    }
+                    etiq.usuario = createEtiquetaDto.usuario;
                 }
-                else {
-                    etiq.statusEtiqueta = createEtiquetaDto.statusEtiqueta;
-                }
-                etiq.usuario = createEtiquetaDto.usuario;
             }
         }
         catch (error) {
@@ -68,6 +74,8 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                 idEtiqueta: true,
                 ipEtiqueta: true,
                 nomeEtiqueta: true,
+                corredor: true,
+                pratilheira: true
             }
         });
     }
