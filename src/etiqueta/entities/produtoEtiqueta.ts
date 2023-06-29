@@ -1,6 +1,7 @@
 import { Produto } from "src/produto/entities/produto.entity";
 import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Etiqueta } from "./etiqueta.entity";
+import { Usuario } from "src/usuario/entities/usuario.entity";
 
 @Entity()
 export class ProdutoEtiqueta{
@@ -17,4 +18,8 @@ export class ProdutoEtiqueta{
     @OneToOne(()=> Etiqueta)
     @JoinColumn()
     etiqueta: Etiqueta;
+
+    @OneToOne(() => Usuario)
+    @JoinColumn()
+    usuario: Usuario;
 }

@@ -16,7 +16,7 @@ export declare class EtiquetaService {
     constructor(repositorioEtiqueta: Repository<Etiqueta>, http: HttpService, repositorioProduto: Repository<Produto>, repositorioProdutoEtiqueta: Repository<ProdutoEtiqueta>);
     cadastrar(createEtiquetaDto: CreateEtiquetaDto): Promise<HttpException>;
     findAll(): Promise<Etiqueta[] | undefined>;
-    findOne(nomeEtiqueta: string): Promise<Etiqueta>;
+    findOne(idEtiqueta: number): Promise<Etiqueta>;
     update(idEtiqueta: number, updateEtiquetaDto: UpdateEtiquetaDto): Promise<HttpException>;
     mandarPrecoEtiqueta(precoEtiqueta: PrecoEtiqueta): Promise<any>;
 }

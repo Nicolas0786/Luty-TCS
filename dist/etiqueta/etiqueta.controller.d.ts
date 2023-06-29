@@ -7,7 +7,7 @@ export declare class EtiquetaController {
     constructor(etiquetaService: EtiquetaService);
     create(createEtiquetaDto: CreateEtiquetaDto): Promise<import("@nestjs/common").HttpException>;
     findAll(): Promise<import("./entities/etiqueta.entity").Etiqueta[]>;
-    findOne(nomeEtiqueta: string): Promise<import("./entities/etiqueta.entity").Etiqueta>;
+    findOne(idEtiqueta: number): Promise<import("./entities/etiqueta.entity").Etiqueta>;
     update(idEtiqueta: number, updateEtiquetaDto: UpdateEtiquetaDto): Promise<import("@nestjs/common").HttpException>;
     manda(precoEtiqueta: PrecoEtiqueta): Promise<any>;
 }

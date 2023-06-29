@@ -79,14 +79,16 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             }
         });
     }
-    findOne(nomeEtiqueta) {
+    findOne(idEtiqueta) {
         return this.repositorioEtiqueta.findOne({
             select: {
                 idEtiqueta: true,
                 ipEtiqueta: true,
                 nomeEtiqueta: true,
+                corredor: true,
+                pratilheira: true,
             }, where: {
-                nomeEtiqueta
+                idEtiqueta
             }
         });
     }
@@ -117,7 +119,6 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                     }
                 }
                 catch (error) {
-                    console.log(error, "erro ao atualizar");
                     throw new common_1.HttpException('Verifique a comunicação com a Etiqueta', common_1.HttpStatus.FORBIDDEN);
                 }
             }
@@ -147,7 +148,7 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             }
         }
         catch (error) {
-            throw new common_1.HttpException("Não foi possivel atualizar as informações da Etiqueta", common_1.HttpStatus.FORBIDDEN);
+            throw new common_1.HttpException("Não foi possivel atualizar as informações da Etiqueta, verifique a comunicação", common_1.HttpStatus.FORBIDDEN);
         }
         this.repositorioEtiqueta.update(idEtiqueta, etiqueta);
         return new common_1.HttpException("Etiqueta Atualizada com Sucesso", common_1.HttpStatus.OK);
@@ -164,6 +165,9 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             const ipp2 = 'http://' + etiq.ipEtiqueta + '/produto';
             const produto = prod.descricaoProduto.toUpperCase() + "," + "R$ " + prod.preco + "," + "Ean: " + prod.codigoEan + "," + etiq.hashEtiqueta;
             const response = await this.http.post(ipp2, produto).toPromise();
+            prodEtiq.etiqueta = etiq;
+            prodEtiq.produto = prod;
+            this.repositorioProdutoEtiqueta.save(prodEtiq);
             return response.data;
         }
         catch (error) {

@@ -32,8 +32,8 @@ let EtiquetaController = class EtiquetaController {
     findAll() {
         return this.etiquetaService.findAll();
     }
-    findOne(nomeEtiqueta) {
-        return this.etiquetaService.findOne(nomeEtiqueta);
+    findOne(idEtiqueta) {
+        return this.etiquetaService.findOne(idEtiqueta);
     }
     update(idEtiqueta, updateEtiquetaDto) {
         return this.etiquetaService.update(+idEtiqueta, updateEtiquetaDto);
@@ -65,17 +65,17 @@ __decorate([
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)('buscarPorNome/:nomeEtiqueta'),
-    __param(0, (0, common_1.Param)('nomeEtiqueta')),
+    (0, common_1.Get)('buscarPorID/:idEtiqueta'),
+    __param(0, (0, common_1.Param)('idEtiqueta')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String]),
+    __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "findOne", null);
 __decorate([
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Patch)('atualizar/:idEtiqueta'),
+    (0, common_1.Put)('atualizar/:idEtiqueta'),
     __param(0, (0, common_1.Param)('idEtiqueta')),
     __param(1, (0, common_1.Body)()),
     __metadata("design:type", Function),

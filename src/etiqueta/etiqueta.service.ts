@@ -99,14 +99,16 @@ export class EtiquetaService {
   }                     
   
 
-  findOne(nomeEtiqueta: string) {
+  findOne(idEtiqueta: number) {
     return this.repositorioEtiqueta.findOne({
       select: {
         idEtiqueta: true,
         ipEtiqueta: true,
         nomeEtiqueta: true,
+        corredor: true,
+        pratilheira: true,
       },where:{
-        nomeEtiqueta
+        idEtiqueta
       }
     });
   }
@@ -139,12 +141,13 @@ export class EtiquetaService {
 
         const response = await this.http.get(ipp2).toPromise();
 
+        
       if(response.status === 200){
         etiqueta.ipEtiqueta = updateEtiquetaDto.ipEtiqueta;
       }
 
       } catch (error) {
-        console.log(error, "erro ao atualizar")
+        //console.log(error, "erro ao atualizar")
         throw new HttpException('Verifique a comunicação com a Etiqueta', HttpStatus.FORBIDDEN);
       }
       
@@ -175,7 +178,7 @@ export class EtiquetaService {
     }
 
   } catch (error) {
-      throw new HttpException("Não foi possivel atualizar as informações da Etiqueta", HttpStatus.FORBIDDEN);
+      throw new HttpException("Não foi possivel atualizar as informações da Etiqueta, verifique a comunicação", HttpStatus.FORBIDDEN);
   }
 
   this.repositorioEtiqueta.update(idEtiqueta, etiqueta);
@@ -209,9 +212,13 @@ export class EtiquetaService {
         const response = await this.http.post(ipp2, produto).toPromise()
 
        // const response = await Sttp.withHeaders({'}).post(ipp2, tes.toString())
-        return response.data;
         
-  
+
+        prodEtiq.etiqueta = etiq;
+        prodEtiq.produto = prod;
+        this.repositorioProdutoEtiqueta.save(prodEtiq);
+        
+        return response.data;
         
         //console.log(response.data);
         } catch (error) {

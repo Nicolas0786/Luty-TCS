@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, UseGuards} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, UseGuards, Put} from '@nestjs/common';
 import { EtiquetaService } from './etiqueta.service';
 import { CreateEtiquetaDto } from './dto/create-etiqueta.dto';
 import { UpdateEtiquetaDto } from './dto/update-etiqueta.dto';
@@ -35,15 +35,15 @@ export class EtiquetaController {
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
   @UseGuards(AuthGuard) 
-  @Get('buscarPorNome/:nomeEtiqueta')
-  findOne(@Param('nomeEtiqueta') nomeEtiqueta: string) {
-    return this.etiquetaService.findOne(nomeEtiqueta);
+  @Get('buscarPorID/:idEtiqueta')
+  findOne(@Param('idEtiqueta') idEtiqueta: number) {
+    return this.etiquetaService.findOne(idEtiqueta);
   }
 
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
   @UseGuards(AuthGuard) 
-  @Patch('atualizar/:idEtiqueta')
+  @Put('atualizar/:idEtiqueta')
   update(@Param('idEtiqueta') idEtiqueta: number, @Body() updateEtiquetaDto: UpdateEtiquetaDto) {
     return this.etiquetaService.update(+idEtiqueta, updateEtiquetaDto);
   }

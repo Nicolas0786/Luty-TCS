@@ -13,6 +13,7 @@ exports.ProdutoEtiqueta = void 0;
 const produto_entity_1 = require("../../produto/entities/produto.entity");
 const typeorm_1 = require("typeorm");
 const etiqueta_entity_1 = require("./etiqueta.entity");
+const usuario_entity_1 = require("../../usuario/entities/usuario.entity");
 let ProdutoEtiqueta = class ProdutoEtiqueta {
 };
 __decorate([
@@ -33,6 +34,11 @@ __decorate([
     (0, typeorm_1.JoinColumn)(),
     __metadata("design:type", etiqueta_entity_1.Etiqueta)
 ], ProdutoEtiqueta.prototype, "etiqueta", void 0);
+__decorate([
+    (0, typeorm_1.OneToOne)(() => usuario_entity_1.Usuario),
+    (0, typeorm_1.JoinColumn)(),
+    __metadata("design:type", usuario_entity_1.Usuario)
+], ProdutoEtiqueta.prototype, "usuario", void 0);
 ProdutoEtiqueta = __decorate([
     (0, typeorm_1.Entity)()
 ], ProdutoEtiqueta);
