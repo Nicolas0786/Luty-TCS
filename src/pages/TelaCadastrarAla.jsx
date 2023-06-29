@@ -9,6 +9,7 @@ import {useNavigate} from 'react-router-dom';
 import React, {useContext, useState, useEffect} from 'react';
 import Axios from "axios";
 import MyContext from '../contexts/myContext';
+import HeaderApp from './headerApp';
 
 
 const TelaCadastrarAla = () =>{
@@ -49,8 +50,8 @@ const TelaCadastrarAla = () =>{
 
 return(
     <>
-                 <header className='inicio'>
-                    <Image src={imgIni} className = 'imgIni'></Image>
+                 <header >
+                    <HeaderApp/>
                 </header>
     <div className="container">
                 

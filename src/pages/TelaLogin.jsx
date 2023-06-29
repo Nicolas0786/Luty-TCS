@@ -22,10 +22,10 @@ const TelaLogin = () =>{
    
     
     return(
-        <div className='fundo'> 
+        <>
             <main className='telLog' id="inicializa">
             <Image src={imgLog} rounded ></Image>
-            <Row className="mb-3" center>
+            <Row className="mb-3" center id='inputs'>
             
                         <Form.Group as={Col} md="12">
                             <Form.Control id="usuario" type="text" value={username} onChange ={(e)=> setUsername(e.target.value)}  placeholder= "Usuário"/>
@@ -38,7 +38,7 @@ const TelaLogin = () =>{
             </Row>            
             <Button className='entrar' onClick={entrar}>Entrar</Button>
             </main>
-            </div>
+            </>   
         
     );
 

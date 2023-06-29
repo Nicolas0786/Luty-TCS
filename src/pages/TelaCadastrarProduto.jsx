@@ -13,6 +13,7 @@ import FormSelect from 'react-bootstrap/esm/FormSelect';
 import './Css/TelaCadastrarProduto.css';
 import imgIni from '../imagens/ini.png';
 import Image from 'react-bootstrap/Image'
+import HeaderApp from "./headerApp";
 
 
 
@@ -93,8 +94,8 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
         <div>
             <body className="fundo">
             
-            <header className='inicio'>
-            <Image src={imgIni} className = 'imgIni'></Image>
+            <header>
+                <HeaderApp/>
             </header>
             
             <br></br>

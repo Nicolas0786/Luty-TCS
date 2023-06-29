@@ -8,6 +8,7 @@ import Axios  from 'axios';
 import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
+import HeaderApp from './headerApp';
 
 
 const TelaMandarEtiqueta = () =>{
@@ -17,29 +18,28 @@ const TelaMandarEtiqueta = () =>{
     const [tes, setTes] = useState([]);
 
     const navigate = useNavigate();
-    const {logado, setLogado} =useContext(MyContext);
+   
     
     //console.log(ip)
 
-    useEffect(() =>{
-    const token = sessionStorage.getItem('token');
-    
-    if(logado === false && !token){
-        //console.log("não estou logado e não tem token")
-        //console.log(logado)
-        navigate('/TelaLogin');
-    }
-    
-    },[]);
+   
     
     React.useEffect(()=>{
         async function buscarDados(){
 
-            const etque = await Axios.get('http://localhost:3000/etiqueta/buscarTodas')
+            const etque = await Axios.get('http://localhost:3000/etiqueta/buscarTodas', {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                }
+            });
             //console.log(etque);
             setTes(etque.data)
 
-            const etqq = await Axios.get(`http://localhost:3000/produto/buscarPorId/${id}`)
+            const etqq = await Axios.get(`http://localhost:3000/produto/buscarPorId/${id}`, {
+                headers: {
+                    'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                }
+            });
             setEtq(etqq.data);
         }
         buscarDados()
@@ -78,6 +78,9 @@ const TelaMandarEtiqueta = () =>{
 
     return(
         <body>
+            <header>
+                <HeaderApp/>
+            </header>
             <main>
                 <div>
                 <Form>

@@ -9,24 +9,14 @@ import './Css/TelaProduto.css';
 import { IoMdExit } from "react-icons/io";
 import imgIni from '../imagens/ini.png';
 import Image from 'react-bootstrap/Image'
+import HeaderApp from './headerApp';
 
 const TelaProduto = () =>{
 
     const navigate = useNavigate();
     const[dadosProdutos, setDadosProdutos] = useState([]);
-    const {logado, setLogado} =useContext(MyContext);
     const [search, setSearch] = useState('');
 
-    useEffect(() =>{
-        const token = sessionStorage.getItem('token');
-        
-        if(logado === false && !token){
-            //console.log("não estou logado e não tem token")
-            //console.log(logado)
-            navigate('/TelaLogin');
-        }
-        
-        },[]);
 
     const head = {
         idProduto: 'Id',
@@ -34,7 +24,8 @@ const TelaProduto = () =>{
         descricaoProduto: 'Descrição',
         quantidade: 'Quantidade',
         preco: 'Preço R$',
-        grupo: 'Grupo'
+        grupo: 'Grupo',
+        ala: 'Ala'
         
     }
 
@@ -60,14 +51,13 @@ const TelaProduto = () =>{
         buscarDados()
     },[])
 
-    const filterDados = search.length > 0 ? dadosProdutos.filter(dadosPrp => dadosPrp.codigoEan.includes(search)) : [];
+    const filterDados = search.length > 0 ? dadosProdutos.filter(dadosPrp => dadosPrp.codigoEan.includes(search) || dadosPrp.descricaoProduto.includes(search)) : [];
 
     return(
         <div>
 
-            <header className='inicio'>
-                <Image src={imgIni} className = 'imgIni'></Image>
-                <IoMdExit  className=' exit'/>
+            <header>
+                <HeaderApp/>
             </header>
 
             <div className='botoes'>

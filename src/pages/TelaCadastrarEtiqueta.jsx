@@ -4,9 +4,12 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/Button';
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useState, useEffect} from 'react';
 import Axios from "axios";
 import jwtDecode from 'jwt-decode';
+import {useNavigate} from 'react-router-dom';
+import HeaderApp from './headerApp';
+
 
 const TelaCadastrarEtiqueta = () =>{
 
@@ -14,12 +17,25 @@ const TelaCadastrarEtiqueta = () =>{
     const [nomeEtiqueta, setNomeEtiqueta] = useState('');
     const [corredor, setCorredor] = useState('');
     const [pratilheira, setPratilheira] = useState('');
+    const [usuario, setUsuario] = useState();
+    const navigate = useNavigate();
+
     
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+        if(token){
+            const decodeToken = jwtDecode(token);
+            const {idUsuario} = decodeToken;
+            setUsuario(idUsuario);
+        }
+        
+          
+        },[]);
 
     async function salvar(){
 
         try {
-           const dadosEtiqueta = {ipEtiqueta, nomeEtiqueta, corredor, pratilheira};
+           const dadosEtiqueta = {ipEtiqueta, nomeEtiqueta, corredor, pratilheira, usuario};
 
            const res = await Axios.post("http://localhost:3000/etiqueta/cadastrar", dadosEtiqueta, {
             headers: {
@@ -27,17 +43,25 @@ const TelaCadastrarEtiqueta = () =>{
             }
            });
            console.log(res);
+           if(res.status === 201){
+            window.alert(res.data.message)
+            setIpEtiqueta('');
+            setNomeEtiqueta('');
+            setCorredor('');
+            setPratilheira('');
+            navigate('/TelaEtiqueta');
+           }
            
 
         } catch (error) {
-            
+           window.alert(error.response.data.message);
         }
     }
 
     return(
         <>
-            <header className='inicio'>
-                <Image src={imgIni} className = 'imgIni'></Image>
+            <header >
+                <HeaderApp/>
             </header>
             <div className='forms'>
                 <Form>
@@ -58,7 +82,7 @@ const TelaCadastrarEtiqueta = () =>{
                         <Form.Control id="pratilheira" type="text" value={pratilheira} onChange={(e) => setPratilheira(e.target.value)}/>
                     </Form.Group>
                         <br></br>
-                    <Button>Cancelar</Button>
+                    <Button onClick={() => navigate('/TelaEtiqueta')}>Cancelar</Button>
                     <Button onClick={salvar}>Salvar</Button>
                 </Form>
             </div>

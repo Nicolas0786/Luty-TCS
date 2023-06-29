@@ -13,3 +13,7 @@
     height: 100vh;    
     background: rgb(255, 253, 249);
     }
+
+    #inputs{
+        background: rgb(255, 253, 249) !important;
+    }

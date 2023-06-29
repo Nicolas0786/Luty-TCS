@@ -9,6 +9,7 @@ import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Button from 'react-bootstrap/esm/Button';
+import HeaderApp from './headerApp';
 
 
 const TelaEditarUsuario = () =>{
@@ -107,19 +108,16 @@ const TelaEditarUsuario = () =>{
         
     } catch (error) {
         window.alert(error.response.data.message);
-    }
-
-    
+    }   
     
 }
 
 
-
-
-
     return(
         <>
-            
+            <header>
+                <HeaderApp/>
+            </header>
         <div className='divCadastroUsuario'>
         <Row className="mb-3">
             <h1>Cadastro Usuario</h1>

@@ -10,6 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
 import { useParams } from 'react-router-dom';
+import HeaderApp from "./headerApp";
 
 const TelaEditarProduto = () => {
     const navigate = useNavigate();
@@ -62,10 +63,14 @@ React.useEffect(()=>{
 
 
     return(
-             <div>
-                <header>
 
-                </header>
+
+
+        <>
+            <header>
+                <HeaderApp/>
+            </header>
+             <div>
                 <br></br>
 
            <Button id="voltarPG" onClick={() => navigate('/TelaProduto')}>Voltar</Button>
@@ -138,7 +143,9 @@ React.useEffect(()=>{
                 </Form>
                 </div>
                
-            </div>    
+            </div>   
+
+        </> 
         );
     
 }

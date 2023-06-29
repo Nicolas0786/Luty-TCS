@@ -10,6 +10,7 @@ import Axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import MyContext from "../contexts/myContext";
 import {useContext } from 'react';
+import HeaderApp from './headerApp';
 
 
 const TelaCadastrarUsuario = () =>{
@@ -101,7 +102,9 @@ const funcionario = ['Consultar Produto'];
     return(
 
             <>
-            
+                <header>
+                    <HeaderApp/>
+                </header>
             <div className='divCadastroUsuario'>
             <Row className="mb-3">
                 <h1>Cadastro Usuario</h1>

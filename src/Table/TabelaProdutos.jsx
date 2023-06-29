@@ -86,7 +86,6 @@ const Row = ({record, columns}) => {
 
 
 const table = ({dadosProdutos, head, filterDados}) =>{
-    console.log(dadosProdutos)
     const keys = Object.keys(head)
 
     const columns = [
@@ -107,6 +106,9 @@ const table = ({dadosProdutos, head, filterDados}) =>{
         },
         {
             property: 'grupos.descricaoGrupo'
+        },
+        {
+            property: 'alas.descricao'
         }
     ]
 

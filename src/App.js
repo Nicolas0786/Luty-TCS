@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import 'bootstrap/dist/css/bootstrap.min.css' ;
 
@@ -20,6 +20,7 @@ import TelaCadastrarAla from "./pages/TelaCadastrarAla";
 import TelaCadastrarGrupo from "./pages/TelaCadastrarGrupo";
 import TelaCadastrarEtiqueta from "./pages/TelaCadastrarEtiqueta";
 import Layout from "./pages/layout";
+import TelaEditarEtiqueta from "./pages/TelaEditarEtiqueta";
 
 function App() {
 
@@ -60,9 +61,8 @@ function App() {
             <Route path="/TelaCadastrarAla" element={<TelaCadastrarAla/>}/>
             <Route path="/TelaCadastrarGrupo" element={<TelaCadastrarGrupo/>}/>
             <Route path="/TelaCadastrarEtiqueta" element={<TelaCadastrarEtiqueta/>}/>
-
+            <Route path="/TelaEditarEtiqueta/:id" element={<TelaEditarEtiqueta/>}/>
           </Route>
-          
         </Routes>
       </BrowserRouter>
     </MyContext.Provider>

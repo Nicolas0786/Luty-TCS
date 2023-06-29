@@ -10,6 +10,7 @@ import MyContext from '../contexts/myContext';
 import imgIni from '../imagens/ini.png';
 import Image from 'react-bootstrap/Image'
 import { IoMdExit } from "react-icons/io";
+import HeaderApp from './headerApp';
 
 
 
@@ -18,7 +19,6 @@ const TelaUsuario = () =>{
     const [dadosUsuario, setDadosUsuario] = useState([]);
     const navigate = useNavigate();
     const [search, setSearch] = useState('');
-    const {logado, setLogado} =useContext(MyContext);
 
     const head = {
         nome: 'Nome',
@@ -42,16 +42,13 @@ const TelaUsuario = () =>{
         buscarUsuarios();
     },[]);
 
-    const filterDados = search.length > 0 ? dadosUsuario.filter(dadosUsu => dadosUsu.login.includes(search)) : [];
+    const filterDados = search.length > 0 ? dadosUsuario.filter(dadosUsu => dadosUsu.login.includes(search) || dadosUsu.nome.includes(search)): [];
    // console.log(dadosUsuario);
     //console.log(filterDados);
     return(
         <body>
-            <header className='inicio'>
-                {true && (
-                <Image src={imgIni} className = 'imgIni'></Image>                    
-                )}
-                <IoMdExit  className=' exit'/>
+            <header>
+                <HeaderApp/>
             </header>
 
             <main className='telaInicio'>
