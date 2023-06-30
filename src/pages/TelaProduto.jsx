@@ -63,7 +63,7 @@ const TelaProduto = () =>{
             <div className='botoes'>
             <Button id="TelaUsuario"  onClick={() => navigate('/TelaUsuario')}>Usuário</Button>
             <Button id="TelaProduto"  onClick={() => navigate('/TelaProduto')}>Produto</Button> 
-            <Button id="TelaEtiqueta">Etiqueta</Button>
+            <Button id="TelaEtiqueta"  onClick={() => navigate('/TelaEtiqueta')}>Etiqueta</Button>
             <input className='btPesquisa' type='text' placeholder='Buscar...' onChange={e => setSearch(e.target.value)} value={search}/>
             </div>
 

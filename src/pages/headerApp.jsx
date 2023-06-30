@@ -22,8 +22,12 @@ const HeaderApp = () =>{
         
      }
 
+     const styles = {
+        backgroundColor: ' #FCF4F4'
+      };
+
     return(
-        <Navbar expand="lg" className="bg-body-tertiary">
+        <Navbar expand="lg" className="bg-body-tertiary" style={styles}>
             <Container>
             <Navbar.Brand ><Image src={imgIni} className = 'imgIni'></Image></Navbar.Brand>
                 <Navbar.Collapse id="basic-navbar-nav">

@@ -10,13 +10,14 @@ import React, {useContext, useState, useEffect} from 'react';
 import Axios from "axios";
 import MyContext from '../contexts/myContext';
 import HeaderApp from './headerApp';
+import Alert from 'react-bootstrap/Alert';
 
 
 const TelaCadastrarAla = () =>{
 
     const navigate = useNavigate();
     const [descricao, setDescricao] = useState();
-    const {logado, setLogado} =useContext(MyContext);
+   
 
 
     async function salvar(){
@@ -30,7 +31,8 @@ const TelaCadastrarAla = () =>{
         })
 
         if(res.status === 201){
-            window.alert("Ala Cadastrada");
+            
+            alert("Ala Cadastrada com Sucesso");
             setDescricao('');
             navigate('/TelaProduto')
         }
@@ -49,7 +51,7 @@ const TelaCadastrarAla = () =>{
 
 
 return(
-    <>
+    <>  
                  <header >
                     <HeaderApp/>
                 </header>

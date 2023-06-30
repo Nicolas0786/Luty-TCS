@@ -28,8 +28,6 @@ const TelaCadastrarEtiqueta = () =>{
             const {idUsuario} = decodeToken;
             setUsuario(idUsuario);
         }
-        
-          
         },[]);
 
     async function salvar(){

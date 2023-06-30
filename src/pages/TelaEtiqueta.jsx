@@ -51,8 +51,8 @@ const TelaEtiqueta = () =>{
         </header>
         <div className="container-fluid">
             
-            <Button>Usuario</Button>
-            <Button>Produto</Button>
+            <Button onClick={()=> navigate('/TelaUsuario')}>Usuario</Button>
+            <Button onClick={()=> navigate('/TelaProduto')}>Produto</Button>
                 <Form.Group as={Col} md="4"> 
                         <Form.Control id="Buscar" type="text" onChange={e => setSearch(e.target.value)} value={search} placeholder= "Buscar"/>
                 </Form.Group>
