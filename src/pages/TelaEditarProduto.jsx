@@ -15,6 +15,8 @@ import HeaderApp from "./headerApp";
 const TelaEditarProduto = () => {
     const navigate = useNavigate();
     const {id} = useParams();
+    const [gruposSelecionar, setGruposSelecionar] = useState([]);
+    const [alasSelecionar, setAlasSelecionar] = useState([]);
 
     const {logado, setLogado, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
  
@@ -29,9 +31,24 @@ React.useEffect(()=>{
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem("token")}`
         }
-    })
+    });
+    setEditarr(back.data);
 
-    setEditarr(back.data)
+    const grupos = await Axios.get('http://localhost:3000/grupo/buscarTodos', {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+        }
+    });
+    setGruposSelecionar(grupos.data);
+
+    const alas = await Axios.get('http://localhost:3000/ala/buscarTodas', {
+            headers: {
+                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+        }
+    });
+    setAlasSelecionar(alas.data);
+
+
 
     }
     buscarDados()
@@ -55,10 +72,11 @@ React.useEffect(()=>{
 
     }
 
-    const alaa = Object.values(editarr).map(tes => {return <option value={tes.idAla} key={tes.idAla}>{tes.descricao}</option>})
-
     
-    const grupoo = Object.values(editarr).map(tess => {return <option key={tess.idGrupo}>{tess.descricaoGrupo}</option>})
+    const alaa = Object.values(alasSelecionar).map(alas => <option value={alas.idAla} key={alas.idAla}>{alas.descricao}</option>)
+    console.log(alaa)
+    
+    const grupoo = Object.values(editarr).map(tess => <option key={tess.idGrupo}>{tess.descricaoGrupo}</option>)
     
 
 
@@ -105,7 +123,8 @@ React.useEffect(()=>{
                          <Form.Group as={Col} md="4">
                             <Form.Label>Grupo</Form.Label>
                             <Form.Select onChange={(e)=> setGrupo(e.target.value)}>
-                                {grupoo}
+                                <option>{editarr.grupos.descricaoGrupo}</option>
+                                
                                 
                             </Form.Select>
                         </Form.Group>
@@ -113,7 +132,9 @@ React.useEffect(()=>{
                         <Form.Group as={Col} md="3">
                             <Form.Label>Ala</Form.Label>
                             <Form.Select onChange={(e)=> setAla(e.target.value)}>
+                            <option>{editarr.grupos.descricaoGrupo}</option>
                                 {alaa}
+                            
                             </Form.Select>
                             
                         </Form.Group>

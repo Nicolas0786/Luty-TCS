@@ -42,7 +42,7 @@ const TelaUsuario = () =>{
         buscarUsuarios();
     },[]);
 
-    const filterDados = search.length > 0 ? dadosUsuario.filter(dadosUsu => dadosUsu.login.includes(search) || dadosUsu.nome.includes(search)): [];
+    const filterDados = search.length > 0 ? dadosUsuario.filter(dadosUsu => dadosUsu.login.includes(search) || dadosUsu.nome.includes(search) || dadosUsu.matricula.toString().includes(search)): [];
    // console.log(dadosUsuario);
     //console.log(filterDados);
     return(

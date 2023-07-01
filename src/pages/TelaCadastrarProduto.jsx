@@ -11,8 +11,6 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import FormSelect from 'react-bootstrap/esm/FormSelect';
 import './Css/TelaCadastrarProduto.css';
-import imgIni from '../imagens/ini.png';
-import Image from 'react-bootstrap/Image'
 import HeaderApp from "./headerApp";
 import jwtDecode from 'jwt-decode';
 
@@ -77,9 +75,7 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
 
          const dadosFront = {codigoEan, descricaoProduto, grupos, alas, quantidade, custo, porcentagem, usuario};
 
-         if(!Number(codigoEan)){
-            window.alert("So pode conter números no campo Código Ean");
-          }try {
+         try {
            const res = await Axios.post("http://localhost:3000/produto/cadastrar", dadosFront, {
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`
@@ -166,7 +162,7 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
                     <div>
                         <div className="codigoEan">
                             <Form.Label>Codigo Ean</Form.Label>
-                            <Form.Control id="codigoEan" pattern='^[0-9]{0,3}$' type="text" value={codigoEan} onChange ={(e)=> setCodigoEan(e.target.value)}  maxLength={13} />
+                            <Form.Control id="codigoEan" pattern='^[0-9]{0,3}$' type="text" value={codigoEan} onChange ={(e)=> setCodigoEan(e.target.value)}  maxLength={14} />
                         </div>
                     </div>
 
