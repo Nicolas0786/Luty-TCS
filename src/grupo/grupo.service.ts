@@ -18,6 +18,7 @@ export class GrupoService {
     const Grup = new Grupo;
 
     Grup.descricaoGrupo = createGrupoDto.descricaoGrupo;
+    Grup.usuario = createGrupoDto.usuario;
 
     return this.repositorioGrupo.save(Grup);
   }

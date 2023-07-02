@@ -10,12 +10,10 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UpdateProdutoDto = void 0;
-const mapped_types_1 = require("@nestjs/mapped-types");
 const class_validator_1 = require("class-validator");
-const create_produto_dto_1 = require("./create-produto.dto");
 const grupo_entity_1 = require("../../grupo/entities/grupo.entity");
 const ala_entity_1 = require("../../ala/entities/ala.entity");
-class UpdateProdutoDto extends (0, mapped_types_1.PartialType)(create_produto_dto_1.CreateProdutoDto) {
+class UpdateProdutoDto {
 }
 __decorate([
     (0, class_validator_1.IsOptional)(),

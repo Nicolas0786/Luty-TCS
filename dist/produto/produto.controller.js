@@ -25,6 +25,9 @@ let ProdutoController = class ProdutoController {
     constructor(produtoService) {
         this.produtoService = produtoService;
     }
+    update(idProduto, updateProdutoDto) {
+        return this.produtoService.update(+idProduto, updateProdutoDto);
+    }
     create(createProdutoDto) {
         return this.produtoService.create(createProdutoDto);
     }
@@ -37,10 +40,18 @@ let ProdutoController = class ProdutoController {
     findOneBy(idProduto) {
         return this.produtoService.findOneBy(idProduto);
     }
-    update(idProduto, updateProdutoDto) {
-        return this.produtoService.update(+idProduto, updateProdutoDto);
-    }
 };
+__decorate([
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Patch)('atualizar/:idProduto'),
+    __param(0, (0, common_1.Param)('idProduto')),
+    __param(1, (0, common_1.Body)()),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [Number, update_produto_dto_1.UpdateProdutoDto]),
+    __metadata("design:returntype", void 0)
+], ProdutoController.prototype, "update", null);
 __decorate([
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
@@ -52,7 +63,9 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProdutoController.prototype, "create", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente, role_enum_1.Role.Coordenador, role_enum_1.Role.Funcionario),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Funcionario),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarTodos'),
     __metadata("design:type", Function),
@@ -77,17 +90,6 @@ __decorate([
     __metadata("design:paramtypes", [Number]),
     __metadata("design:returntype", void 0)
 ], ProdutoController.prototype, "findOneBy", null);
-__decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
-    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Patch)('atualizar/:idProduto'),
-    __param(0, (0, common_1.Param)('idProduto')),
-    __param(1, (0, common_1.Body)()),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Number, update_produto_dto_1.UpdateProdutoDto]),
-    __metadata("design:returntype", void 0)
-], ProdutoController.prototype, "update", null);
 ProdutoController = __decorate([
     (0, common_1.Controller)('produto'),
     (0, common_1.UseGuards)(roles_guard_1.RolesGuard),

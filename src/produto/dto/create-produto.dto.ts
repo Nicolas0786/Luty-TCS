@@ -6,24 +6,24 @@ import { Usuario } from "src/usuario/entities/usuario.entity";
 export class CreateProdutoDto {
 
     
-    @IsNumber()
+   
     @IsNotEmpty()
     codigoEan: number;
 
-    @IsNotEmpty()
+    //@IsNotEmpty()
     descricaoProduto: string;
     
     
-    @IsNumber()
+   
     @IsNotEmpty()
     quantidade: number;
     
    
-    @IsNumber()
+    
     @IsNotEmpty()
     custo: number;
     
-    @IsNumber()
+   
     @IsNotEmpty()
     porcentagem: number
 

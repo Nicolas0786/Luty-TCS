@@ -24,6 +24,7 @@ let GrupoService = class GrupoService {
     create(createGrupoDto) {
         const Grup = new grupo_entity_1.Grupo;
         Grup.descricaoGrupo = createGrupoDto.descricaoGrupo;
+        Grup.usuario = createGrupoDto.usuario;
         return this.repositorioGrupo.save(Grup);
     }
     findAll() {

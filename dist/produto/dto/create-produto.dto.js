@@ -17,26 +17,18 @@ const usuario_entity_1 = require("../../usuario/entities/usuario.entity");
 class CreateProdutoDto {
 }
 __decorate([
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateProdutoDto.prototype, "codigoEan", void 0);
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
-    __metadata("design:type", String)
-], CreateProdutoDto.prototype, "descricaoProduto", void 0);
-__decorate([
-    (0, class_validator_1.IsNumber)(),
-    (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateProdutoDto.prototype, "quantidade", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateProdutoDto.prototype, "custo", void 0);
 __decorate([
-    (0, class_validator_1.IsNumber)(),
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], CreateProdutoDto.prototype, "porcentagem", void 0);

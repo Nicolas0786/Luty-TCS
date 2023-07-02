@@ -16,12 +16,23 @@ export class ProdutoController {
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
   @UseGuards(AuthGuard)
+  @Patch('atualizar/:idProduto')
+  update(@Param('idProduto') idProduto: number, @Body() updateProdutoDto: UpdateProdutoDto) {
+    return this.produtoService.update(+ idProduto, updateProdutoDto);
+  }
+
+
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(AuthGuard)
   @Post('cadastrar')
   create(@Body() createProdutoDto: CreateProdutoDto) {
     return this.produtoService.create(createProdutoDto);
   }
 
-  @Roles(Role.Gerente, Role.Coordenador, Role.Funcionario)
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @Roles(Role.Funcionario)
   @UseGuards(AuthGuard)
   @Get('buscarTodos')
   findAll() {
@@ -42,13 +53,5 @@ export class ProdutoController {
     return this.produtoService.findOneBy(idProduto);
   }
   
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
-  @UseGuards(AuthGuard)
-  @Patch('atualizar/:idProduto')
-  update(@Param('idProduto') idProduto: number, @Body() updateProdutoDto: UpdateProdutoDto) {
-    return this.produtoService.update(+ idProduto, updateProdutoDto);
-  }
-
   
 }

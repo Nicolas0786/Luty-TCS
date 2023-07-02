@@ -11,11 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateAlaDto = void 0;
 const class_validator_1 = require("class-validator");
+const usuario_entity_1 = require("../../usuario/entities/usuario.entity");
 class CreateAlaDto {
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateAlaDto.prototype, "descricao", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", usuario_entity_1.Usuario)
+], CreateAlaDto.prototype, "usuario", void 0);
 exports.CreateAlaDto = CreateAlaDto;
 //# sourceMappingURL=create-ala.dto.js.map

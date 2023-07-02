@@ -23,12 +23,12 @@ let ProdutoService = class ProdutoService {
     }
     async create(createProdutoDto) {
         if (!Number(createProdutoDto.codigoEan)) {
-            throw new common_1.HttpException("So pode conter número no campo Código Ean", common_1.HttpStatus.BAD_REQUEST);
+            throw new common_1.HttpException("Neste campo Código Ean so podem conter caracteres númericos", common_1.HttpStatus.BAD_REQUEST);
         }
         else if (createProdutoDto.codigoEan < 0) {
             throw new common_1.HttpException("O codigo ean não pode ser negativo", common_1.HttpStatus.FORBIDDEN);
         }
-        else if (createProdutoDto.codigoEan.toString().length > 13) {
+        else if (createProdutoDto.codigoEan.toString().length > 14) {
             throw new common_1.HttpException("O codigo ean não pode conter mais de 13 caracteres", common_1.HttpStatus.FORBIDDEN);
         }
         if (createProdutoDto.custo <= 0) {
@@ -111,8 +111,10 @@ let ProdutoService = class ProdutoService {
     }
     async update(idProduto, updateProdutoDto) {
         const produto = new produto_entity_1.Produto();
+        console.log('ala', updateProdutoDto.alas);
         const coluns = await this.repositorioProduto.findOne({
             select: {
+                idProduto: true,
                 codigoEan: true,
                 descricaoProduto: true,
                 quantidade: true,
@@ -126,6 +128,7 @@ let ProdutoService = class ProdutoService {
                 idProduto
             }
         });
+        console.log('aa', coluns.alas);
         const codigoEanExists = await this.repositorioProduto.findOneBy({
             codigoEan: updateProdutoDto.codigoEan
         });
@@ -142,12 +145,12 @@ let ProdutoService = class ProdutoService {
             else if (updateProdutoDto.codigoEan < 0) {
                 throw new common_1.HttpException("O codigo ean não pode ser negativo", common_1.HttpStatus.FORBIDDEN);
             }
-            else if (updateProdutoDto.codigoEan.toString().length > 13) {
-                throw new common_1.HttpException("O codigo ean não pode conter mais de 13 caracteres", common_1.HttpStatus.FORBIDDEN);
+            else if (updateProdutoDto.codigoEan.toString().length > 14) {
+                throw new common_1.HttpException("O codigo ean não pode conter mais de 14 caracteres", common_1.HttpStatus.FORBIDDEN);
             }
             produto.codigoEan = updateProdutoDto.codigoEan;
         }
-        if (updateProdutoDto.descricaoProduto === undefined) {
+        if (updateProdutoDto.descricaoProduto === undefined || updateProdutoDto.descricaoProduto.toString() === '') {
             produto.descricaoProduto = coluns.descricaoProduto;
         }
         else {
@@ -186,13 +189,13 @@ let ProdutoService = class ProdutoService {
         else {
             produto.statusProduto = updateProdutoDto.statusProduto;
         }
-        if (updateProdutoDto.alas === undefined) {
+        if (updateProdutoDto.alas === undefined || updateProdutoDto.alas.toString() === '') {
             produto.alas = coluns.alas;
         }
         else {
             produto.alas = updateProdutoDto.alas;
         }
-        if (updateProdutoDto.grupos === undefined) {
+        if (updateProdutoDto.grupos === undefined || updateProdutoDto.grupos.toString() === '') {
             produto.grupos = coluns.grupos;
         }
         else {
@@ -201,7 +204,7 @@ let ProdutoService = class ProdutoService {
         let porcen = produto.porcentagem;
         let novaPorcentagem = porcen / 100;
         let precoCusto = produto.custo;
-        let precoo = precoCusto * novaPorcentagem + precoCusto;
+        let precoo = precoCusto * novaPorcentagem + parseFloat(precoCusto.toString());
         produto.preco = precoo;
         this.repositorioProduto.update(idProduto, produto);
         return new common_1.HttpException("Produto alterado com sucesso", common_1.HttpStatus.OK);

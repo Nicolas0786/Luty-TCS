@@ -19,6 +19,7 @@ export class AlaService {
     const Alaa = new Ala();
 
     Alaa.descricao = createAlaDto.descricao;
+    Alaa.usuario = createAlaDto.usuario;
     return this.repositorioAla.save(Alaa);
   }
 

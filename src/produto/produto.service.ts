@@ -6,7 +6,7 @@ import { createQuery } from 'mysql2/typings/mysql/lib/Connection';
 import { parse } from 'path';
 import { Etiqueta } from 'src/etiqueta/entities/etiqueta.entity';
 import { Grupo } from 'src/grupo/entities/grupo.entity';
-import { createQueryBuilder, getRepository, Repository } from 'typeorm';
+import { Column, createQueryBuilder, getRepository, Repository } from 'typeorm';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { Produto } from './entities/produto.entity';
@@ -24,10 +24,10 @@ export class ProdutoService {
   async create(createProdutoDto: CreateProdutoDto) {
 
     if(!Number(createProdutoDto.codigoEan)){
-      throw new HttpException("So pode conter número no campo Código Ean", HttpStatus.BAD_REQUEST);
+      throw new HttpException("Neste campo Código Ean so podem conter caracteres númericos", HttpStatus.BAD_REQUEST);
     }else if(createProdutoDto.codigoEan < 0){
       throw new HttpException("O codigo ean não pode ser negativo", HttpStatus.FORBIDDEN);
-    }else if(createProdutoDto.codigoEan.toString().length > 13){
+    }else if(createProdutoDto.codigoEan.toString().length > 14){
       throw new HttpException("O codigo ean não pode conter mais de 13 caracteres", HttpStatus.FORBIDDEN);
     }
 
@@ -140,9 +140,11 @@ export class ProdutoService {
   async update(idProduto: number, updateProdutoDto: UpdateProdutoDto) {
 
     const produto = new Produto();
+    console.log('ala',updateProdutoDto.alas)
 
     const coluns:Produto = await this.repositorioProduto.findOne({
       select: {
+        idProduto:true,
         codigoEan: true,
         descricaoProduto: true,
         quantidade: true,
@@ -159,6 +161,7 @@ export class ProdutoService {
       }
     })
 
+    console.log('aa',coluns.alas);
 
     const codigoEanExists: Produto = await this.repositorioProduto.findOneBy({
      codigoEan: updateProdutoDto.codigoEan
@@ -176,8 +179,8 @@ if(updateProdutoDto.codigoEan === undefined){
     throw new HttpException("So pode conter número no campo Código Ean", HttpStatus.BAD_REQUEST);
   }else if(updateProdutoDto.codigoEan < 0){
     throw new HttpException("O codigo ean não pode ser negativo", HttpStatus.FORBIDDEN);
-  }else if(updateProdutoDto.codigoEan.toString().length > 13){
-    throw new HttpException("O codigo ean não pode conter mais de 13 caracteres", HttpStatus.FORBIDDEN);
+  }else if(updateProdutoDto.codigoEan.toString().length > 14){
+    throw new HttpException("O codigo ean não pode conter mais de 14 caracteres", HttpStatus.FORBIDDEN);
   }
 
 produto.codigoEan = updateProdutoDto.codigoEan;
@@ -185,7 +188,7 @@ produto.codigoEan = updateProdutoDto.codigoEan;
 }
 
 
-if(updateProdutoDto.descricaoProduto === undefined){
+if(updateProdutoDto.descricaoProduto === undefined || updateProdutoDto.descricaoProduto.toString() === ''){
   produto.descricaoProduto = coluns.descricaoProduto;
 
 }else{
@@ -230,13 +233,13 @@ if(updateProdutoDto.statusProduto === undefined){
 
 }
 
-if(updateProdutoDto.alas === undefined){
+if(updateProdutoDto.alas === undefined || updateProdutoDto.alas.toString() === ''){
   produto.alas = coluns.alas;
 }else{
   produto.alas = updateProdutoDto.alas;
 }
 
-if(updateProdutoDto.grupos === undefined){
+if(updateProdutoDto.grupos === undefined || updateProdutoDto.grupos.toString() === ''){
   produto.grupos = coluns.grupos;
 }else{
   produto.grupos = updateProdutoDto.grupos;
@@ -247,9 +250,9 @@ if(updateProdutoDto.grupos === undefined){
   
     let novaPorcentagem: number = porcen/100;
 
-    let precoCusto: number = produto.custo;
-      
-    let precoo: number = precoCusto * novaPorcentagem + precoCusto;
+    let precoCusto: number = produto.custo;   
+    
+    let precoo: number =  precoCusto * novaPorcentagem + parseFloat(precoCusto.toString());
 
     produto.preco = precoo;
 

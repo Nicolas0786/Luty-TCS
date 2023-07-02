@@ -1,1 +1,1 @@
-{"version":3,"file":"create-grupo.dto.js","sourceRoot":"","sources":["../../../src/grupo/dto/create-grupo.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA4C;AAG5C,MAAa,cAAc;CAI1B;AAFG;IAAC,IAAA,4BAAU,GAAE;;sDACU;AAH3B,wCAIC"}
+{"version":3,"file":"create-grupo.dto.js","sourceRoot":"","sources":["../../../src/grupo/dto/create-grupo.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA4C;AAC5C,0EAA8D;AAG9D,MAAa,cAAc;CAO1B;AALG;IAAC,IAAA,4BAAU,GAAE;;sDACU;AAEvB;IAAC,IAAA,4BAAU,GAAE;8BACJ,wBAAO;+CAAC;AANrB,wCAOC"}

@@ -11,11 +11,16 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CreateGrupoDto = void 0;
 const class_validator_1 = require("class-validator");
+const usuario_entity_1 = require("../../usuario/entities/usuario.entity");
 class CreateGrupoDto {
 }
 __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", String)
 ], CreateGrupoDto.prototype, "descricaoGrupo", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", usuario_entity_1.Usuario)
+], CreateGrupoDto.prototype, "usuario", void 0);
 exports.CreateGrupoDto = CreateGrupoDto;
 //# sourceMappingURL=create-grupo.dto.js.map

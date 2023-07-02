@@ -1,4 +1,4 @@
-import { IsNotEmpty, IsNumber } from "class-validator";
+import { IsNotEmpty } from "class-validator";
 import { Permissao } from "../entities/permissao.entity";
 
 export class CreateUsuarioDto {

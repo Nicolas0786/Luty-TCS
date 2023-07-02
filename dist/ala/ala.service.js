@@ -24,6 +24,7 @@ let AlaService = class AlaService {
     create(createAlaDto) {
         const Alaa = new ala_entity_1.Ala();
         Alaa.descricao = createAlaDto.descricao;
+        Alaa.usuario = createAlaDto.usuario;
         return this.repositorioAla.save(Alaa);
     }
     findAll() {

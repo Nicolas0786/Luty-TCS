@@ -4,7 +4,7 @@ import { CreateProdutoDto } from './create-produto.dto';
 import { Grupo } from 'src/grupo/entities/grupo.entity';
 import { Ala } from 'src/ala/entities/ala.entity';
 
-export class UpdateProdutoDto extends PartialType(CreateProdutoDto) {
+export class UpdateProdutoDto {
 
     @IsOptional()
     @IsNumber()
