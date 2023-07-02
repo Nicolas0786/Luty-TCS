@@ -9,13 +9,23 @@ import './Css/TelaCadastrarGrupo.css';
 import {useNavigate} from 'react-router-dom';
 import React, {useContext, useState, useEffect} from 'react';
 import Axios from "axios";
-import MyContext from '../contexts/myContext';
 import HeaderApp from './headerApp';
+import jwtDecode from 'jwt-decode';
+
 
 const TelaCadastrarGrupo = () => {
     const navigate = useNavigate();
     const [descricaoGrupo, setDescricaoGrupo] = useState();
-    const {logado, setLogado} =useContext(MyContext);
+    const [usuario, setUsuario] = useState('');
+
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+        if(token){
+            const decodeToken = jwtDecode(token);
+            const {idUsuario} = decodeToken;
+            setUsuario(idUsuario);
+        }
+        },[]);
 
     
 
@@ -23,7 +33,7 @@ const TelaCadastrarGrupo = () => {
 
         try {
             
-      const res = await Axios.post("http://localhost:3000/grupo/criar", {descricaoGrupo:descricaoGrupo}, {
+      const res = await Axios.post("http://localhost:3000/grupo/criar", {descricaoGrupo:descricaoGrupo, usuario: usuario}, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             }

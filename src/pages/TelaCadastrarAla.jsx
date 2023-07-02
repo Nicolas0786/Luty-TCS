@@ -11,12 +11,24 @@ import Axios from "axios";
 import MyContext from '../contexts/myContext';
 import HeaderApp from './headerApp';
 import Alert from 'react-bootstrap/Alert';
+import jwtDecode from 'jwt-decode';
+
 
 
 const TelaCadastrarAla = () =>{
 
     const navigate = useNavigate();
     const [descricao, setDescricao] = useState();
+    const [usuario, setUsuario] = useState('');
+
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+        if(token){
+            const decodeToken = jwtDecode(token);
+            const {idUsuario} = decodeToken;
+            setUsuario(idUsuario);
+        }
+        },[]);
    
 
 
@@ -24,7 +36,7 @@ const TelaCadastrarAla = () =>{
 
         try {
             
-      const res = await Axios.post("http://localhost:3000/ala/criar", {descricao:descricao}, {
+      const res = await Axios.post("http://localhost:3000/ala/criar", {descricao:descricao, usuario:usuario}, {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
             }

@@ -26,7 +26,6 @@ const TelaCadastrarProduto = ()=>{
     const [test, setTest] = useState([]);
     const [test1, setTest1] = useState([]);
     const [usuario, setUsuario] = useState('');
-    //console.log(editarr);
 
     useEffect(() =>{
         const token = sessionStorage.getItem('token');

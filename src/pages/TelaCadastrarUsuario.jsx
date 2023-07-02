@@ -26,7 +26,6 @@ const TelaCadastrarUsuario = () =>{
     const [confirsenha, SetConfirsenha] = useState('');
     const [permissao, SetPermissao] = useState('');
     
-    const {logado, setLogado} =useContext(MyContext);
 
 const gerente = ['Cadastro Usuario', 'Cadastro Etiqueta', 'Cadastrar Produto', 'Consultar Produto', 'Atualizar Etiqueta', 'Cadastrar Grupo/Ala', 'Consultar Usuarios'];
 const coordenador = ['Atualizar Etiqueta', 'Cadastro Produto', 'Cadastro Grupo/Ala', 'Consultar Produto']

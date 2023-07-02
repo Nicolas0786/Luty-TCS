@@ -2,7 +2,6 @@ import React, {useContext, useState, useEffect} from "react";
 import {useNavigate} from 'react-router-dom';
 import MyContext from "../contexts/myContext";
 import Axios from 'axios';
-import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 
 import Form from 'react-bootstrap/Form';
@@ -17,6 +16,8 @@ const TelaEditarProduto = () => {
     const {id} = useParams();
     const [gruposSelecionar, setGruposSelecionar] = useState([]);
     const [alasSelecionar, setAlasSelecionar] = useState([]);
+    const [grupos, setGrupos] = useState('');
+    const [alas, setAlas] = useState('');
 
     const {logado, setLogado, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
  
@@ -61,29 +62,33 @@ React.useEffect(()=>{
 
     async function atualizarProduto (){
 
-    const alal = await Axios.patch("http://localhost:3000/produto/atualizar/"+ editarr.idProduto, {descricaoProduto, grupo, ala, quantidade, custo, porcentagem}, {
+        try {
+            
+        const alal = await Axios.patch("http://localhost:3000/produto/atualizar/"+ editarr.idProduto, {descricaoProduto, grupos, alas, quantidade, custo, porcentagem}, {
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem("token")}`
         }
     });
-    //console.log(alal)
 
-     navigate('/TelaProduto')
+    console.log(alal)
+     navigate('/TelaProduto');
+
+    } catch (error) {
+        console.log(alas);
+        console.log('erro', error);
+    }
+
+
 
     }
 
     
     const alaa = Object.values(alasSelecionar).map(alas => <option value={alas.idAla} key={alas.idAla}>{alas.descricao}</option>)
-    console.log(alaa)
     
-    const grupoo = Object.values(editarr).map(tess => <option key={tess.idGrupo}>{tess.descricaoGrupo}</option>)
+    const grupoo = Object.values(gruposSelecionar).map(grupos => <option value={grupos.idGrupo} key={grupos.idGrupo}>{grupos.descricaoGrupo}</option>)
     
-
 
     return(
-
-
-
         <>
             <header>
                 <HeaderApp/>
@@ -122,8 +127,9 @@ React.useEffect(()=>{
                     <Row className="mb-3">
                          <Form.Group as={Col} md="4">
                             <Form.Label>Grupo</Form.Label>
-                            <Form.Select onChange={(e)=> setGrupo(e.target.value)}>
+                            <Form.Select onChange={(e)=> setGrupos(e.target.value)}>
                                 <option>{editarr.grupos.descricaoGrupo}</option>
+                                {grupoo}
                                 
                                 
                             </Form.Select>
@@ -131,8 +137,8 @@ React.useEffect(()=>{
 
                         <Form.Group as={Col} md="3">
                             <Form.Label>Ala</Form.Label>
-                            <Form.Select onChange={(e)=> setAla(e.target.value)}>
-                            <option>{editarr.grupos.descricaoGrupo}</option>
+                            <Form.Select onChange={(e)=> setAlas(e.target.value)}>
+                                <option>{editarr.alas.descricao}</option>
                                 {alaa}
                             
                             </Form.Select>

@@ -26,8 +26,8 @@ function App() {
 
   const [codigoEan, setCodigoEan] = useState();
   const [descricaoProduto, setDescricaoProduto] = useState("");
-  const [grupos, setGrupos] = useState();
-  const [alas, setAlas] = useState();
+  const [grupos, setGrupos] = useState('');
+  const [alas, setAlas] = useState('');
   const [quantidade, setQuantidade] = useState();
   const [custo, setCusto] = useState();
   const [porcentagem, setPorcentagem] = useState();
