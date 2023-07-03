@@ -9,6 +9,8 @@ import Button from 'react-bootstrap/Button';
 import { useParams } from 'react-router-dom';
 import {useNavigate} from 'react-router-dom';
 import HeaderApp from './headerApp';
+import jwtDecode from 'jwt-decode';
+
 
 
 
@@ -18,9 +20,19 @@ const TelaMandarEtiqueta = () =>{
     const [ip, setIp] = useState();
     const [tes, setTes] = useState([]);
     const [search, setSearch] = useState('');
+    const [idUsuario, setIdUsuario] = useState('');
     
     const navigate = useNavigate();
    
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+        if(token){
+            const decodeToken = jwtDecode(token);
+            const {idUsuario} = decodeToken;
+            setIdUsuario(idUsuario);
+        }
+        },[]);
+
 
     React.useEffect(()=>{
         async function buscarDados(){
@@ -69,7 +81,7 @@ const TelaMandarEtiqueta = () =>{
         try {
             const idProduto = etq.idProduto;
         const idEtiqueta = ip;
-        const dados = {idEtiqueta , idProduto};
+        const dados = {idEtiqueta , idProduto, idUsuario};
 
         console.log(dados);
         const res = await Axios.post('http://localhost:3000/etiqueta/alterar/' , dados, {

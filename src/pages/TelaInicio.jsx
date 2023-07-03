@@ -33,7 +33,7 @@ const TelaInicio = () =>{
                     <Button className='botaoIniic' href="/TelaProduto">Produto</Button>
                     <Button className='botaoInii' href="/TelaEtiqueta">Etiqueta</Button>
                     {usuario.cargo === "gerente" && (
-                    <Button className='botaoRel' >Relatorio</Button>               
+                    <Button className='botaoRel' href='/TelaRelatorio' >Relatorio</Button>               
                     )}
                 </div>
             </main>

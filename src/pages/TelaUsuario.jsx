@@ -30,8 +30,7 @@ const TelaUsuario = () =>{
 
     React.useEffect(()=>{
         async function buscarUsuarios(){
-            
-            console.log('eu',sessionStorage.getItem("token"));
+        
             const dados = await Axios.get('http://localhost:3000/usuario/buscarTodos', {
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`

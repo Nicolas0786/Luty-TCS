@@ -21,6 +21,7 @@ import TelaCadastrarGrupo from "./pages/TelaCadastrarGrupo";
 import TelaCadastrarEtiqueta from "./pages/TelaCadastrarEtiqueta";
 import Layout from "./pages/layout";
 import TelaEditarEtiqueta from "./pages/TelaEditarEtiqueta";
+import TelaRelatorio from "./pages/TelaRelatorio";
 
 function App() {
 
@@ -62,6 +63,7 @@ function App() {
             <Route path="/TelaCadastrarGrupo" element={<TelaCadastrarGrupo/>}/>
             <Route path="/TelaCadastrarEtiqueta" element={<TelaCadastrarEtiqueta/>}/>
             <Route path="/TelaEditarEtiqueta/:id" element={<TelaEditarEtiqueta/>}/>
+            <Route path="/TelaRelatorio" element={<TelaRelatorio/>}/>
           </Route>
         </Routes>
       </BrowserRouter>
