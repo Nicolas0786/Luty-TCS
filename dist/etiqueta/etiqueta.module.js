@@ -17,11 +17,12 @@ const axios_1 = require("@nestjs/axios");
 const produto_entity_1 = require("../produto/entities/produto.entity");
 const produtoEtiqueta_1 = require("./entities/produtoEtiqueta");
 const auth_module_1 = require("../auth/auth.module");
+const usuario_entity_1 = require("../usuario/entities/usuario.entity");
 let EtiquetaModule = EtiquetaModule_1 = class EtiquetaModule {
 };
 EtiquetaModule = EtiquetaModule_1 = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([etiqueta_entity_1.Etiqueta, produto_entity_1.Produto, produtoEtiqueta_1.ProdutoEtiqueta]), axios_1.HttpModule.registerAsync({ useFactory: () => ({ timeout: 50000, maxRedirects: 10 }) }), (0, common_1.forwardRef)(() => auth_module_1.AuthModule)],
+        imports: [typeorm_1.TypeOrmModule.forFeature([etiqueta_entity_1.Etiqueta, produto_entity_1.Produto, produtoEtiqueta_1.ProdutoEtiqueta, usuario_entity_1.Usuario]), axios_1.HttpModule.registerAsync({ useFactory: () => ({ timeout: 50000, maxRedirects: 10 }) }), (0, common_1.forwardRef)(() => auth_module_1.AuthModule)],
         controllers: [etiqueta_controller_1.EtiquetaController],
         providers: [etiqueta_service_1.EtiquetaService],
         exports: [EtiquetaModule_1],

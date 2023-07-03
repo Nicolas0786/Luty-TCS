@@ -32,6 +32,9 @@ let EtiquetaController = class EtiquetaController {
     findAll() {
         return this.etiquetaService.findAll();
     }
+    buscaIntegra() {
+        return this.etiquetaService.integracao();
+    }
     findOne(idEtiqueta) {
         return this.etiquetaService.findOne(idEtiqueta);
     }
@@ -61,6 +64,12 @@ __decorate([
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "findAll", null);
+__decorate([
+    (0, common_1.Get)('integra'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], EtiquetaController.prototype, "buscaIntegra", null);
 __decorate([
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),

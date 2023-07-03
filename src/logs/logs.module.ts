@@ -4,10 +4,11 @@ import { LogsController } from './logs.controller';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { etiqueta_log } from './entities/etiqueta_log';
 import { produto_log } from './entities/produto_log';
+import { ProdutoEtiqueta } from 'src/etiqueta/entities/produtoEtiqueta';
 
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ etiqueta_log, produto_log])],
+  imports: [TypeOrmModule.forFeature([ etiqueta_log, produto_log, ProdutoEtiqueta])],
   controllers: [LogsController],
   providers: [LogsService],
   exports: [LogsModule]

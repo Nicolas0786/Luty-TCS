@@ -14,11 +14,12 @@ const logs_controller_1 = require("./logs.controller");
 const typeorm_1 = require("@nestjs/typeorm");
 const etiqueta_log_1 = require("./entities/etiqueta_log");
 const produto_log_1 = require("./entities/produto_log");
+const produtoEtiqueta_1 = require("../etiqueta/entities/produtoEtiqueta");
 let LogsModule = LogsModule_1 = class LogsModule {
 };
 LogsModule = LogsModule_1 = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([etiqueta_log_1.etiqueta_log, produto_log_1.produto_log])],
+        imports: [typeorm_1.TypeOrmModule.forFeature([etiqueta_log_1.etiqueta_log, produto_log_1.produto_log, produtoEtiqueta_1.ProdutoEtiqueta])],
         controllers: [logs_controller_1.LogsController],
         providers: [logs_service_1.LogsService],
         exports: [LogsModule_1]

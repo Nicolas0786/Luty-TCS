@@ -8,4 +8,7 @@ export class PrecoEtiqueta {
     @IsNotEmpty()
     idProduto: number;
 
+    @IsNotEmpty()
+    idUsuario: number;
+
 }

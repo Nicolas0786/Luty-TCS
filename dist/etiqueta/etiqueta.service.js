@@ -22,12 +22,14 @@ const etiqueta_entity_1 = require("./entities/etiqueta.entity");
 const bcrypt = require("bcrypt");
 const produto_entity_1 = require("../produto/entities/produto.entity");
 const produtoEtiqueta_1 = require("./entities/produtoEtiqueta");
+const usuario_entity_1 = require("../usuario/entities/usuario.entity");
 let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
-    constructor(repositorioEtiqueta, http, repositorioProduto, repositorioProdutoEtiqueta) {
+    constructor(repositorioEtiqueta, http, repositorioProduto, repositorioProdutoEtiqueta, repositorioUsuario) {
         this.repositorioEtiqueta = repositorioEtiqueta;
         this.http = http;
         this.repositorioProduto = repositorioProduto;
         this.repositorioProdutoEtiqueta = repositorioProdutoEtiqueta;
+        this.repositorioUsuario = repositorioUsuario;
         this.logger = new common_1.Logger(EtiquetaService_1.name);
     }
     async cadastrar(createEtiquetaDto) {
@@ -78,6 +80,20 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                 pratilheira: true
             }
         });
+    }
+    async integracao() {
+        const tes = await this.repositorioProdutoEtiqueta.find({
+            select: {
+                idProdutoEtiqueta: true,
+                dataIntegracao: true,
+            }, relations: {
+                produto: true,
+                etiqueta: true,
+                usuario: true,
+            }
+        });
+        console.log(tes);
+        return tes;
     }
     findOne(idEtiqueta) {
         return this.repositorioEtiqueta.findOne({
@@ -161,12 +177,16 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
         const prod = await this.repositorioProduto.findOneBy({
             idProduto: precoEtiqueta.idProduto
         });
+        const usu = await this.repositorioUsuario.findOneBy({
+            idUsuario: precoEtiqueta.idUsuario
+        });
         try {
             const ipp2 = 'http://' + etiq.ipEtiqueta + '/produto';
             const produto = prod.descricaoProduto.toUpperCase() + "," + "R$ " + prod.preco + "," + "Ean: " + prod.codigoEan + "," + etiq.hashEtiqueta;
             const response = await this.http.post(ipp2, produto).toPromise();
             prodEtiq.etiqueta = etiq;
             prodEtiq.produto = prod;
+            prodEtiq.usuario = usu;
             this.repositorioProdutoEtiqueta.save(prodEtiq);
             return response.data;
         }
@@ -181,8 +201,10 @@ EtiquetaService = EtiquetaService_1 = __decorate([
     __param(0, (0, typeorm_1.InjectRepository)(etiqueta_entity_1.Etiqueta)),
     __param(2, (0, typeorm_1.InjectRepository)(produto_entity_1.Produto)),
     __param(3, (0, typeorm_1.InjectRepository)(produtoEtiqueta_1.ProdutoEtiqueta)),
+    __param(4, (0, typeorm_1.InjectRepository)(usuario_entity_1.Usuario)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         axios_1.HttpService,
+        typeorm_2.Repository,
         typeorm_2.Repository,
         typeorm_2.Repository])
 ], EtiquetaService);

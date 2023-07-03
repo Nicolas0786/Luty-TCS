@@ -32,6 +32,12 @@ export class EtiquetaController {
     return this.etiquetaService.findAll();
   }
 
+@Get('integra')
+buscaIntegra(){
+  return this.etiquetaService.integracao();
+}
+
+
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
   @UseGuards(AuthGuard) 

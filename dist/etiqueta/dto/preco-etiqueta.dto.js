@@ -21,5 +21,9 @@ __decorate([
     (0, class_validator_1.IsNotEmpty)(),
     __metadata("design:type", Number)
 ], PrecoEtiqueta.prototype, "idProduto", void 0);
+__decorate([
+    (0, class_validator_1.IsNotEmpty)(),
+    __metadata("design:type", Number)
+], PrecoEtiqueta.prototype, "idUsuario", void 0);
 exports.PrecoEtiqueta = PrecoEtiqueta;
 //# sourceMappingURL=preco-etiqueta.dto.js.map

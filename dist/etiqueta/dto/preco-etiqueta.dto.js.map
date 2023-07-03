@@ -1,1 +1,1 @@
-{"version":3,"file":"preco-etiqueta.dto.js","sourceRoot":"","sources":["../../../src/etiqueta/dto/preco-etiqueta.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA4C;AAE5C,MAAa,aAAa;CAQzB;AANG;IAAC,IAAA,4BAAU,GAAE;;iDACM;AAEnB;IAAC,IAAA,4BAAU,GAAE;;gDACK;AANtB,sCAQC"}
+{"version":3,"file":"preco-etiqueta.dto.js","sourceRoot":"","sources":["../../../src/etiqueta/dto/preco-etiqueta.dto.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,qDAA4C;AAE5C,MAAa,aAAa;CAWzB;AATG;IAAC,IAAA,4BAAU,GAAE;;iDACM;AAEnB;IAAC,IAAA,4BAAU,GAAE;;gDACK;AAElB;IAAC,IAAA,4BAAU,GAAE;;gDACK;AATtB,sCAWC"}

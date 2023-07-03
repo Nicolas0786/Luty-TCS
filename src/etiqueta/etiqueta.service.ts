@@ -15,6 +15,7 @@ import {Sttp} from '@supercharge/sttp';
 import { error } from 'console';
 import { response } from 'express';
 import { ProdutoEtiqueta } from './entities/produtoEtiqueta';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 
 @Injectable()
@@ -31,6 +32,9 @@ export class EtiquetaService {
 
     @InjectRepository(ProdutoEtiqueta)
     private repositorioProdutoEtiqueta: Repository<ProdutoEtiqueta>,
+
+    @InjectRepository(Usuario)
+    private repositorioUsuario: Repository<Usuario>,
 
   ){}
   
@@ -98,6 +102,20 @@ export class EtiquetaService {
     });
   }                     
   
+  async integracao(){
+    const tes = await this.repositorioProdutoEtiqueta.find({
+      select:{
+        idProdutoEtiqueta: true,
+        dataIntegracao: true,
+      }, relations:{
+        produto: true,
+        etiqueta: true,
+        usuario: true,
+      }
+    });
+
+    return tes;
+  }
 
   findOne(idEtiqueta: number) {
     return this.repositorioEtiqueta.findOne({
@@ -201,6 +219,10 @@ export class EtiquetaService {
        const prod: Produto = await this.repositorioProduto.findOneBy({
           idProduto: precoEtiqueta.idProduto
         })
+
+        const usu: Usuario = await this.repositorioUsuario.findOneBy({
+          idUsuario: precoEtiqueta.idUsuario
+        })
         //console.log(etiq.idEtiqueta)
 
         try {
@@ -216,6 +238,7 @@ export class EtiquetaService {
 
         prodEtiq.etiqueta = etiq;
         prodEtiq.produto = prod;
+        prodEtiq.usuario = usu;
         this.repositorioProdutoEtiqueta.save(prodEtiq);
         
         return response.data;
