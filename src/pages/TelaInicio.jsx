@@ -29,11 +29,18 @@ const TelaInicio = () =>{
             </header>
             <main className='telaInicio'>
                 <div className='inicio-container'>
-                    <Button className='botaoIni' href='/TelaUsuario'>Usuário</Button>
+                    {usuario.cargo === "gerente" &&(
+                        <Button className='botaoIni' href='/TelaUsuario'>Usuário</Button>
+                    )}
+                    
                     <Button className='botaoIniic' href="/TelaProduto">Produto</Button>
-                    <Button className='botaoInii' href="/TelaEtiqueta">Etiqueta</Button>
+                    
+                    {usuario.cargo !== "funcionario" && (
+                        <Button className='botaoInii' href="/TelaEtiqueta">Etiqueta</Button>
+                    )}
+                    
                     {usuario.cargo === "gerente" && (
-                    <Button className='botaoRel' href='/TelaRelatorio' >Relatorio</Button>               
+                        <Button className='botaoRel' href='/TelaRelatorio' >Relatorio</Button>               
                     )}
                 </div>
             </main>

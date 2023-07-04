@@ -1,12 +1,14 @@
 
-import React, { useContext } from "react"
+import React, { useContext, useState, useEffect } from "react"
 import MyContext from "../contexts/myContext"
-import TelaCadastrarProduto from "../pages/TelaCadastrarProduto"
 import {useNavigate} from 'react-router-dom';
 import Axios from 'axios';
 import Table from 'react-bootstrap/Table';
 import Button from 'react-bootstrap/Button';
-import './Css/TabelaProduto.css'
+import './Css/TabelaProduto.css';
+import { BsFillPencilFill } from "react-icons/bs";
+import { BsToggleOn, BsToggleOff } from "react-icons/bs";
+
 
 
 
@@ -50,25 +52,68 @@ const comando = {
 }
 
 
-const Row = ({record, columns}) => {
+const Row = ({ record, columns}) => {
     const navigate = useNavigate();
     const {editarr, setEditarr} = useContext(MyContext);
     const {etq, setEtq} = useContext(MyContext);
+    const [test, setTest] = useState('');
+    const [ver, setVer] = useState(false);
+    
+
+    
+    useEffect(() =>{
+        record.statusProduto === 0 ? setTest(<BsToggleOn/>): setTest(<BsToggleOff/>);
+        },[]);
+            
+        
     
     return(
         
-        <tr key={record.id}> {''} 
-            {
+        <tr key={record.id}> 
+            {   
                 columns.map((column) => <td>{formatarDados(column, record, comando)}</td>)
             }
+            
+
+            <Button className="bteditar"onClick={async () =>{
+                 
+                if(record.statusProduto === 0){
+                     await Axios.patch('http://localhost:3000/produto/atualizar/'+record.idProduto, {statusProduto: 1}, {
+                        headers: {
+                            'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                        }
+                    });
+                    //console.log("desativado");
+                    window.alert("Produto desativado");
+                    setTest(<BsToggleOff/>)
+                    record.statusProduto = 1;
+                    
+
+                }else{
+                    await Axios.patch('http://localhost:3000/produto/atualizar/'+record.idProduto, {statusProduto: 0}, {
+                        headers: {
+                            'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                        }
+                    });
+                    
+                    //console.log("ativado");
+                    window.alert("Produto ativado");
+                    setTest(<BsToggleOn/>)
+                    record.statusProduto = 0;
+                }
+                
+               
+            }}>{test}</Button>
+
+
             <Button className="bteditar" onClick={async () =>{
 
-                const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`) //verificar se ta sendo usado
-                console.log(back.data)
-               setEditarr(back.data);
+                //const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`) //verificar se ta sendo usado
+                //console.log(back.data)
+               //setEditarr(back.data);
                navigate(`/TelaEditarProduto/${record.idProduto}`);
               
-            }}>editar</Button>
+            }}><BsFillPencilFill/></Button>
 
             <Button className="btetiq" onClick={async () => {
                 const etqq = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`) // verificar se ta sendo usado

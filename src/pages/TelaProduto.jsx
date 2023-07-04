@@ -10,6 +10,7 @@ import { IoMdExit } from "react-icons/io";
 import imgIni from '../imagens/ini.png';
 import Image from 'react-bootstrap/Image'
 import HeaderApp from './headerApp';
+import { BsFillPencilFill } from "react-icons/bs";
 
 const TelaProduto = () =>{
 
@@ -68,7 +69,7 @@ const TelaProduto = () =>{
             </div>
 
             <div className='inici'>
-                <Table dadosProdutos = {dadosProdutos} head={head} filterDados={filterDados}/>
+                <Table dadosProdutos = {dadosProdutos} head={head} filterDados={filterDados} />
             </div>
 
             <div className='btsBaixo'>

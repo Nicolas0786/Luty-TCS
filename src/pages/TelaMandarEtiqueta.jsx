@@ -55,6 +55,7 @@ const TelaMandarEtiqueta = () =>{
         buscarDados()
     },[])
 
+    
 
     const handleChange = (e) =>{
         setIp(e.target.value);
