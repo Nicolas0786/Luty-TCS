@@ -64,10 +64,10 @@ const table = ({dados, head}) =>{
             property: 'dataIntegracao',
         },
         {
-            property: 'produto.descricaoProduto',
+            property: 'descricaoProduto',
         },
         {
-            property: 'produto.preco',
+            property: 'preco',
         },
         {
             property: 'etiqueta.nomeEtiqueta',
@@ -80,7 +80,9 @@ const table = ({dados, head}) =>{
         },
         {
             property: 'usuario.nome',
-        }
+        },
+        
+
     ]
 
 

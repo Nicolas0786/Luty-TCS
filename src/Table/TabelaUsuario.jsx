@@ -1,11 +1,15 @@
-import MyContext from "../contexts/myContext"
+
 import Button from 'react-bootstrap/Button';
 import Table from 'react-bootstrap/Table';
-import { useContext } from "react";
+import React, { useState, useEffect } from "react"
+
 import Axios from 'axios';
 import './Css/TabelaUsuario.css';
-import {BiEdit} from "react-icons/bi";
+
 import {useNavigate} from 'react-router-dom';
+import { BsFillPencilFill } from "react-icons/bs";
+import { BsToggleOn, BsToggleOff } from "react-icons/bs";
+
 
 const Head = ({keys, head}) => {
     const tableHead = head || {}
@@ -22,25 +26,49 @@ const Head = ({keys, head}) => {
 
 const Row = ({record}) => {
     const keys = Object.keys(record)
-    const {edt, setEdt} = useContext(MyContext);
     const navigate = useNavigate();
+    const [test, setTest] = useState('');
+
+    console.log(record)
+    useEffect(() =>{
+        record.statusUsuario === 1 ? setTest(<BsToggleOn/>): setTest(<BsToggleOff/>);
+        },[]);
     
     return(
         
         
-        <tr key={record.login}> {''} 
+        <tr key={record.idUsuario}> {''} 
             {
                 keys.map(key => <td key={key}>{record[key]} </td>)
             }
             
+
+            <Button className="bteditar"onClick={async () =>{
+                    
+                    if(record.statusUsuario === 1){
+                        
+                        
+                        window.alert("Usuario desativado");
+                        setTest(<BsToggleOff/>)
+                        record.statusUsuario = 0;
+                        
+
+                    }else{
+                        
+                        
+                        window.alert("Usuario ativado");
+                        setTest(<BsToggleOn/>)
+                        record.statusUsuario = 1;
+                    }
+                    
+                }}>{test}</Button>
+
+
             <Button  className="bteditarUsu" onClick={async () =>{
                
                 navigate(`/TelaEditarUsuario/${record.login}`);
-                        //console.log(record.login);
-
-                    
-                       
-            }}>Editar</Button>
+                        
+            }}><BsFillPencilFill/></Button>
             
 
         </tr> 

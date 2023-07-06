@@ -1,11 +1,8 @@
-
-
 import Axios from "axios";
 import {useNavigate} from 'react-router-dom';
 import React, {useContext, useState, useEffect} from 'react';
 import MyContext from "../contexts/myContext";
 import Button from 'react-bootstrap/Button';
-
 import Form from 'react-bootstrap/Form';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
@@ -20,11 +17,11 @@ import jwtDecode from 'jwt-decode';
 const TelaCadastrarProduto = ()=>{
 
     const navigate = useNavigate();
-    const {logado, setLogado, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem} = useContext(MyContext);
+    const {codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupos, setGrupos, alas, setAlas, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem} = useContext(MyContext);
 
-    //window.location = window.location;
-    const [test, setTest] = useState([]);
-    const [test1, setTest1] = useState([]);
+    
+    const [grupoMap, setGrupoMap] = useState([]);
+    const [alaMap, setAlaMap] = useState([]);
     const [usuario, setUsuario] = useState('');
 
     useEffect(() =>{
@@ -51,9 +48,9 @@ const TelaCadastrarProduto = ()=>{
             })
             //console.log(axi.data);
             
-            setTest(grupos.data);
+            setGrupoMap(grupos.data);
         
-            setTest1(alas.data);
+            setAlaMap(alas.data);
             
         
         }
@@ -63,9 +60,9 @@ const TelaCadastrarProduto = ()=>{
 
     //console.log(test)
 
-const grup = test.map((grupo) => <option value={grupo.idGrupo}  key={grupo.idGrupo}>{grupo.descricaoGrupo}</option>);
+const grup = grupoMap.map((grupo) => <option value={grupo.idGrupo}  key={grupo.idGrupo}>{grupo.descricaoGrupo}</option>);
 
-const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.descricao}</option>);
+const all = alaMap.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.descricao}</option>);
 
 
 
@@ -87,95 +84,92 @@ const all = test1.map((ala) => <option value={ala.idAla} key={ala.idAla}>{ala.de
          } catch (error) {
             console.log(error);
                 window.alert(error.response.data.message);
-            
-          
+
     }
 }
     
+
+    async function cancelar(){
+        setCodigoEan(''); setQuantidade(''); setPorcentagem(''); setCusto(''); setDescricaoProduto('');
+            navigate('/TelaProduto');
+    } 
+
 
     return (
         <>
             <header>
                 <HeaderApp/>
             </header>
-            
-            
-            
+             
             <div  className="container-fluid">
-            <div className="row">
-            <div className="col-12 full-screen-div">
-       <Button id="voltarPG" onClick={()=> navigate('/TelaProduto')}> Voltar</Button>
+                <div className="row">
+                    <div className="col-12 full-screen-div">
+                        <Button id="voltarPG" onClick={()=> navigate('/TelaProduto')}> Voltar</Button>
            
-           <div className="forms">
-            <h2>Cadastro de Produto</h2> 
-            <br></br>    
-                <Form >
-                    <Row className="mb-3">
-                        <Form.Group as={Col} md="4">
-                            <Form.Label>Descrição</Form.Label>
-                            <Form.Control id="descricao" type="text" value={descricaoProduto} onChange ={(e)=> setDescricaoProduto(e.target.value)}/>
-                        </Form.Group>
-                        
-                        <Form.Group as={Col} md="2">
-                            <Form.Label>Quantidade</Form.Label>
-                            <Form.Control id="quantidade" type="number" value={quantidade} onChange ={(e)=> setQuantidade(e.target.value)}  />
-                        </Form.Group>
-                    
-                        <Form.Group as={Col} md="1">
-                            <Form.Label>porcentagem %</Form.Label>
-                            <Form.Control id="porcentagem" type="number" value={porcentagem} onChange ={(e)=> setPorcentagem(e.target.value)}  />
-                         </Form.Group>
-            
-                    </Row>
-                   
+                            <div className="forms">
+                                <h2>Cadastro de Produto</h2> 
+                                    <br></br>    
+                                        <Form >
+                                            <Row className="mb-3">
+                                                <Form.Group as={Col} md="4">
+                                                    <Form.Label>Descrição</Form.Label>
+                                                    <Form.Control id="descricao" type="text" value={descricaoProduto} onChange ={(e)=> setDescricaoProduto(e.target.value)}/>
+                                                </Form.Group>
+                                                
+                                                <Form.Group as={Col} md="2">
+                                                    <Form.Label>Quantidade</Form.Label>
+                                                    <Form.Control id="quantidade" type="number" value={quantidade} onChange ={(e)=> setQuantidade(e.target.value)}  />
+                                                </Form.Group>
+                                            
+                                                <Form.Group as={Col} md="1">
+                                                    <Form.Label>porcentagem %</Form.Label>
+                                                    <Form.Control id="porcentagem" type="number" value={porcentagem} onChange ={(e)=> setPorcentagem(e.target.value)}  />
+                                                </Form.Group>
+                                    
+                                            </Row>
+                                        
 
-                    <div>
-                    <Row className="mb-2">
-                         <Form.Group as={Col} md="3">
-                            <Form.Label >Grupo</Form.Label>
-                            <FormSelect onChange ={(e)=> setGrupos(e.target.value)} >
-                           <option></option>
-                           {grup}
-                
-                            </FormSelect>
-                        </Form.Group>
+                                            <div>
+                                            <Row className="mb-2">
+                                                <Form.Group as={Col} md="3">
+                                                    <Form.Label >Grupo</Form.Label>
+                                                        <FormSelect onChange ={(e)=> setGrupos(e.target.value)} >
+                                                            <option></option>
+                                                            {grup}
+                                                        </FormSelect>
+                                                </Form.Group>
 
-                        <Form.Group as={Col} md="3">
-                            <Form.Label>Ala</Form.Label>
-                            <FormSelect onChange ={(e)=> setAlas(e.target.value)} >
-                           <option></option>
-                           {all}
-                
-                            </FormSelect>
+                                                <Form.Group as={Col} md="3">
+                                                    <Form.Label>Ala</Form.Label>
+                                                        <FormSelect onChange ={(e)=> setAlas(e.target.value)} >
+                                                            <option></option>
+                                                                {all}
+                                                        </FormSelect>
+                                                </Form.Group>
+                                                
+                                                <Form.Group as={Col} md="3">
+                                                    <Form.Label>Custo R$</Form.Label>
+                                                    <Form.Control id="custo" type="number" value={custo} onChange ={(e)=> setCusto(e.target.value)}  />
+                                                </Form.Group>
+                                            </Row>
+                                            </div>
 
+                                            <div>
+                                                <div className="codigoEan">
+                                                    <Form.Label>Codigo Ean</Form.Label>
+                                                    <Form.Control id="codigoEan" pattern='^[0-9]{0,3}$' type="text" value={codigoEan} onChange ={(e)=> setCodigoEan(e.target.value)}  maxLength={14} />
+                                                </div>
+                                            </div>
 
-                        </Form.Group>
-                        
-                        <Form.Group as={Col} md="3">
-                            <Form.Label>Custo R$</Form.Label>
-                            <Form.Control id="custo" type="number" value={custo} onChange ={(e)=> setCusto(e.target.value)}  />
-                        </Form.Group>
-                    </Row>
-                    </div>
-
-                    <div>
-                        <div className="codigoEan">
-                            <Form.Label>Codigo Ean</Form.Label>
-                            <Form.Control id="codigoEan" pattern='^[0-9]{0,3}$' type="text" value={codigoEan} onChange ={(e)=> setCodigoEan(e.target.value)}  maxLength={14} />
+                                            <br></br>
+                                            
+                                        
+                                        </Form>
+                    <Button  id="cancelar" onClick={cancelar}>Cancelar</Button>
+                        <Button  id="salvar" onClick={salvarProdutos}>Salvar</Button>
+                            </div>    
                         </div>
                     </div>
-
-                    <br></br>
-                    
-                   
-                </Form>
-                <Button  id="cancelar" onClick={()=> navigate('/TelaProduto')}>Cancelar</Button>
-                <Button  id="salvar" onClick={salvarProdutos}>Salvar</Button>
-                </div>
-               
-                
-                </div>
-                </div>
                 </div>
                 </>   
     );

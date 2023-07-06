@@ -16,7 +16,8 @@ const TelaRelatorio = () =>{
         nomeEtiqueta: "Nome Etiqueta",
         corredor: "Corredor",
         pratilheira: "Pratilheira",
-        nome: 'Nome Usuario'
+        nome: 'Nome Usuario',
+        
     }
 
     React.useEffect(()=>{

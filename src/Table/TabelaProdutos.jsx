@@ -8,6 +8,7 @@ import Button from 'react-bootstrap/Button';
 import './Css/TabelaProduto.css';
 import { BsFillPencilFill } from "react-icons/bs";
 import { BsToggleOn, BsToggleOff } from "react-icons/bs";
+import jwtDecode from 'jwt-decode';
 
 
 
@@ -54,76 +55,77 @@ const comando = {
 
 const Row = ({ record, columns}) => {
     const navigate = useNavigate();
-    const {editarr, setEditarr} = useContext(MyContext);
-    const {etq, setEtq} = useContext(MyContext);
-    const [test, setTest] = useState('');
-    const [ver, setVer] = useState(false);
     
+    const [test, setTest] = useState('');
 
+    const [usuario, setUsuario] = useState([]);
+     
     
     useEffect(() =>{
-        record.statusProduto === 0 ? setTest(<BsToggleOn/>): setTest(<BsToggleOff/>);
+        record.statusProduto === 1 ? setTest(<BsToggleOn/>): setTest(<BsToggleOff/>);
+        const token = sessionStorage.getItem('token');
+        if(token){
+            const decodeToken = jwtDecode(token);
+            const {permissao} = decodeToken;
+            setUsuario(permissao);
+        }
         },[]);
             
-        
+        console.log(record)    
     
     return(
         
-        <tr key={record.id}> 
+        <tr key={record.idProduto}> 
             {   
                 columns.map((column) => <td>{formatarDados(column, record, comando)}</td>)
             }
             
-
-            <Button className="bteditar"onClick={async () =>{
-                 
-                if(record.statusProduto === 0){
-                     await Axios.patch('http://localhost:3000/produto/atualizar/'+record.idProduto, {statusProduto: 1}, {
-                        headers: {
-                            'Authorization': `Bearer ${sessionStorage.getItem("token")}`
-                        }
-                    });
-                    //console.log("desativado");
-                    window.alert("Produto desativado");
-                    setTest(<BsToggleOff/>)
-                    record.statusProduto = 1;
+            {usuario.cargo !== "funcionario" && (
+                <>
+                <Button className="bteditar"onClick={async () =>{
                     
+                    if(record.statusProduto === 1){
+                        await Axios.patch('http://localhost:3000/produto/atualizar/'+record.idProduto, {statusProduto: 0}, {
+                            headers: {
+                                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                            }
+                        });
+                        
+                        window.alert("Produto desativado");
+                        setTest(<BsToggleOff/>)
+                        record.statusProduto = 0;
+                        
 
-                }else{
-                    await Axios.patch('http://localhost:3000/produto/atualizar/'+record.idProduto, {statusProduto: 0}, {
-                        headers: {
-                            'Authorization': `Bearer ${sessionStorage.getItem("token")}`
-                        }
-                    });
+                    }else{
+                        await Axios.patch('http://localhost:3000/produto/atualizar/'+record.idProduto, {statusProduto: 1}, {
+                            headers: {
+                                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                            }
+                        });
+                        
+                        window.alert("Produto ativado");
+                        setTest(<BsToggleOn/>)
+                        record.statusProduto = 1;
+                    }
                     
-                    //console.log("ativado");
-                    window.alert("Produto ativado");
-                    setTest(<BsToggleOn/>)
-                    record.statusProduto = 0;
-                }
-                
-               
-            }}>{test}</Button>
-
-
-            <Button className="bteditar" onClick={async () =>{
-
-                //const  back = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`) //verificar se ta sendo usado
-                //console.log(back.data)
-               //setEditarr(back.data);
-               navigate(`/TelaEditarProduto/${record.idProduto}`);
-              
-            }}><BsFillPencilFill/></Button>
-
-            <Button className="btetiq" onClick={async () => {
-                const etqq = await Axios.get(`http://localhost:3000/produto/buscarPorId/${record.idProduto}`) // verificar se ta sendo usado
-                
-                setEtq(etqq.data);
-                console.log(etq);
-                navigate(`/TelaMandarEtiqueta/${record.idProduto}`)
-
-            }} >Etiqueta</Button>
+                }}>{test}</Button>
             
+
+                <Button className="bteditar" onClick={async () =>{
+                        navigate(`/TelaEditarProduto/${record.idProduto}`);        
+                }}><BsFillPencilFill/></Button>
+                </>
+            )}
+
+             {usuario.cargo === "gerente" &&(  
+                <Button className="btetiq" onClick={async () => {
+                    if(record.statusProduto === 0){
+                        window.alert("Esse produto está desativado");
+                    }else{
+                        navigate(`/TelaMandarEtiqueta/${record.idProduto}`)
+                    }
+            }}>Etiqueta</Button>
+            )} 
         </tr> 
         
     )

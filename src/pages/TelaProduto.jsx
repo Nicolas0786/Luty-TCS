@@ -1,22 +1,28 @@
 import Axios  from 'axios';
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useEffect} from 'react';
 import {useNavigate} from 'react-router-dom';
 import Table from '../Table/TabelaProdutos';
-import Row from '../Table/TabelaProdutos';
 import Button from 'react-bootstrap/Button';
-import MyContext from '../contexts/myContext';
 import './Css/TelaProduto.css';
-import { IoMdExit } from "react-icons/io";
-import imgIni from '../imagens/ini.png';
-import Image from 'react-bootstrap/Image'
 import HeaderApp from './headerApp';
-import { BsFillPencilFill } from "react-icons/bs";
+import jwtDecode from 'jwt-decode';
+
 
 const TelaProduto = () =>{
 
     const navigate = useNavigate();
     const[dadosProdutos, setDadosProdutos] = useState([]);
     const [search, setSearch] = useState('');
+    const [usuario, setUsuario] = useState([]);
+    
+    useEffect(() =>{
+        const token = sessionStorage.getItem('token');
+        if(token){
+            const decodeToken = jwtDecode(token);
+            const {permissao} = decodeToken;
+            setUsuario(permissao);
+        }
+        },[]);
 
 
     const head = {
@@ -38,16 +44,9 @@ const TelaProduto = () =>{
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`
                 }
             })
-            //console.log(axi.data);
             
             setDadosProdutos(axi.data);
             
-            //console.log(axi.data[0].grupos.descricaoGrupo)
-
-            /*const teste = axi.data.map((grup, i)=> {
-               console.log( grup.grupos.descricaoGrupo);
-               setDadosProdutos(grup.grupos.descricaoGrupo)
-            })*/
         }
         buscarDados()
     },[])
@@ -62,9 +61,16 @@ const TelaProduto = () =>{
             </header>
 
             <div className='botoes'>
-            <Button id="TelaUsuario"  onClick={() => navigate('/TelaUsuario')}>Usuário</Button>
-            <Button id="TelaProduto"  onClick={() => navigate('/TelaProduto')}>Produto</Button> 
-            <Button id="TelaEtiqueta"  onClick={() => navigate('/TelaEtiqueta')}>Etiqueta</Button>
+              {usuario.cargo === "gerente" && (
+                <Button id="TelaUsuario"  onClick={() => navigate('/TelaUsuario')}>Usuário</Button>
+              )}  
+            
+            <Button id="TelaProduto"  disabled >Produto</Button> 
+
+            {usuario.cargo !== "funcionario" && (
+                <Button id="TelaEtiqueta"  onClick={() => navigate('/TelaEtiqueta')}>Etiqueta</Button>
+            )}
+            
             <input className='btPesquisa' type='text' placeholder='Buscar...' onChange={e => setSearch(e.target.value)} value={search}/>
             </div>
 
@@ -73,10 +79,14 @@ const TelaProduto = () =>{
             </div>
 
             <div className='btsBaixo'>
-            <Button className='btGrupo' onClick={() => navigate('/TelaCadastrarGrupo')}>Grupo +</Button>
-            <Button className='btAla' onClick={() => navigate('/TelaCadastrarAla')}>Ala +</Button>
-
-            <Button className='btBaixoProduto' id="novoProduto"  onClick={() => navigate('/TelaCadastrarProduto')}>Produto +</Button> 
+                {usuario.cargo !== "funcionario" && (
+                    <>
+                    <Button className='btGrupo' onClick={() => navigate('/TelaCadastrarGrupo')}>Grupo +</Button>
+                    <Button className='btAla' onClick={() => navigate('/TelaCadastrarAla')}>Ala +</Button>
+                    <Button className='btBaixoProduto' onClick={() => navigate('/TelaCadastrarProduto')}>Produto +</Button>
+                    </>
+                )}
+             
             <Button className='btBaixoProduto' onClick={() => navigate('/TelaInicio')}>Fechar</Button>
             </div>
         </div>

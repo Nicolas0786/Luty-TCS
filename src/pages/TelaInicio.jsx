@@ -19,7 +19,7 @@ const TelaInicio = () =>{
         }
         },[]);
 
-    console.log(usuario.cargo === "gerente")
+   
     
 
     return(

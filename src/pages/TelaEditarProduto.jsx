@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from "react";
+import React, {useContext, useState} from "react";
 import {useNavigate} from 'react-router-dom';
 import MyContext from "../contexts/myContext";
 import Axios from 'axios';
@@ -16,14 +16,13 @@ const TelaEditarProduto = () => {
     const {id} = useParams();
     const [gruposSelecionar, setGruposSelecionar] = useState([]);
     const [alasSelecionar, setAlasSelecionar] = useState([]);
+    const [dadosEdt, setDadosEdt] = useState([]);
     const [grupos, setGrupos] = useState('');
     const [alas, setAlas] = useState('');
 
-    const {logado, setLogado, editarr, setEditarr, codigoEan, setCodigoEan, descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
+
+    const { descricaoProduto, setDescricaoProduto, grupo, setGrupo, ala, setAla, quantidade, setQuantidade, custo, setCusto, porcentagem, setPorcentagem, preco, setPreco} = useContext(MyContext);
  
-//console.log(editarr);
-
-
 
 React.useEffect(()=>{
     async function buscarDados(){
@@ -33,8 +32,9 @@ React.useEffect(()=>{
             'Authorization': `Bearer ${sessionStorage.getItem("token")}`
         }
     });
-    setEditarr(back.data);
+    setDadosEdt(back.data);
 
+    
     const grupos = await Axios.get('http://localhost:3000/grupo/buscarTodos', {
             headers: {
                 'Authorization': `Bearer ${sessionStorage.getItem("token")}`
@@ -49,33 +49,32 @@ React.useEffect(()=>{
     });
     setAlasSelecionar(alas.data);
 
-
-
     }
     buscarDados()
 },[])
 
-//console.log(editarr)
-//editarr.map(ala => console.log(ala))
 
+const gruposSeleciondado = Object.values(dadosEdt).map(edt => edt.descricaoGrupo);
+
+const alaSelecionada = Object.values(dadosEdt).map(edt => edt.descricao);
 
 
     async function atualizarProduto (){
 
         try {
             
-        const alal = await Axios.patch("http://localhost:3000/produto/atualizar/"+ editarr.idProduto, {descricaoProduto, grupos, alas, quantidade, custo, porcentagem}, {
+        const alal = await Axios.patch("http://localhost:3000/produto/atualizar/"+ dadosEdt.idProduto, {descricaoProduto, grupos, alas, quantidade, custo, porcentagem}, {
         headers: {
             'Authorization': `Bearer ${sessionStorage.getItem("token")}`
         }
     });
 
-    console.log(alal)
+    window.alert(alal.data.message);
      navigate('/TelaProduto');
 
     } catch (error) {
-        console.log(alas);
-        console.log('erro', error);
+        window.alert(error.response.data.message);
+        
     }
 
 
@@ -107,17 +106,17 @@ React.useEffect(()=>{
                     <Row className="mb-3">
                         <Form.Group as={Col} md="4">
                             <Form.Label>Descrição</Form.Label>
-                            <Form.Control id="descricao" type="text" defaultValue={editarr.descricaoProduto || []} onChange ={(e)=> setDescricaoProduto(e.target.value || [])} placeholder= "Descrição"/>
+                            <Form.Control id="descricao" type="text" defaultValue={dadosEdt.descricaoProduto || []} onChange ={(e)=> setDescricaoProduto(e.target.value || [])} placeholder= "Descrição"/>
                         </Form.Group>
                         
                         <Form.Group as={Col} md="2">
                             <Form.Label>Quantidade</Form.Label>
-                            <Form.Control id="quantidade" type="number" defaultValue={editarr.quantidade} onChange ={(e)=> setQuantidade(e.target.value)} placeholder= "Quantidade" />
+                            <Form.Control id="quantidade" type="number" defaultValue={dadosEdt.quantidade} onChange ={(e)=> setQuantidade(e.target.value)} placeholder= "Quantidade" />
                         </Form.Group>
                     
                         <Form.Group as={Col} md="1">
                             <Form.Label>%</Form.Label>
-                            <Form.Control id="porcentagem" type="number" defaultValue={editarr.porcentagem} onChange ={(e)=> setPorcentagem(e.target.value)} placeholder= " % " />
+                            <Form.Control id="porcentagem" type="number" defaultValue={dadosEdt.porcentagem} onChange ={(e)=> setPorcentagem(e.target.value)} placeholder= " % " />
                          </Form.Group>
             
                     </Row>
@@ -128,7 +127,7 @@ React.useEffect(()=>{
                          <Form.Group as={Col} md="4">
                             <Form.Label>Grupo</Form.Label>
                             <Form.Select onChange={(e)=> setGrupos(e.target.value)}>
-                                <option>{editarr.grupos.descricaoGrupo}</option>
+                                <option>{gruposSeleciondado}</option>
                                 {grupoo}
                                 
                                 
@@ -138,7 +137,7 @@ React.useEffect(()=>{
                         <Form.Group as={Col} md="3">
                             <Form.Label>Ala</Form.Label>
                             <Form.Select onChange={(e)=> setAlas(e.target.value)}>
-                                <option>{editarr.alas.descricao}</option>
+                                <option>{alaSelecionada}</option>
                                 {alaa}
                             
                             </Form.Select>
@@ -147,12 +146,12 @@ React.useEffect(()=>{
                         
                         <Form.Group as={Col} md="3">
                             <Form.Label>Custo</Form.Label>
-                            <Form.Control id="custo" type="number" defaultValue={editarr.custo} onChange ={(e)=> setCusto(e.target.value)} placeholder= "Custo R$" />
+                            <Form.Control id="custo" type="number" defaultValue={dadosEdt.custo} onChange ={(e)=> setCusto(e.target.value)} placeholder= "Custo R$" />
                         </Form.Group>
 
                         <Form.Group as={Col} md="2">
                             <Form.Label>Preço R$</Form.Label>
-                            <Form.Control id="preco" type="number" defaultValue={editarr.preco} readOnly/>
+                            <Form.Control id="preco" type="number" defaultValue={dadosEdt.preco} readOnly/>
                         </Form.Group>
                     </Row>
                     </div>
@@ -160,7 +159,7 @@ React.useEffect(()=>{
                     <div>
                         <div className="codigoEan">
                             <Form.Label for="codigoEan">Codigo Ean</Form.Label>
-                            <Form.Control id="codigoEan" type="number" defaultValue={editarr.codigoEan} placeholder= "Código Ean" readOnly />
+                            <Form.Control id="codigoEan" type="number" defaultValue={dadosEdt.codigoEan} placeholder= "Código Ean" readOnly />
                         </div>
                     </div>
 
