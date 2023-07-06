@@ -30,9 +30,8 @@ export class ProdutoController {
     return this.produtoService.create(createProdutoDto);
   }
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
-  @Roles(Role.Funcionario)
+
+  @Roles(Role.Funcionario, Role.Gerente, Role.Coordenador)
   @UseGuards(AuthGuard)
   @Get('buscarTodos')
   findAll() {

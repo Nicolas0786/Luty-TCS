@@ -63,9 +63,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProdutoController.prototype, "create", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Funcionario),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Funcionario, role_enum_1.Role.Gerente, role_enum_1.Role.Coordenador),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarTodos'),
     __metadata("design:type", Function),

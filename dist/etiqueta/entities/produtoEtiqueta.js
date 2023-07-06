@@ -21,24 +21,29 @@ __decorate([
     __metadata("design:type", Number)
 ], ProdutoEtiqueta.prototype, "idProdutoEtiqueta", void 0);
 __decorate([
-    (0, typeorm_1.CreateDateColumn)(),
+    (0, typeorm_1.Column)({ type: 'datetime', default: () => 'NOW()' }),
     __metadata("design:type", Date)
 ], ProdutoEtiqueta.prototype, "dataIntegracao", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => produto_entity_1.Produto),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", produto_entity_1.Produto)
-], ProdutoEtiqueta.prototype, "produto", void 0);
+    (0, typeorm_1.Column)('decimal', { precision: 12, scale: 2 }),
+    __metadata("design:type", Number)
+], ProdutoEtiqueta.prototype, "preco", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => etiqueta_entity_1.Etiqueta),
-    (0, typeorm_1.JoinColumn)(),
+    (0, typeorm_1.Column)('varchar', { length: 150 }),
+    __metadata("design:type", String)
+], ProdutoEtiqueta.prototype, "descricaoProduto", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => usuario_entity_1.Usuario, (usuario) => usuario.produtoEtiqueta),
+    __metadata("design:type", usuario_entity_1.Usuario)
+], ProdutoEtiqueta.prototype, "usuario", void 0);
+__decorate([
+    (0, typeorm_1.ManyToOne)(() => etiqueta_entity_1.Etiqueta, (etiqueta) => etiqueta.produtoEtiqueta),
     __metadata("design:type", etiqueta_entity_1.Etiqueta)
 ], ProdutoEtiqueta.prototype, "etiqueta", void 0);
 __decorate([
-    (0, typeorm_1.OneToOne)(() => usuario_entity_1.Usuario),
-    (0, typeorm_1.JoinColumn)(),
-    __metadata("design:type", usuario_entity_1.Usuario)
-], ProdutoEtiqueta.prototype, "usuario", void 0);
+    (0, typeorm_1.ManyToOne)(() => produto_entity_1.Produto, (produto) => produto.produtoEtiqueta),
+    __metadata("design:type", produto_entity_1.Produto)
+], ProdutoEtiqueta.prototype, "produto", void 0);
 ProdutoEtiqueta = __decorate([
     (0, typeorm_1.Entity)()
 ], ProdutoEtiqueta);

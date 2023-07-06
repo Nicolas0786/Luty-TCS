@@ -7,22 +7,22 @@ import { Ala } from 'src/ala/entities/ala.entity';
 export class UpdateProdutoDto {
 
     @IsOptional()
-    @IsNumber()
+    //@IsNumber()
     codigoEan: number;
 
     @IsOptional()
     descricaoProduto: string;
     
     @IsOptional()
-    @IsNumber()
+    ///@IsNumber()
     quantidade: number;
     
     @IsOptional()
-    @IsNumber()
+    //@IsNumber()
     custo: number;
     
     @IsOptional()
-    @IsNumber()
+    //@IsNumber()
     porcentagem: number
 
     @IsOptional()

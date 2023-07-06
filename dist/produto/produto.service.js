@@ -63,7 +63,7 @@ let ProdutoService = class ProdutoService {
         produto.alas = createProdutoDto.alas;
         produto.usuario = createProdutoDto.usuario;
         if (createProdutoDto.statusProduto === undefined) {
-            produto.statusProduto = 0;
+            produto.statusProduto = 1;
         }
         else {
             produto.statusProduto = createProdutoDto.statusProduto;
@@ -79,6 +79,7 @@ let ProdutoService = class ProdutoService {
                 descricaoProduto: true,
                 quantidade: true,
                 preco: true,
+                statusProduto: true,
             },
             relations: {
                 grupos: true,
@@ -111,7 +112,6 @@ let ProdutoService = class ProdutoService {
     }
     async update(idProduto, updateProdutoDto) {
         const produto = new produto_entity_1.Produto();
-        console.log('ala', updateProdutoDto.alas);
         const coluns = await this.repositorioProduto.findOne({
             select: {
                 idProduto: true,
@@ -128,7 +128,6 @@ let ProdutoService = class ProdutoService {
                 idProduto
             }
         });
-        console.log('aa', coluns.alas);
         const codigoEanExists = await this.repositorioProduto.findOneBy({
             codigoEan: updateProdutoDto.codigoEan
         });
@@ -163,6 +162,9 @@ let ProdutoService = class ProdutoService {
             if (updateProdutoDto.quantidade <= 0) {
                 throw new common_1.HttpException("A quantidade não pode ser negativa e nem zerada", common_1.HttpStatus.FORBIDDEN);
             }
+            else if (!Number(updateProdutoDto.quantidade)) {
+                throw new common_1.HttpException("So pode conter número no campo Quantidade", common_1.HttpStatus.BAD_REQUEST);
+            }
             produto.quantidade = updateProdutoDto.quantidade;
         }
         if (updateProdutoDto.custo === undefined) {
@@ -172,6 +174,9 @@ let ProdutoService = class ProdutoService {
             if (updateProdutoDto.custo <= 0) {
                 throw new common_1.HttpException("O custo não pode ser negativo e nem zerado", common_1.HttpStatus.FORBIDDEN);
             }
+            else if (!Number(updateProdutoDto.custo)) {
+                throw new common_1.HttpException("So pode conter número no campo Custo", common_1.HttpStatus.BAD_REQUEST);
+            }
             produto.custo = updateProdutoDto.custo;
         }
         if (updateProdutoDto.porcentagem === undefined) {
@@ -180,6 +185,9 @@ let ProdutoService = class ProdutoService {
         else {
             if (updateProdutoDto.porcentagem <= 0) {
                 throw new common_1.HttpException("A porcentagem não pode ser negativa e nem zerada", common_1.HttpStatus.FORBIDDEN);
+            }
+            else if (!Number(updateProdutoDto.porcentagem)) {
+                throw new common_1.HttpException("So pode conter número no campo Porcentagem", common_1.HttpStatus.BAD_REQUEST);
             }
             produto.porcentagem = updateProdutoDto.porcentagem;
         }

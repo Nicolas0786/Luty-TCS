@@ -75,7 +75,7 @@ export class ProdutoService {
     produto.usuario = createProdutoDto.usuario;
 
     if(createProdutoDto.statusProduto === undefined){
-      produto.statusProduto = 0;
+      produto.statusProduto = 1;
     } else{
       produto.statusProduto = createProdutoDto.statusProduto
     }
@@ -96,6 +96,7 @@ export class ProdutoService {
             descricaoProduto: true,
             quantidade: true,
             preco: true,
+            statusProduto: true,
   
           },
           relations: {
@@ -140,7 +141,7 @@ export class ProdutoService {
   async update(idProduto: number, updateProdutoDto: UpdateProdutoDto) {
 
     const produto = new Produto();
-    console.log('ala',updateProdutoDto.alas)
+    
 
     const coluns:Produto = await this.repositorioProduto.findOne({
       select: {
@@ -161,7 +162,7 @@ export class ProdutoService {
       }
     })
 
-    console.log('aa',coluns.alas);
+    
 
     const codigoEanExists: Produto = await this.repositorioProduto.findOneBy({
      codigoEan: updateProdutoDto.codigoEan
@@ -201,6 +202,8 @@ if(updateProdutoDto.quantidade === undefined){
 }else{
   if(updateProdutoDto.quantidade <=0){
     throw new HttpException("A quantidade não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
+  }else if(!Number(updateProdutoDto.quantidade)){
+    throw new HttpException("So pode conter número no campo Quantidade", HttpStatus.BAD_REQUEST);
   }
   produto.quantidade = updateProdutoDto.quantidade;
 
@@ -211,6 +214,8 @@ if(updateProdutoDto.custo === undefined){
 }else{
   if(updateProdutoDto.custo <= 0 ){
     throw new HttpException("O custo não pode ser negativo e nem zerado", HttpStatus.FORBIDDEN);
+  }else if(!Number(updateProdutoDto.custo)){
+    throw new HttpException("So pode conter número no campo Custo", HttpStatus.BAD_REQUEST);
   }
   produto.custo = updateProdutoDto.custo;
 
@@ -221,6 +226,8 @@ if(updateProdutoDto.porcentagem === undefined){
 }else{
   if(updateProdutoDto.porcentagem <= 0){
     throw new HttpException("A porcentagem não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
+  }else if(!Number(updateProdutoDto.porcentagem)){
+    throw new HttpException("So pode conter número no campo Porcentagem", HttpStatus.BAD_REQUEST);
   }
   produto.porcentagem = updateProdutoDto.porcentagem;
 

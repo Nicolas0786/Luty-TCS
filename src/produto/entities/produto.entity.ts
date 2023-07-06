@@ -1,8 +1,9 @@
 
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { Grupo } from 'src/grupo/entities/grupo.entity';
 import { Ala } from 'src/ala/entities/ala.entity';
 import { Usuario } from 'src/usuario/entities/usuario.entity';
+import { ProdutoEtiqueta } from 'src/etiqueta/entities/produtoEtiqueta';
 
 
 
@@ -11,7 +12,7 @@ export class Produto {
   @PrimaryGeneratedColumn('increment')
   idProduto: number;
 
-  @Column('varchar', { length: 13 })
+  @Column('varchar', { length: 15 })
   codigoEan: number;
 
   @Column('varchar', { length: 150 })
@@ -44,6 +45,9 @@ export class Produto {
 
   @ManyToOne(() => Usuario, (usuario)=> usuario.produtos)
   usuario: Usuario;
+
+  @OneToMany(()=> ProdutoEtiqueta, (produtoEtiqueta) => produtoEtiqueta.produto)
+  produtoEtiqueta: ProdutoEtiqueta[];
 
   
 }

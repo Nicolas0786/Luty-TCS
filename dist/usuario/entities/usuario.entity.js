@@ -16,6 +16,7 @@ const grupo_entity_1 = require("../../grupo/entities/grupo.entity");
 const produto_entity_1 = require("../../produto/entities/produto.entity");
 const typeorm_1 = require("typeorm");
 const permissao_entity_1 = require("./permissao.entity");
+const produtoEtiqueta_1 = require("../../etiqueta/entities/produtoEtiqueta");
 let Usuario = class Usuario {
 };
 __decorate([
@@ -62,6 +63,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => permissao_entity_1.Permissao, (permissao) => permissao.usuario),
     __metadata("design:type", permissao_entity_1.Permissao)
 ], Usuario.prototype, "permissao", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => produtoEtiqueta_1.ProdutoEtiqueta, (produtoEtiqueta) => produtoEtiqueta.usuario),
+    __metadata("design:type", Array)
+], Usuario.prototype, "produtoEtiqueta", void 0);
 Usuario = __decorate([
     (0, typeorm_1.Entity)()
 ], Usuario);

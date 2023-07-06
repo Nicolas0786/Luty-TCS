@@ -12,6 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Etiqueta = void 0;
 const usuario_entity_1 = require("../../usuario/entities/usuario.entity");
 const typeorm_1 = require("typeorm");
+const produtoEtiqueta_1 = require("./produtoEtiqueta");
 let Etiqueta = class Etiqueta {
 };
 __decorate([
@@ -46,6 +47,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => usuario_entity_1.Usuario, (usuario) => usuario.etiquetas),
     __metadata("design:type", usuario_entity_1.Usuario)
 ], Etiqueta.prototype, "usuario", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => produtoEtiqueta_1.ProdutoEtiqueta, (produtoEtiqueta) => produtoEtiqueta.etiqueta),
+    __metadata("design:type", Array)
+], Etiqueta.prototype, "produtoEtiqueta", void 0);
 Etiqueta = __decorate([
     (0, typeorm_1.Entity)()
 ], Etiqueta);

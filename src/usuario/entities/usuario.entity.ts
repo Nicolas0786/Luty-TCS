@@ -6,6 +6,7 @@ import { Produto } from "src/produto/entities/produto.entity";
 
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Permissao } from "./permissao.entity";
+import { ProdutoEtiqueta } from "src/etiqueta/entities/produtoEtiqueta";
 
 @Entity()
 export class Usuario {
@@ -41,4 +42,7 @@ export class Usuario {
 
     @ManyToOne(() => Permissao, (permissao)=> permissao.usuario)
     permissao: Permissao;
+
+    @OneToMany(()=> ProdutoEtiqueta, (produtoEtiqueta) => produtoEtiqueta.usuario)
+    produtoEtiqueta: ProdutoEtiqueta[];
 }

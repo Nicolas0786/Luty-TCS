@@ -1,5 +1,6 @@
 import { Usuario } from "src/usuario/entities/usuario.entity";
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { ProdutoEtiqueta } from "./produtoEtiqueta";
 
 @Entity()
 export class Etiqueta {
@@ -27,6 +28,8 @@ export class Etiqueta {
     @ManyToOne(() => Usuario, (usuario)=> usuario.etiquetas)
     usuario: Usuario;
 
+    @OneToMany(()=> ProdutoEtiqueta, (produtoEtiqueta) => produtoEtiqueta.etiqueta)
+    produtoEtiqueta: ProdutoEtiqueta[];
     
 
 }

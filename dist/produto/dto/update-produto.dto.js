@@ -17,7 +17,6 @@ class UpdateProdutoDto {
 }
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateProdutoDto.prototype, "codigoEan", void 0);
 __decorate([
@@ -26,17 +25,14 @@ __decorate([
 ], UpdateProdutoDto.prototype, "descricaoProduto", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateProdutoDto.prototype, "quantidade", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateProdutoDto.prototype, "custo", void 0);
 __decorate([
     (0, class_validator_1.IsOptional)(),
-    (0, class_validator_1.IsNumber)(),
     __metadata("design:type", Number)
 ], UpdateProdutoDto.prototype, "porcentagem", void 0);
 __decorate([

@@ -38,7 +38,7 @@ let UsuarioService = class UsuarioService {
         user.senha = await bcrypt.hashSync(createUsuarioDto.senha, 8);
         user.permissao = createUsuarioDto.permissao;
         if (createUsuarioDto.statusUsuario === undefined) {
-            user.statusUsuario = 0;
+            user.statusUsuario = 1;
         }
         else {
             user.statusUsuario = createUsuarioDto.statusUsuario;
@@ -51,8 +51,7 @@ let UsuarioService = class UsuarioService {
                 nome: true,
                 matricula: true,
                 login: true,
-            }, where: {
-                statusUsuario: 0
+                statusUsuario: true,
             }
         });
     }
@@ -79,7 +78,7 @@ let UsuarioService = class UsuarioService {
                 permissao: true,
             }, where: {
                 login,
-                statusUsuario: 0
+                statusUsuario: 1
             }
         });
     }

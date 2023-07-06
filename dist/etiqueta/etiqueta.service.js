@@ -54,7 +54,7 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                     etiq.corredor = createEtiquetaDto.corredor;
                     etiq.pratilheira = createEtiquetaDto.pratilheira;
                     if (createEtiquetaDto.statusEtiqueta === undefined) {
-                        etiq.statusEtiqueta = 0;
+                        etiq.statusEtiqueta = 1;
                     }
                     else {
                         etiq.statusEtiqueta = createEtiquetaDto.statusEtiqueta;
@@ -78,6 +78,8 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                 nomeEtiqueta: true,
                 corredor: true,
                 pratilheira: true
+            }, where: {
+                statusEtiqueta: 1,
             }
         });
     }
@@ -86,13 +88,14 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             select: {
                 idProdutoEtiqueta: true,
                 dataIntegracao: true,
+                preco: true,
+                descricaoProduto: true,
             }, relations: {
                 produto: true,
                 etiqueta: true,
                 usuario: true,
             }
         });
-        console.log(tes);
         return tes;
     }
     findOne(idEtiqueta) {
@@ -185,7 +188,8 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             const produto = prod.descricaoProduto.toUpperCase() + "," + "R$ " + prod.preco + "," + "Ean: " + prod.codigoEan + "," + etiq.hashEtiqueta;
             const response = await this.http.post(ipp2, produto).toPromise();
             prodEtiq.etiqueta = etiq;
-            prodEtiq.produto = prod;
+            prodEtiq.preco = prod.preco;
+            prodEtiq.descricaoProduto = prod.descricaoProduto;
             prodEtiq.usuario = usu;
             this.repositorioProdutoEtiqueta.save(prodEtiq);
             return response.data;

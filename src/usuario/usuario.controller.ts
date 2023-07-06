@@ -35,8 +35,8 @@ export class UsuarioController {
   }
  
 
-  @Roles(Role.Gerente)
-  @UseGuards(AuthGuard)
+  //@Roles(Role.Gerente)
+  //@UseGuards(AuthGuard)
   @Post('criar')
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuarioService.create(createUsuarioDto);

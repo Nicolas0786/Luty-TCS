@@ -14,6 +14,7 @@ const typeorm_1 = require("typeorm");
 const grupo_entity_1 = require("../../grupo/entities/grupo.entity");
 const ala_entity_1 = require("../../ala/entities/ala.entity");
 const usuario_entity_1 = require("../../usuario/entities/usuario.entity");
+const produtoEtiqueta_1 = require("../../etiqueta/entities/produtoEtiqueta");
 let Produto = class Produto {
 };
 __decorate([
@@ -21,7 +22,7 @@ __decorate([
     __metadata("design:type", Number)
 ], Produto.prototype, "idProduto", void 0);
 __decorate([
-    (0, typeorm_1.Column)('varchar', { length: 13 }),
+    (0, typeorm_1.Column)('varchar', { length: 15 }),
     __metadata("design:type", Number)
 ], Produto.prototype, "codigoEan", void 0);
 __decorate([
@@ -61,6 +62,10 @@ __decorate([
     (0, typeorm_1.ManyToOne)(() => usuario_entity_1.Usuario, (usuario) => usuario.produtos),
     __metadata("design:type", usuario_entity_1.Usuario)
 ], Produto.prototype, "usuario", void 0);
+__decorate([
+    (0, typeorm_1.OneToMany)(() => produtoEtiqueta_1.ProdutoEtiqueta, (produtoEtiqueta) => produtoEtiqueta.produto),
+    __metadata("design:type", Array)
+], Produto.prototype, "produtoEtiqueta", void 0);
 Produto = __decorate([
     (0, typeorm_1.Entity)()
 ], Produto);

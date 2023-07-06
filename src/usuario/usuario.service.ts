@@ -40,7 +40,7 @@ export class UsuarioService {
    user.permissao = createUsuarioDto.permissao;
     
     if(createUsuarioDto.statusUsuario === undefined){
-      user.statusUsuario = 0;
+      user.statusUsuario = 1;
     }else{
       user.statusUsuario = createUsuarioDto.statusUsuario;
     }
@@ -54,9 +54,8 @@ export class UsuarioService {
         nome: true,
         matricula: true,
         login: true,
+        statusUsuario: true,
         
-      }, where:{
-        statusUsuario:0
       }
     });
   }
@@ -85,7 +84,7 @@ export class UsuarioService {
         permissao: true,
       },where:{
         login,
-        statusUsuario:0
+        statusUsuario:1
       }
     })
   }

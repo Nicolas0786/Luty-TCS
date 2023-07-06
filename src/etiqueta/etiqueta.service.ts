@@ -70,7 +70,7 @@ export class EtiquetaService {
     etiq.pratilheira = createEtiquetaDto.pratilheira;
 
     if(createEtiquetaDto.statusEtiqueta === undefined){
-      etiq.statusEtiqueta = 0;
+      etiq.statusEtiqueta = 1;
     } else{
       etiq.statusEtiqueta = createEtiquetaDto.statusEtiqueta;
     }
@@ -98,6 +98,8 @@ export class EtiquetaService {
         nomeEtiqueta: true,
         corredor: true,
         pratilheira: true
+      },where:{
+        statusEtiqueta: 1,
       }
     });
   }                     
@@ -107,6 +109,8 @@ export class EtiquetaService {
       select:{
         idProdutoEtiqueta: true,
         dataIntegracao: true,
+        preco: true,
+        descricaoProduto: true,
       }, relations:{
         produto: true,
         etiqueta: true,
@@ -237,8 +241,10 @@ export class EtiquetaService {
         
 
         prodEtiq.etiqueta = etiq;
-        prodEtiq.produto = prod;
+        prodEtiq.preco = prod.preco;
+        prodEtiq.descricaoProduto = prod.descricaoProduto;
         prodEtiq.usuario = usu;
+
         this.repositorioProdutoEtiqueta.save(prodEtiq);
         
         return response.data;
