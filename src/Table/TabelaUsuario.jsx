@@ -24,8 +24,21 @@ const Head = ({keys, head}) => {
     )
 }
 
-const Row = ({record}) => {
-    const keys = Object.keys(record)
+const formatarDados = (column, record, comando) => {
+  
+    const keys = column.property.split('.');
+    const value = keys.reduce((prevValue, currentValue) => {
+        return prevValue?.[currentValue]
+    }, record)
+    
+    return(
+        <td>{value}</td>
+    )
+}
+
+
+const Row = ({record, columns}) => {
+    //const keys = Object.keys(record)
     const navigate = useNavigate();
     const [test, setTest] = useState('');
 
@@ -39,14 +52,18 @@ const Row = ({record}) => {
         
         <tr key={record.idUsuario}> {''} 
             {
-                keys.map(key => <td key={key}>{record[key]} </td>)
+                columns.map((column) => <td>{formatarDados(column, record)}</td>)
             }
             
 
             <Button className="bteditar"onClick={async () =>{
                     
                     if(record.statusUsuario === 1){
-                        
+                        await Axios.put('http://localhost:3000/usuario/atualizar/'+record.idUsuario, {statusUsuario: 0}, {
+                            headers: {
+                                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                            }
+                        })
                         
                         window.alert("Usuario desativado");
                         setTest(<BsToggleOff/>)
@@ -54,7 +71,11 @@ const Row = ({record}) => {
                         
 
                     }else{
-                        
+                        await Axios.put('http://localhost:3000/usuario/atualizar/'+record.idUsuario, {statusUsuario: 1}, {
+                            headers: {
+                                'Authorization': `Bearer ${sessionStorage.getItem("token")}`
+                            }
+                        })
                         
                         window.alert("Usuario ativado");
                         setTest(<BsToggleOn/>)
@@ -79,17 +100,29 @@ const Row = ({record}) => {
 
 const table = ({filterDados, dadosUsuario, head}) =>{
     const keys = Object.keys(head)
+
+    const columns = [
+        {
+            property: 'nome',
+        },
+        {
+            property: 'matricula',
+        },
+        {
+            property: 'login',
+        }
+    ]
     
     
    
     return(
          
     
-        <Table>
+        <Table striped>
                         <Head keys={keys} head={head}/>
                         <tbody>
 
-                                {filterDados == 0 ? dadosUsuario.map(record => <Row record={record}/>) : filterDados.map(record => <Row record={record}/>)}
+                                {filterDados == 0 ? dadosUsuario.map(record => <Row key={record.idUsuario} columns={columns} record={record}/>) : filterDados.map(record => <Row key={record.idUsuario} columns={columns} record={record}/>)}
                                 
                         </tbody>
     

@@ -14,9 +14,7 @@ import HeaderApp from './headerApp';
 
 const TelaEditarUsuario = () =>{
     const {login} = useParams();
-    //console.log(login)
     const [editUsu, setEditUsu] = useState([]);
-    const {logado, setLogado} =useContext(MyContext);
     const navigate = useNavigate();
 
     const [nome, SetNome] = useState(undefined);
@@ -152,11 +150,11 @@ const TelaEditarUsuario = () =>{
     
     <div className='permissoes'>
         <h1>Permissões</h1>
-        <Form.Check type='radio'  label='Gerente' name='radioGerent' id='3' onChange={handleChange} value={"gerente"} checked={selectedOption === "gerente"} />
+        <Form.Check type='radio'  label='Gerente' name='radioGerent' id='2' onChange={handleChange} value={"gerente"} checked={selectedOption === "gerente"} />
             
-        <Form.Check type='radio' label='Coordenador' name='radioCoor' id='1' onChange={handleChange} value={"coordenador"} checked={selectedOption === "coordenador"}  />
+        <Form.Check type='radio' label='Coordenador' name='radioCoor' id='3' onChange={handleChange} value={"coordenador"} checked={selectedOption === "coordenador"}  />
 
-        <Form.Check type='radio' label='Funcionario' name='radioFunci' id='2' onChange={handleChange} value={"funcionario"} checked={selectedOption === "funcionario"}/>
+        <Form.Check type='radio' label='Funcionario' name='radioFunci' id='4' onChange={handleChange} value={"funcionario"} checked={selectedOption === "funcionario"}/>
         <div className='descricaoPer'>
         {permissoes}
         </div>

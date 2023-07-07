@@ -70,8 +70,7 @@ const Row = ({ record, columns}) => {
             setUsuario(permissao);
         }
         },[]);
-            
-        console.log(record)    
+               
     
     return(
         

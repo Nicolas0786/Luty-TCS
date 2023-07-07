@@ -37,7 +37,7 @@ const TelaMandarEtiqueta = () =>{
     React.useEffect(()=>{
         async function buscarDados(){
 
-            const etque = await Axios.get('http://localhost:3000/etiqueta/buscarTodas', {
+            const etque = await Axios.get('http://localhost:3000/etiqueta/buscarTodasAtivas', {
                 headers: {
                     'Authorization': `Bearer ${sessionStorage.getItem("token")}`
                 }

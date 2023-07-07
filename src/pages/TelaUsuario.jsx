@@ -44,8 +44,7 @@ const TelaUsuario = () =>{
     },[]);
 
     const filterDados = search.length > 0 ? dadosUsuario.filter(dadosUsu => dadosUsu.login.includes(search) || dadosUsu.nome.includes(search) || dadosUsu.matricula.toString().includes(search)): [];
-   //console.log(dadosUsuario);
-    //console.log(filterDados);
+   
     return(
         <body>
             <header>
@@ -54,20 +53,16 @@ const TelaUsuario = () =>{
 
             <main className='telaInicio'>
             <div className='botoes'>
+                <Button disabled className='btUsuario'>Usuário</Button>
                 <Button className='btUsuario' id='produto' onClick={() => navigate('/TelaProduto')}>Produto</Button>{''}
                 <Button className='btUsuario' id='Etiqueta' onClick={() => navigate('/TelaEtiqueta')}>Etiqueta</Button>{''}
                 <input  className='btPesquisa' type='text' placeholder='Buscar' onChange={e => setSearch(e.target.value)} value={search}/>
-
-                <a class="botao-search" href="#">
-                <i class="fas fa-search"></i>
-                </a>
             </div>
-
-           
 
             <div className='inici'>
                 <Table dadosUsuario={dadosUsuario} head={head} filterDados={filterDados} />
             </div>
+            
             <div className='btsBaixo'>
                 <Button className='btBaixo' id='novoUsuario' onClick={() => navigate('/TelaCadastrarUsuario')}>Novo</Button>
                 <Button className='btBaixo' id='fechar' onClick={() => navigate('/TelaInicio')}>Fechar</Button>

@@ -40,7 +40,7 @@ const TelaInicio = () =>{
                     )}
                     
                     {usuario.cargo === "gerente" && (
-                        <Button className='botaoRel' href='/TelaRelatorio' >Relatorio</Button>               
+                        <Button className='botaoRel' href='/TelaRelatorio' >Relatorio Log</Button>               
                     )}
                 </div>
             </main>

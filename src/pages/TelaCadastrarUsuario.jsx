@@ -138,11 +138,11 @@ const funcionario = ['Consultar Produto'];
         
         <div className='permissoes'>
             <h1>Permissões</h1>
-            <Form.Check type='radio' label='Gerente' name='radioGerent' id='3' onChange={handleChange} value={"ger"} checked={selectedOption === "ger"} />
+            <Form.Check type='radio' label='Gerente' name='radioGerent' id='2' onChange={handleChange} value={"ger"} checked={selectedOption === "ger"} />
                 
-            <Form.Check type='radio' label='Coordenador' name='radioCoor' id='1' onChange={handleChange} value={"coor"} checked={selectedOption === "coor"}  />
+            <Form.Check type='radio' label='Coordenador' name='radioCoor' id='3' onChange={handleChange} value={"coor"} checked={selectedOption === "coor"}  />
 
-            <Form.Check type='radio' label='Funcionario' name='radioFunci' id='2' onChange={handleChange} value={"func"} checked={selectedOption === "func"}/>
+            <Form.Check type='radio' label='Funcionario' name='radioFunci' id='4' onChange={handleChange} value={"func"} checked={selectedOption === "func"}/>
             <div className='descricaoPer'>
             {permissoes}
             </div>

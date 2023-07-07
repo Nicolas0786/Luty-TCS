@@ -58,8 +58,9 @@ const TelaLogin = () =>{
             navigate('/TelaInicio')
             
         } catch (error) {
-            window.alert("Verefique a Senha ou Usuario")
-            console.log(error);
+            //window.alert("Verefique a Senha ou Usuario")
+            window.alert(error.response.data.message);
+            console.log(error.response);
 
         }
 

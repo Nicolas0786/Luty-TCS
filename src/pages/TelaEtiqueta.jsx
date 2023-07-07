@@ -49,7 +49,7 @@ const TelaEtiqueta = () =>{
             <HeaderApp/>
         </header>
         <div className="container-fluid">
-            
+            <Button disabled>Etiqueta</Button>
             <Button onClick={()=> navigate('/TelaUsuario')}>Usuario</Button>
             <Button onClick={()=> navigate('/TelaProduto')}>Produto</Button>
                 <Form.Group as={Col} md="4"> 

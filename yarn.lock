@@ -7724,7 +7724,7 @@
   "resolved" "https://registry.npmjs.org/path-type/-/path-type-4.0.0.tgz"
   "version" "4.0.0"
 
-"pdfmake@^0.2.4":
+"pdfmake@^0.2.4", "pdfmake@^0.2.7":
   "integrity" "sha512-ClLpgx30H5G3EDvRW1MrA1Xih6YxEaSgIVFrOyBMgAAt62V+hxsyWAi6JNP7u1Fc5JKYAbpb4RRVw8Rhvmz5cQ=="
   "resolved" "https://registry.npmjs.org/pdfmake/-/pdfmake-0.2.7.tgz"
   "version" "0.2.7"
