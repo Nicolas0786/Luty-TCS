@@ -27,9 +27,17 @@ export class EtiquetaController {
   @Roles(Role.Gerente)
   @Roles(Role.Coordenador)
   @UseGuards(AuthGuard)  
-  @Get('buscarTodas')
+  @Get('buscarTodasAtivas')
   findAll() {
     return this.etiquetaService.findAll();
+  }
+
+  @Roles(Role.Gerente)
+  @Roles(Role.Coordenador)
+  @UseGuards(AuthGuard) 
+  @Get('buscarTodas')
+  buscarTodas(){
+    return this.etiquetaService.buscarTodas();
   }
 
 @Get('integra')

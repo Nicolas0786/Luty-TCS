@@ -83,6 +83,17 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             }
         });
     }
+    buscarTodas() {
+        return this.repositorioEtiqueta.find({
+            select: {
+                idEtiqueta: true,
+                ipEtiqueta: true,
+                nomeEtiqueta: true,
+                corredor: true,
+                pratilheira: true
+            }
+        });
+    }
     async integracao() {
         const tes = await this.repositorioProdutoEtiqueta.find({
             select: {

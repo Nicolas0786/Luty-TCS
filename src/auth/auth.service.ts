@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -18,9 +18,12 @@ export class AuthService {
         const usuario = await this.usuarioService.findOneBy(username);
         //console.log('eu',usuario);
 
-        if(usuario == null){
-          throw new Error("Usuario não encontrado");
+        if(usuario === null){
+          throw new HttpException("Usuario não encontrado", HttpStatus.FORBIDDEN);
+        }else if(usuario.statusUsuario === 0){
+          throw new HttpException("O usuario está desativado e não pode logar", HttpStatus.FORBIDDEN);
         }
+        
         if(username == usuario.login && await bcrypt.compare(password, usuario.senha)) {
          /* const { senha, ...result } = usuario;
           return result;*/
@@ -34,7 +37,7 @@ export class AuthService {
           };
 
         }else{
-          throw new UnauthorizedException();
+          throw new HttpException("Verifique a senha e o Usuario", HttpStatus.FORBIDDEN);
         }
         //return null;
 

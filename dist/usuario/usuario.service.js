@@ -48,6 +48,7 @@ let UsuarioService = class UsuarioService {
     findAll() {
         return this.repositorioUsuario.find({
             select: {
+                idUsuario: true,
                 nome: true,
                 matricula: true,
                 login: true,
@@ -153,6 +154,7 @@ let UsuarioService = class UsuarioService {
                 idUsuario: true,
                 login: true,
                 senha: true,
+                statusUsuario: true,
             }, relations: {
                 permissao: true,
             }, where: {

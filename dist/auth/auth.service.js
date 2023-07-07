@@ -21,8 +21,11 @@ let AuthService = class AuthService {
     }
     async validarUsuario(username, password) {
         const usuario = await this.usuarioService.findOneBy(username);
-        if (usuario == null) {
-            throw new Error("Usuario não encontrado");
+        if (usuario === null) {
+            throw new common_1.HttpException("Usuario não encontrado", common_1.HttpStatus.FORBIDDEN);
+        }
+        else if (usuario.statusUsuario === 0) {
+            throw new common_1.HttpException("O usuario está desativado e não pode logar", common_1.HttpStatus.FORBIDDEN);
         }
         if (username == usuario.login && await bcrypt.compare(password, usuario.senha)) {
             console.log('cert');
@@ -33,7 +36,7 @@ let AuthService = class AuthService {
             };
         }
         else {
-            throw new common_1.UnauthorizedException();
+            throw new common_1.HttpException("Verifique a senha e o Usuario", common_1.HttpStatus.FORBIDDEN);
         }
     }
 };

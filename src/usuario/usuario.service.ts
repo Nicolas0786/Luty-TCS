@@ -51,6 +51,7 @@ export class UsuarioService {
   findAll():Promise<Usuario[]> {
     return  this.repositorioUsuario.find({
       select:{
+        idUsuario: true,
         nome: true,
         matricula: true,
         login: true,
@@ -167,11 +168,12 @@ export class UsuarioService {
 
   async findOneBy(username: string): Promise<Usuario | undefined> {
     const login: string = username
-    return await this.repositorioUsuario.findOne({
+       return await this.repositorioUsuario.findOne({
       select:{
         idUsuario: true,
         login: true,
         senha: true,
+        statusUsuario: true,
       }, relations: {
         permissao: true,
       }, where:{
@@ -179,8 +181,6 @@ export class UsuarioService {
       }
     }   
     );
-    
-    
-     
+  
   }
 }

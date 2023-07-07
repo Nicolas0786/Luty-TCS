@@ -32,6 +32,9 @@ let EtiquetaController = class EtiquetaController {
     findAll() {
         return this.etiquetaService.findAll();
     }
+    buscarTodas() {
+        return this.etiquetaService.buscarTodas();
+    }
     buscaIntegra() {
         return this.etiquetaService.integracao();
     }
@@ -59,11 +62,20 @@ __decorate([
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
     (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
-    (0, common_1.Get)('buscarTodas'),
+    (0, common_1.Get)('buscarTodasAtivas'),
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "findAll", null);
+__decorate([
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
+    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
+    (0, common_1.Get)('buscarTodas'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], EtiquetaController.prototype, "buscarTodas", null);
 __decorate([
     (0, common_1.Get)('integra'),
     __metadata("design:type", Function),

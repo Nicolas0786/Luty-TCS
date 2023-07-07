@@ -102,7 +102,20 @@ export class EtiquetaService {
         statusEtiqueta: 1,
       }
     });
-  }                     
+  }  
+  
+  
+  buscarTodas():Promise<Etiqueta[] | undefined>{
+    return this.repositorioEtiqueta.find({
+      select: {
+        idEtiqueta: true,
+        ipEtiqueta: true,
+        nomeEtiqueta: true,
+        corredor: true,
+        pratilheira: true
+      }
+    });
+  }
   
   async integracao(){
     const tes = await this.repositorioProdutoEtiqueta.find({
