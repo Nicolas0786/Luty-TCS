@@ -48,7 +48,6 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                     etiq.ipEtiqueta = createEtiquetaDto.ipEtiqueta;
                     new common_1.HttpException("Comunicação concluida", common_1.HttpStatus.OK);
                     const chave = await bcrypt.hashSync(createEtiquetaDto.ipEtiqueta, 1);
-                    const response = await this.http.post(ipp2, chave.toString()).toPromise();
                     etiq.hashEtiqueta = chave.toString();
                     etiq.nomeEtiqueta = createEtiquetaDto.nomeEtiqueta;
                     etiq.corredor = createEtiquetaDto.corredor;
@@ -90,7 +89,8 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                 ipEtiqueta: true,
                 nomeEtiqueta: true,
                 corredor: true,
-                pratilheira: true
+                pratilheira: true,
+                statusEtiqueta: true,
             }
         });
     }
@@ -161,8 +161,45 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             if (updateEtiquetaDto.statusEtiqueta === undefined) {
                 etiqueta.statusEtiqueta = oneEtiqueta.statusEtiqueta;
             }
-            else {
-                etiqueta.statusEtiqueta = updateEtiquetaDto.statusEtiqueta;
+            else if (updateEtiquetaDto.statusEtiqueta === 0) {
+                try {
+                    let ip;
+                    if (updateEtiquetaDto.ipEtiqueta === undefined) {
+                        ip = oneEtiqueta.ipEtiqueta;
+                    }
+                    else {
+                        ip = updateEtiquetaDto.ipEtiqueta;
+                    }
+                    const ipp2 = 'http://' + ip + '/body';
+                    const response = await this.http.post(ipp2, 'desativa').toPromise();
+                    if (response.status === 200) {
+                        etiqueta.statusEtiqueta = updateEtiquetaDto.statusEtiqueta;
+                        new common_1.HttpException('Etiqueta desativada com sucesso', common_1.HttpStatus.FORBIDDEN);
+                    }
+                }
+                catch (error) {
+                    throw new common_1.HttpException('Não foi possivel desativar, verifique a comunicação com a Etiqueta', common_1.HttpStatus.FORBIDDEN);
+                }
+            }
+            else if (updateEtiquetaDto.statusEtiqueta === 1) {
+                try {
+                    let ip;
+                    if (updateEtiquetaDto.ipEtiqueta === undefined) {
+                        ip = oneEtiqueta.ipEtiqueta;
+                    }
+                    else {
+                        ip = updateEtiquetaDto.ipEtiqueta;
+                    }
+                    const ipp2 = 'http://' + ip + '/protect';
+                    const response = await this.http.post(ipp2, 'ativa').toPromise();
+                    if (response.status === 200) {
+                        etiqueta.statusEtiqueta = updateEtiquetaDto.statusEtiqueta;
+                        new common_1.HttpException('Etiqueta ativada com sucesso', common_1.HttpStatus.FORBIDDEN);
+                    }
+                }
+                catch (error) {
+                    throw new common_1.HttpException('Não foi possivel ativar, verifique a comunicação com a Etiqueta', common_1.HttpStatus.FORBIDDEN);
+                }
             }
             if (updateEtiquetaDto.corredor === undefined) {
                 etiqueta.corredor = oneEtiqueta.corredor;

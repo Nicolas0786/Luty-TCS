@@ -62,7 +62,7 @@ export class EtiquetaService {
 
     const chave = await bcrypt.hashSync(createEtiquetaDto.ipEtiqueta, 1);
     //console.log(chave)
-    const response = await this.http.post(ipp2, chave.toString()).toPromise();
+    //const response = await this.http.post(ipp2, chave.toString()).toPromise();
     etiq.hashEtiqueta = chave.toString();
     //console.log(response.data);
     etiq.nomeEtiqueta = createEtiquetaDto.nomeEtiqueta;
@@ -112,7 +112,8 @@ export class EtiquetaService {
         ipEtiqueta: true,
         nomeEtiqueta: true,
         corredor: true,
-        pratilheira: true
+        pratilheira: true,
+        statusEtiqueta: true,
       }
     });
   }
@@ -194,11 +195,69 @@ export class EtiquetaService {
       etiqueta.nomeEtiqueta = updateEtiquetaDto.nomeEtiqueta;
     }
 
+
+
     if(updateEtiquetaDto.statusEtiqueta === undefined){
       etiqueta.statusEtiqueta = oneEtiqueta.statusEtiqueta;
-    }else{
-      etiqueta.statusEtiqueta = updateEtiquetaDto.statusEtiqueta;
+
+    }else if(updateEtiquetaDto.statusEtiqueta === 0){
+        try {
+
+          let ip:string;
+
+          if(updateEtiquetaDto.ipEtiqueta === undefined){
+            ip = oneEtiqueta.ipEtiqueta;
+          }else{
+            ip = updateEtiquetaDto.ipEtiqueta;  
+          }
+        
+          const ipp2:string = 'http://'+ ip +'/body';
+          
+          const response = await this.http.post(ipp2, 'desativa').toPromise();
+  
+          
+       if(response.status === 200){
+          etiqueta.statusEtiqueta = updateEtiquetaDto.statusEtiqueta;
+           new HttpException('Etiqueta desativada com sucesso', HttpStatus.FORBIDDEN);
+        }
+  
+        } catch (error) {
+          //console.log(error, "erro ao atualizar")
+          throw new HttpException('Não foi possivel desativar, verifique a comunicação com a Etiqueta', HttpStatus.FORBIDDEN);
+        }
+
+
+      }else if(updateEtiquetaDto.statusEtiqueta === 1){
+
+        try {
+
+          let ip:string;
+
+          if(updateEtiquetaDto.ipEtiqueta === undefined){
+            ip = oneEtiqueta.ipEtiqueta;
+          }else{
+            ip = updateEtiquetaDto.ipEtiqueta;  
+          }
+        
+          const ipp2:string = 'http://'+ ip +'/protect';
+          
+          const response = await this.http.post(ipp2, 'ativa').toPromise();
+  
+          
+       if(response.status === 200){
+          etiqueta.statusEtiqueta = updateEtiquetaDto.statusEtiqueta;
+           new HttpException('Etiqueta ativada com sucesso', HttpStatus.FORBIDDEN);
+        }
+
+      } catch (error) {
+        //console.log(error, "erro ao atualizar")
+        throw new HttpException('Não foi possivel ativar, verifique a comunicação com a Etiqueta', HttpStatus.FORBIDDEN);
+      }
     }
+      
+    
+
+
 
     if(updateEtiquetaDto.corredor === undefined){
       etiqueta.corredor = oneEtiqueta.corredor;
