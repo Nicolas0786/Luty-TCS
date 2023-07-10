@@ -35,7 +35,7 @@ export class UsuarioService {
     user.nome = createUsuarioDto.nome;
     user.matricula = createUsuarioDto.matricula;
     user.login = createUsuarioDto.login;
-   user.senha = await bcrypt.hashSync(createUsuarioDto.senha, 8);
+    user.senha = await bcrypt.hashSync(createUsuarioDto.senha, 8);
   
    user.permissao = createUsuarioDto.permissao;
     
@@ -91,8 +91,8 @@ export class UsuarioService {
   }
 
   async update(idUsuario: number, updateUsuarioDto: UpdateUsuarioDto) {
-    console.log('chegou', updateUsuarioDto)
-    console.log('outro teste', updateUsuarioDto.matricula)
+   // console.log('chegou', updateUsuarioDto)
+   // console.log('outro teste', updateUsuarioDto.matricula)
 
     const user = new Usuario();
 
@@ -167,7 +167,7 @@ export class UsuarioService {
 
 
   async findOneBy(username: string): Promise<Usuario | undefined> {
-    const login: string = username
+    const login: string = username;
        return await this.repositorioUsuario.findOne({
       select:{
         idUsuario: true,

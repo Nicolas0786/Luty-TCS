@@ -49,8 +49,12 @@ AppModule = __decorate([
             auth_module_1.AuthModule,
         ],
         controllers: [],
-        providers: [{ provide: core_1.APP_GUARD,
-                useClass: roles_guard_1.RolesGuard },],
+        providers: [
+            {
+                provide: core_1.APP_GUARD,
+                useClass: roles_guard_1.RolesGuard,
+            },
+        ],
     })
 ], AppModule);
 exports.AppModule = AppModule;

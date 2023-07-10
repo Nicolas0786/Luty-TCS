@@ -28,9 +28,7 @@ let AuthService = class AuthService {
             throw new common_1.HttpException("O usuario está desativado e não pode logar", common_1.HttpStatus.FORBIDDEN);
         }
         if (username == usuario.login && await bcrypt.compare(password, usuario.senha)) {
-            console.log('cert');
             const payload = { permissao: usuario.permissao, username: usuario.login, idUsuario: usuario.idUsuario, sub: usuario.idUsuario };
-            console.log(payload);
             return {
                 access_token: this.jwtService.sign(payload),
             };

@@ -18,8 +18,6 @@ const etiqueta_service_1 = require("./etiqueta.service");
 const create_etiqueta_dto_1 = require("./dto/create-etiqueta.dto");
 const update_etiqueta_dto_1 = require("./dto/update-etiqueta.dto");
 const roles_guard_1 = require("../auth/roles.guard");
-const roles_decorator_1 = require("../auth/roles.decorator");
-const role_enum_1 = require("../auth/role.enum");
 const preco_etiqueta_dto_1 = require("./dto/preco-etiqueta.dto");
 const auth_guard_1 = require("../auth/auth.guard");
 let EtiquetaController = class EtiquetaController {
@@ -49,8 +47,7 @@ let EtiquetaController = class EtiquetaController {
     }
 };
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Post)('cadastrar'),
     __param(0, (0, common_1.Body)()),
@@ -59,8 +56,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "create", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarTodasAtivas'),
     __metadata("design:type", Function),
@@ -68,8 +64,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "findAll", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarTodas'),
     __metadata("design:type", Function),
@@ -83,8 +78,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "buscaIntegra", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarPorID/:idEtiqueta'),
     __param(0, (0, common_1.Param)('idEtiqueta')),
@@ -93,8 +87,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "findOne", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Put)('atualizar/:idEtiqueta'),
     __param(0, (0, common_1.Param)('idEtiqueta')),
@@ -104,8 +97,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], EtiquetaController.prototype, "update", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Post)('alterar'),
     __param(0, (0, common_1.Body)()),

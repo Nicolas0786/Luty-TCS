@@ -84,8 +84,6 @@ let UsuarioService = class UsuarioService {
         });
     }
     async update(idUsuario, updateUsuarioDto) {
-        console.log('chegou', updateUsuarioDto);
-        console.log('outro teste', updateUsuarioDto.matricula);
         const user = new usuario_entity_1.Usuario();
         const userOne = await this.repositorioUsuario.findOne({
             select: {

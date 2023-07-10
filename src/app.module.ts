@@ -43,7 +43,11 @@ import { ProdutoEtiqueta } from './etiqueta/entities/produtoEtiqueta';
     AuthModule,
   ],
   controllers: [],
-  providers: [ {provide: APP_GUARD,
-    useClass: RolesGuard},],
+  providers: [ 
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+  },
+],
 })
 export class AppModule {}

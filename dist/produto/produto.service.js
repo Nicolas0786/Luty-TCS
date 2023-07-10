@@ -131,15 +131,15 @@ let ProdutoService = class ProdutoService {
         const codigoEanExists = await this.repositorioProduto.findOneBy({
             codigoEan: updateProdutoDto.codigoEan
         });
-        if (updateProdutoDto.codigoEan === undefined) {
+        if (updateProdutoDto.codigoEan === undefined || updateProdutoDto.codigoEan.toString() === "") {
             produto.codigoEan = coluns.codigoEan;
         }
         else {
             if (codigoEanExists) {
-                throw new common_1.HttpException("Esse codigo ean já esta sendo utilizado", common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException("Esse codigo ean já esta sendo utilizado", common_1.HttpStatus.FORBIDDEN);
             }
             if (!Number(updateProdutoDto.codigoEan)) {
-                throw new common_1.HttpException("So pode conter número no campo Código Ean", common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException("So pode conter número no campo Código Ean", common_1.HttpStatus.FORBIDDEN);
             }
             else if (updateProdutoDto.codigoEan < 0) {
                 throw new common_1.HttpException("O codigo ean não pode ser negativo", common_1.HttpStatus.FORBIDDEN);
@@ -155,7 +155,7 @@ let ProdutoService = class ProdutoService {
         else {
             produto.descricaoProduto = updateProdutoDto.descricaoProduto;
         }
-        if (updateProdutoDto.quantidade === undefined) {
+        if (updateProdutoDto.quantidade === undefined || updateProdutoDto.quantidade.toString() === "") {
             produto.quantidade = coluns.quantidade;
         }
         else {
@@ -163,11 +163,11 @@ let ProdutoService = class ProdutoService {
                 throw new common_1.HttpException("A quantidade não pode ser negativa e nem zerada", common_1.HttpStatus.FORBIDDEN);
             }
             else if (!Number(updateProdutoDto.quantidade)) {
-                throw new common_1.HttpException("So pode conter número no campo Quantidade", common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException("So pode conter número no campo Quantidade", common_1.HttpStatus.FORBIDDEN);
             }
             produto.quantidade = updateProdutoDto.quantidade;
         }
-        if (updateProdutoDto.custo === undefined) {
+        if (updateProdutoDto.custo === undefined || updateProdutoDto.custo.toString() === "") {
             produto.custo = coluns.custo;
         }
         else {
@@ -175,11 +175,11 @@ let ProdutoService = class ProdutoService {
                 throw new common_1.HttpException("O custo não pode ser negativo e nem zerado", common_1.HttpStatus.FORBIDDEN);
             }
             else if (!Number(updateProdutoDto.custo)) {
-                throw new common_1.HttpException("So pode conter número no campo Custo", common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException("So pode conter número no campo Custo", common_1.HttpStatus.FORBIDDEN);
             }
             produto.custo = updateProdutoDto.custo;
         }
-        if (updateProdutoDto.porcentagem === undefined) {
+        if (updateProdutoDto.porcentagem === undefined || updateProdutoDto.porcentagem.toString() === "") {
             produto.porcentagem = coluns.porcentagem;
         }
         else {
@@ -187,7 +187,7 @@ let ProdutoService = class ProdutoService {
                 throw new common_1.HttpException("A porcentagem não pode ser negativa e nem zerada", common_1.HttpStatus.FORBIDDEN);
             }
             else if (!Number(updateProdutoDto.porcentagem)) {
-                throw new common_1.HttpException("So pode conter número no campo Porcentagem", common_1.HttpStatus.BAD_REQUEST);
+                throw new common_1.HttpException("So pode conter número no campo Porcentagem", common_1.HttpStatus.FORBIDDEN);
             }
             produto.porcentagem = updateProdutoDto.porcentagem;
         }

@@ -17,8 +17,6 @@ const common_1 = require("@nestjs/common");
 const produto_service_1 = require("./produto.service");
 const create_produto_dto_1 = require("./dto/create-produto.dto");
 const update_produto_dto_1 = require("./dto/update-produto.dto");
-const roles_decorator_1 = require("../auth/roles.decorator");
-const role_enum_1 = require("../auth/role.enum");
 const roles_guard_1 = require("../auth/roles.guard");
 const auth_guard_1 = require("../auth/auth.guard");
 let ProdutoController = class ProdutoController {
@@ -42,8 +40,7 @@ let ProdutoController = class ProdutoController {
     }
 };
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Patch)('atualizar/:idProduto'),
     __param(0, (0, common_1.Param)('idProduto')),
@@ -53,8 +50,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProdutoController.prototype, "update", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Post)('cadastrar'),
     __param(0, (0, common_1.Body)()),
@@ -63,7 +59,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProdutoController.prototype, "create", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Funcionario, role_enum_1.Role.Gerente, role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente', 'funcionario']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarTodos'),
     __metadata("design:type", Function),
@@ -71,9 +67,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], ProdutoController.prototype, "findAll", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Funcionario),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente', 'funcionario']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarPorEan/:codigoEan'),
     __param(0, (0, common_1.Param)('codigoEan')),

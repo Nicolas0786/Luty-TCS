@@ -2,6 +2,7 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { UsuarioService } from 'src/usuario/usuario.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
+import { Usuario } from 'src/usuario/entities/usuario.entity';
 
 
 @Injectable()
@@ -15,7 +16,7 @@ export class AuthService {
         ) {}
 
     async validarUsuario(username: string, password: string): Promise<any> {
-        const usuario = await this.usuarioService.findOneBy(username);
+        const usuario:Usuario = await this.usuarioService.findOneBy(username);
         //console.log('eu',usuario);
 
         if(usuario === null){
@@ -27,9 +28,9 @@ export class AuthService {
         if(username == usuario.login && await bcrypt.compare(password, usuario.senha)) {
          /* const { senha, ...result } = usuario;
           return result;*/
-          console.log('cert')
+          //console.log('cert')
           const payload = { permissao: usuario.permissao, username: usuario.login, idUsuario: usuario.idUsuario, sub: usuario.idUsuario };
-          console.log(payload)
+          //console.log(payload)
           //console.log(usuario)
   
           return {

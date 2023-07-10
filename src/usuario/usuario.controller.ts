@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, UseGuards, Request, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, UseGuards, Request, Put, SetMetadata } from '@nestjs/common';
 import { UsuarioService } from './usuario.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -42,7 +42,8 @@ export class UsuarioController {
     return this.usuarioService.create(createUsuarioDto);
   }
 
-  @Roles(Role.Gerente)
+  //@Roles(Role.Gerente)
+  @SetMetadata('roles', ['gerente', 'adm'])
   @UseGuards(AuthGuard)
   @Get('buscarTodos')
   findAll() {
@@ -57,14 +58,16 @@ export class UsuarioController {
     return this.usuarioService.findOne(nome);
   }
 
-  @Roles(Role.Gerente)
+  //@Roles(Role.Gerente)
+  @SetMetadata('roles', ['gerente', 'adm'])
   @UseGuards(AuthGuard)
   @Get('buscarPorLogin/:login')
   buscarLogin(@Param('login') login: string){
     return this.usuarioService.buscarLogin(login);
   }
 
-  @Roles(Role.Gerente)
+  //@Roles(Role.Gerente)
+  @SetMetadata('roles', ['gerente', 'adm'])
   @UseGuards(AuthGuard)
   @Put('atualizar/:idUsuario')
   update(@Param('idUsuario') idUsuario: number, @Body() updateUsuarioDto: UpdateUsuarioDto) {

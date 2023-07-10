@@ -18,8 +18,6 @@ const grupo_service_1 = require("./grupo.service");
 const create_grupo_dto_1 = require("./dto/create-grupo.dto");
 const update_grupo_dto_1 = require("./dto/update-grupo.dto");
 const roles_guard_1 = require("../auth/roles.guard");
-const roles_decorator_1 = require("../auth/roles.decorator");
-const role_enum_1 = require("../auth/role.enum");
 const auth_guard_1 = require("../auth/auth.guard");
 let GrupoController = class GrupoController {
     constructor(grupoService) {
@@ -39,8 +37,7 @@ let GrupoController = class GrupoController {
     }
 };
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Post)('criar'),
     __param(0, (0, common_1.Body)()),

@@ -170,14 +170,14 @@ export class ProdutoService {
 
 //console.log(coluns);
 
-if(updateProdutoDto.codigoEan === undefined){
+if(updateProdutoDto.codigoEan === undefined || updateProdutoDto.codigoEan.toString() === ""){
   produto.codigoEan = coluns.codigoEan;
 }else{
   if(codigoEanExists){
-    throw new HttpException("Esse codigo ean já esta sendo utilizado", HttpStatus.BAD_REQUEST);
+    throw new HttpException("Esse codigo ean já esta sendo utilizado", HttpStatus.FORBIDDEN);
   }
   if(!Number(updateProdutoDto.codigoEan)){
-    throw new HttpException("So pode conter número no campo Código Ean", HttpStatus.BAD_REQUEST);
+    throw new HttpException("So pode conter número no campo Código Ean", HttpStatus.FORBIDDEN);
   }else if(updateProdutoDto.codigoEan < 0){
     throw new HttpException("O codigo ean não pode ser negativo", HttpStatus.FORBIDDEN);
   }else if(updateProdutoDto.codigoEan.toString().length > 14){
@@ -196,43 +196,43 @@ if(updateProdutoDto.descricaoProduto === undefined || updateProdutoDto.descricao
   produto.descricaoProduto = updateProdutoDto.descricaoProduto;
 
 }
-if(updateProdutoDto.quantidade === undefined){
+if(updateProdutoDto.quantidade === undefined || updateProdutoDto.quantidade.toString() === ""){
   produto.quantidade = coluns.quantidade;
 
 }else{
   if(updateProdutoDto.quantidade <=0){
     throw new HttpException("A quantidade não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
   }else if(!Number(updateProdutoDto.quantidade)){
-    throw new HttpException("So pode conter número no campo Quantidade", HttpStatus.BAD_REQUEST);
+    throw new HttpException("So pode conter número no campo Quantidade", HttpStatus.FORBIDDEN);
   }
   produto.quantidade = updateProdutoDto.quantidade;
 
 }
-if(updateProdutoDto.custo === undefined){
+if(updateProdutoDto.custo === undefined || updateProdutoDto.custo.toString() === ""){
   produto.custo = coluns.custo;
 
 }else{
   if(updateProdutoDto.custo <= 0 ){
     throw new HttpException("O custo não pode ser negativo e nem zerado", HttpStatus.FORBIDDEN);
   }else if(!Number(updateProdutoDto.custo)){
-    throw new HttpException("So pode conter número no campo Custo", HttpStatus.BAD_REQUEST);
+    throw new HttpException("So pode conter número no campo Custo", HttpStatus.FORBIDDEN);
   }
   produto.custo = updateProdutoDto.custo;
 
 }
-if(updateProdutoDto.porcentagem === undefined){
+if(updateProdutoDto.porcentagem === undefined || updateProdutoDto.porcentagem.toString() === ""){
   produto.porcentagem = coluns.porcentagem
 
 }else{
   if(updateProdutoDto.porcentagem <= 0){
     throw new HttpException("A porcentagem não pode ser negativa e nem zerada", HttpStatus.FORBIDDEN);
   }else if(!Number(updateProdutoDto.porcentagem)){
-    throw new HttpException("So pode conter número no campo Porcentagem", HttpStatus.BAD_REQUEST);
+    throw new HttpException("So pode conter número no campo Porcentagem", HttpStatus.FORBIDDEN);
   }
   produto.porcentagem = updateProdutoDto.porcentagem;
 
 }
-if(updateProdutoDto.statusProduto === undefined){
+if(updateProdutoDto.statusProduto === undefined ){
   produto.statusProduto = coluns.statusProduto
 
 }else{

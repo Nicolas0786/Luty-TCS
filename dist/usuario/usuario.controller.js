@@ -63,7 +63,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsuarioController.prototype, "create", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
+    (0, common_1.SetMetadata)('roles', ['gerente', 'adm']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarTodos'),
     __metadata("design:type", Function),
@@ -80,7 +80,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsuarioController.prototype, "findOne", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
+    (0, common_1.SetMetadata)('roles', ['gerente', 'adm']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Get)('buscarPorLogin/:login'),
     __param(0, (0, common_1.Param)('login')),
@@ -89,7 +89,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsuarioController.prototype, "buscarLogin", null);
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
+    (0, common_1.SetMetadata)('roles', ['gerente', 'adm']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Put)('atualizar/:idUsuario'),
     __param(0, (0, common_1.Param)('idUsuario')),

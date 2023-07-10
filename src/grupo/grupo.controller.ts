@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, SetMetadata } from '@nestjs/common';
 import { GrupoService } from './grupo.service';
 import { CreateGrupoDto } from './dto/create-grupo.dto';
 import { UpdateGrupoDto } from './dto/update-grupo.dto';
@@ -13,8 +13,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class GrupoController {
   constructor(private readonly grupoService: GrupoService) {}
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard)
   @Post('criar')
   create(@Body() createGrupoDto: CreateGrupoDto) {

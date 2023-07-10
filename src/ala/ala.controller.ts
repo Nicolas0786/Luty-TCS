@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, SetMetadata } from '@nestjs/common';
 
 import { Role } from 'src/auth/role.enum';
 import { Roles } from 'src/auth/roles.decorator';
@@ -13,8 +13,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class AlaController {
   constructor(private readonly alaService: AlaService) {}
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard)
   @Post('criar')
   create(@Body() createAlaDto: CreateAlaDto) {

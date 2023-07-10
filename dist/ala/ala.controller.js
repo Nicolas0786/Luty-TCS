@@ -14,8 +14,6 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AlaController = void 0;
 const common_1 = require("@nestjs/common");
-const role_enum_1 = require("../auth/role.enum");
-const roles_decorator_1 = require("../auth/roles.decorator");
 const roles_guard_1 = require("../auth/roles.guard");
 const ala_service_1 = require("./ala.service");
 const create_ala_dto_1 = require("./dto/create-ala.dto");
@@ -36,8 +34,7 @@ let AlaController = class AlaController {
     }
 };
 __decorate([
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Gerente),
-    (0, roles_decorator_1.Roles)(role_enum_1.Role.Coordenador),
+    (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),
     (0, common_1.Post)('criar'),
     __param(0, (0, common_1.Body)()),

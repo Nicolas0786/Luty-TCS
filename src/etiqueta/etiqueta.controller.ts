@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, UseGuards, Put} from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, UseGuards, Put, SetMetadata} from '@nestjs/common';
 import { EtiquetaService } from './etiqueta.service';
 import { CreateEtiquetaDto } from './dto/create-etiqueta.dto';
 import { UpdateEtiquetaDto } from './dto/update-etiqueta.dto';
@@ -15,8 +15,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class EtiquetaController {
   constructor(private readonly etiquetaService: EtiquetaService) {}
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard)  
   @Post('cadastrar')
   create(@Body() createEtiquetaDto: CreateEtiquetaDto) {
@@ -24,16 +25,20 @@ export class EtiquetaController {
   
   }
   
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard)  
   @Get('buscarTodasAtivas')
   findAll() {
     return this.etiquetaService.findAll();
   }
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard) 
   @Get('buscarTodas')
   buscarTodas(){
@@ -46,24 +51,27 @@ buscaIntegra(){
 }
 
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard) 
   @Get('buscarPorID/:idEtiqueta')
   findOne(@Param('idEtiqueta') idEtiqueta: number) {
     return this.etiquetaService.findOne(idEtiqueta);
   }
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard) 
   @Put('atualizar/:idEtiqueta')
   update(@Param('idEtiqueta') idEtiqueta: number, @Body() updateEtiquetaDto: UpdateEtiquetaDto) {
     return this.etiquetaService.update(+idEtiqueta, updateEtiquetaDto);
   }
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard)  
   @Post('alterar')
   manda(@Body() precoEtiqueta: PrecoEtiqueta){

@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, Put, UseGuards, SetMetadata } from '@nestjs/common';
 import { ProdutoService } from './produto.service';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
@@ -13,8 +13,9 @@ import { AuthGuard } from 'src/auth/auth.guard';
 export class ProdutoController {
   constructor(private readonly produtoService: ProdutoService) {}
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard)
   @Patch('atualizar/:idProduto')
   update(@Param('idProduto') idProduto: number, @Body() updateProdutoDto: UpdateProdutoDto) {
@@ -22,8 +23,9 @@ export class ProdutoController {
   }
 
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente'])
   @UseGuards(AuthGuard)
   @Post('cadastrar')
   create(@Body() createProdutoDto: CreateProdutoDto) {
@@ -31,16 +33,17 @@ export class ProdutoController {
   }
 
 
-  @Roles(Role.Funcionario, Role.Gerente, Role.Coordenador)
+  @SetMetadata('roles', ['coordenador', 'gerente', 'funcionario'])
   @UseGuards(AuthGuard)
   @Get('buscarTodos')
   findAll() {
     return this.produtoService.findAll();
   }
 
-  @Roles(Role.Gerente)
-  @Roles(Role.Coordenador)
-  @Roles(Role.Funcionario)
+  //@Roles(Role.Gerente)
+  //@Roles(Role.Coordenador)
+  //@Roles(Role.Funcionario)
+  @SetMetadata('roles', ['coordenador', 'gerente', 'funcionario'])
   @UseGuards(AuthGuard)
   @Get('buscarPorEan/:codigoEan')
   findOne(@Param('codigoEan') codigoEan: number) {
