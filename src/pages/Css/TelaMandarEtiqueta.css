@@ -1,0 +1,48 @@
+.telaMandarEtiqueta{
+    width: 100vw;
+    height: 100vh;
+    background-color: #091D66;
+}
+
+.formsMandar{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.formsMandarEtiqueta{
+    margin-top: 2%;
+    width: 60%;
+    display: flex;
+    background-color: #FCF4F4 !important;
+}
+
+.formsMandarProduto{
+    margin-top: 10%;
+    width: 60%;
+    display: flex;
+    background-color: #FCF4F4 !important;
+}
+
+.areaBotoesMandarEtiqueta{
+	list-style: none;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.btns{
+    display: flex;
+    margin: 0 1em; 
+    font-size: 20px;
+    width: 180px;
+    height: 46px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-color: #FCF4F4 !important;
+    color: black !important;
+    font-weight: bold !important;
+}
