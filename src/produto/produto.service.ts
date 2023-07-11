@@ -166,9 +166,9 @@ export class ProdutoService {
       }
     })
 
-    const ultimoProdutoEtiqueta:ProdutoEtiqueta = await this.repositorioProdutoEtiqueta.query(`select max(idProdutoEtiqueta), max(produtoIdProduto) from produto_etiqueta  inner join produto on produto.idProduto = produto_etiqueta.produtoIdProduto`)
+    const ultimoProdutoEtiqueta:ProdutoEtiqueta = await this.repositorioProdutoEtiqueta.query(`select idProdutoEtiqueta, produtoIdProduto from produto_etiqueta  inner join produto on produto.idProduto = produto_etiqueta.produtoIdProduto order by idProdutoEtiqueta desc limit 1`)
     const produtoNaEtiqueta = Object.values(ultimoProdutoEtiqueta[0])[1];
-    console.log('banco',produtoNaEtiqueta, 'aplica',idProduto);
+    //console.log('banco',ultimoProdutoEtiqueta, 'aplica',idProduto);
 
 
     const codigoEanExists: Produto = await this.repositorioProduto.findOneBy({
