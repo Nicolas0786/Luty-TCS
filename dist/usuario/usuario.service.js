@@ -112,7 +112,7 @@ let UsuarioService = class UsuarioService {
         }
         else {
             if (matriculaExist) {
-                throw new common_1.HttpException("Essa matricula já está sendo utilizada", common_1.HttpStatus.FORBIDDEN);
+                new common_1.HttpException("Essa matricula já está sendo utilizada", common_1.HttpStatus.FORBIDDEN);
             }
             user.matricula = updateUsuarioDto.matricula;
         }
@@ -121,7 +121,7 @@ let UsuarioService = class UsuarioService {
         }
         else {
             if (loginExists) {
-                throw new common_1.HttpException("Esse login já está sendo utilizado", common_1.HttpStatus.FORBIDDEN);
+                new common_1.HttpException("Esse login já está sendo utilizado", common_1.HttpStatus.FORBIDDEN);
             }
             user.login = updateUsuarioDto.login;
         }

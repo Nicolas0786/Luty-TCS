@@ -3,9 +3,11 @@ import { Repository } from 'typeorm';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { Produto } from './entities/produto.entity';
+import { ProdutoEtiqueta } from 'src/etiqueta/entities/produtoEtiqueta';
 export declare class ProdutoService {
     private repositorioProduto;
-    constructor(repositorioProduto: Repository<Produto>);
+    private repositorioProdutoEtiqueta;
+    constructor(repositorioProduto: Repository<Produto>, repositorioProdutoEtiqueta: Repository<ProdutoEtiqueta>);
     create(createProdutoDto: CreateProdutoDto): Promise<HttpException>;
     findAll(): Promise<Produto[]>;
     findOne(codigoEan: number): Promise<Produto>;

@@ -19,7 +19,7 @@ export declare class EtiquetaService {
     cadastrar(createEtiquetaDto: CreateEtiquetaDto): Promise<HttpException>;
     findAll(): Promise<Etiqueta[] | undefined>;
     buscarTodas(): Promise<Etiqueta[] | undefined>;
-    integracao(): Promise<ProdutoEtiqueta[]>;
+    integracao(): Promise<ProdutoEtiqueta[] | undefined>;
     findOne(idEtiqueta: number): Promise<Etiqueta>;
     update(idEtiqueta: number, updateEtiquetaDto: UpdateEtiquetaDto): Promise<HttpException>;
     mandarPrecoEtiqueta(precoEtiqueta: PrecoEtiqueta): Promise<any>;

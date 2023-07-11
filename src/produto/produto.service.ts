@@ -10,6 +10,7 @@ import { Column, createQueryBuilder, getRepository, Repository } from 'typeorm';
 import { CreateProdutoDto } from './dto/create-produto.dto';
 import { UpdateProdutoDto } from './dto/update-produto.dto';
 import { Produto } from './entities/produto.entity';
+import { ProdutoEtiqueta } from 'src/etiqueta/entities/produtoEtiqueta';
 
 @Injectable()
 export class ProdutoService {
@@ -17,6 +18,9 @@ export class ProdutoService {
   constructor(
     @InjectRepository(Produto)
     private repositorioProduto: Repository<Produto>,
+
+    @InjectRepository(ProdutoEtiqueta)
+    private repositorioProdutoEtiqueta: Repository<ProdutoEtiqueta>,
     
   ) {}
 
@@ -162,7 +166,10 @@ export class ProdutoService {
       }
     })
 
-    
+    const ultimoProdutoEtiqueta:ProdutoEtiqueta = await this.repositorioProdutoEtiqueta.query(`select max(idProdutoEtiqueta), max(produtoIdProduto) from produto_etiqueta  inner join produto on produto.idProduto = produto_etiqueta.produtoIdProduto`)
+    const produtoNaEtiqueta = Object.values(ultimoProdutoEtiqueta[0])[1];
+    console.log('banco',produtoNaEtiqueta, 'aplica',idProduto);
+
 
     const codigoEanExists: Produto = await this.repositorioProduto.findOneBy({
      codigoEan: updateProdutoDto.codigoEan
@@ -236,8 +243,18 @@ if(updateProdutoDto.statusProduto === undefined ){
   produto.statusProduto = coluns.statusProduto
 
 }else{
-  produto.statusProduto = updateProdutoDto.statusProduto;
 
+  if(updateProdutoDto.statusProduto === 0){
+    if(produtoNaEtiqueta === idProduto){
+      throw new HttpException("Esse produto está sendo ultilizado na etiqueta", HttpStatus.FORBIDDEN);
+    }else{
+      produto.statusProduto = updateProdutoDto.statusProduto;
+    }
+  }else{
+    produto.statusProduto = updateProdutoDto.statusProduto;
+  }
+  
+  
 }
 
 if(updateProdutoDto.alas === undefined || updateProdutoDto.alas.toString() === ''){

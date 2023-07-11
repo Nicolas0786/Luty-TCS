@@ -8,7 +8,7 @@ export declare class EtiquetaController {
     create(createEtiquetaDto: CreateEtiquetaDto): Promise<import("@nestjs/common").HttpException>;
     findAll(): Promise<import("./entities/etiqueta.entity").Etiqueta[]>;
     buscarTodas(): Promise<import("./entities/etiqueta.entity").Etiqueta[]>;
-    buscaIntegra(): Promise<import("./entities/produtoEtiqueta").ProdutoEtiqueta[]>;
+    integracao(): Promise<import("./entities/produtoEtiqueta").ProdutoEtiqueta[]>;
     findOne(idEtiqueta: number): Promise<import("./entities/etiqueta.entity").Etiqueta>;
     update(idEtiqueta: number, updateEtiquetaDto: UpdateEtiquetaDto): Promise<import("@nestjs/common").HttpException>;
     manda(precoEtiqueta: PrecoEtiqueta): Promise<any>;

@@ -33,7 +33,7 @@ let EtiquetaController = class EtiquetaController {
     buscarTodas() {
         return this.etiquetaService.buscarTodas();
     }
-    buscaIntegra() {
+    integracao() {
         return this.etiquetaService.integracao();
     }
     findOne(idEtiqueta) {
@@ -76,7 +76,7 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", []),
     __metadata("design:returntype", void 0)
-], EtiquetaController.prototype, "buscaIntegra", null);
+], EtiquetaController.prototype, "integracao", null);
 __decorate([
     (0, common_1.SetMetadata)('roles', ['coordenador', 'gerente']),
     (0, common_1.UseGuards)(auth_guard_1.AuthGuard),

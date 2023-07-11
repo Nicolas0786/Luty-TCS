@@ -118,8 +118,8 @@ export class EtiquetaService {
     });
   }
   
-  async integracao(){
-    const tes = await this.repositorioProdutoEtiqueta.find({
+   integracao():Promise<ProdutoEtiqueta[] | undefined>{
+    return this.repositorioProdutoEtiqueta.find({
       select:{
         idProdutoEtiqueta: true,
         dataIntegracao: true,
@@ -131,8 +131,7 @@ export class EtiquetaService {
         usuario: true,
       }
     });
-
-    return tes;
+    
   }
 
   findOne(idEtiqueta: number) {
@@ -255,11 +254,9 @@ export class EtiquetaService {
       }
     }
       
-    
+  
 
-
-
-    if(updateEtiquetaDto.corredor === undefined){
+    if(updateEtiquetaDto.corredor === undefined || updateEtiquetaDto.corredor === ""){
       etiqueta.corredor = oneEtiqueta.corredor;
     }else{
       etiqueta.corredor = updateEtiquetaDto.corredor;
@@ -316,6 +313,7 @@ export class EtiquetaService {
         prodEtiq.preco = prod.preco;
         prodEtiq.descricaoProduto = prod.descricaoProduto;
         prodEtiq.usuario = usu;
+        prodEtiq.produto = prod;
 
         this.repositorioProdutoEtiqueta.save(prodEtiq);
         

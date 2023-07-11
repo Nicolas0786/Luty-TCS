@@ -94,8 +94,8 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             }
         });
     }
-    async integracao() {
-        const tes = await this.repositorioProdutoEtiqueta.find({
+    integracao() {
+        return this.repositorioProdutoEtiqueta.find({
             select: {
                 idProdutoEtiqueta: true,
                 dataIntegracao: true,
@@ -107,7 +107,6 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                 usuario: true,
             }
         });
-        return tes;
     }
     findOne(idEtiqueta) {
         return this.repositorioEtiqueta.findOne({
@@ -201,7 +200,7 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
                     throw new common_1.HttpException('Não foi possivel ativar, verifique a comunicação com a Etiqueta', common_1.HttpStatus.FORBIDDEN);
                 }
             }
-            if (updateEtiquetaDto.corredor === undefined) {
+            if (updateEtiquetaDto.corredor === undefined || updateEtiquetaDto.corredor === "") {
                 etiqueta.corredor = oneEtiqueta.corredor;
             }
             else {
@@ -239,6 +238,7 @@ let EtiquetaService = EtiquetaService_1 = class EtiquetaService {
             prodEtiq.preco = prod.preco;
             prodEtiq.descricaoProduto = prod.descricaoProduto;
             prodEtiq.usuario = usu;
+            prodEtiq.produto = prod;
             this.repositorioProdutoEtiqueta.save(prodEtiq);
             return response.data;
         }

@@ -46,7 +46,7 @@ export class EtiquetaController {
   }
 
 @Get('integra')
-buscaIntegra(){
+integracao(){
   return this.etiquetaService.integracao();
 }
 

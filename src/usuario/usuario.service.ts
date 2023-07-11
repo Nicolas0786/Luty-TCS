@@ -130,7 +130,7 @@ export class UsuarioService {
       user.matricula = userOne.matricula;
     }else{
       if(matriculaExist){
-        throw new HttpException("Essa matricula já está sendo utilizada", HttpStatus.FORBIDDEN);
+         new HttpException("Essa matricula já está sendo utilizada", HttpStatus.FORBIDDEN);
       }
       user.matricula = updateUsuarioDto.matricula;
     }
@@ -139,7 +139,7 @@ export class UsuarioService {
       user.login = userOne.login;
     }else{
       if(loginExists){
-        throw new HttpException("Esse login já está sendo utilizado", HttpStatus.FORBIDDEN);
+         new HttpException("Esse login já está sendo utilizado", HttpStatus.FORBIDDEN);
       }
       user.login = updateUsuarioDto.login;
     }

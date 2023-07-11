@@ -5,9 +5,10 @@ import { Produto } from './entities/produto.entity';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { Etiqueta } from 'src/etiqueta/entities/etiqueta.entity';
 import { AuthModule } from 'src/auth/auth.module';
+import { ProdutoEtiqueta } from 'src/etiqueta/entities/produtoEtiqueta';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Produto, Etiqueta]), forwardRef(() => AuthModule)],
+  imports: [TypeOrmModule.forFeature([Produto, Etiqueta, ProdutoEtiqueta]), forwardRef(() => AuthModule)],
   controllers: [ProdutoController],
   providers: [ProdutoService],
   exports: [ProdutoModule],

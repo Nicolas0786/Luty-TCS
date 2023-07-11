@@ -15,11 +15,12 @@ const produto_entity_1 = require("./entities/produto.entity");
 const typeorm_1 = require("@nestjs/typeorm");
 const etiqueta_entity_1 = require("../etiqueta/entities/etiqueta.entity");
 const auth_module_1 = require("../auth/auth.module");
+const produtoEtiqueta_1 = require("../etiqueta/entities/produtoEtiqueta");
 let ProdutoModule = ProdutoModule_1 = class ProdutoModule {
 };
 ProdutoModule = ProdutoModule_1 = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([produto_entity_1.Produto, etiqueta_entity_1.Etiqueta]), (0, common_1.forwardRef)(() => auth_module_1.AuthModule)],
+        imports: [typeorm_1.TypeOrmModule.forFeature([produto_entity_1.Produto, etiqueta_entity_1.Etiqueta, produtoEtiqueta_1.ProdutoEtiqueta]), (0, common_1.forwardRef)(() => auth_module_1.AuthModule)],
         controllers: [produto_controller_1.ProdutoController],
         providers: [produto_service_1.ProdutoService],
         exports: [ProdutoModule_1],

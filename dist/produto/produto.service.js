@@ -17,9 +17,11 @@ const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const typeorm_2 = require("typeorm");
 const produto_entity_1 = require("./entities/produto.entity");
+const produtoEtiqueta_1 = require("../etiqueta/entities/produtoEtiqueta");
 let ProdutoService = class ProdutoService {
-    constructor(repositorioProduto) {
+    constructor(repositorioProduto, repositorioProdutoEtiqueta) {
         this.repositorioProduto = repositorioProduto;
+        this.repositorioProdutoEtiqueta = repositorioProdutoEtiqueta;
     }
     async create(createProdutoDto) {
         if (!Number(createProdutoDto.codigoEan)) {
@@ -128,6 +130,9 @@ let ProdutoService = class ProdutoService {
                 idProduto
             }
         });
+        const ultimoProdutoEtiqueta = await this.repositorioProdutoEtiqueta.query(`select max(idProdutoEtiqueta), max(produtoIdProduto) from produto_etiqueta  inner join produto on produto.idProduto = produto_etiqueta.produtoIdProduto`);
+        const produtoNaEtiqueta = Object.values(ultimoProdutoEtiqueta[0])[1];
+        console.log('banco', produtoNaEtiqueta, 'aplica', idProduto);
         const codigoEanExists = await this.repositorioProduto.findOneBy({
             codigoEan: updateProdutoDto.codigoEan
         });
@@ -195,7 +200,17 @@ let ProdutoService = class ProdutoService {
             produto.statusProduto = coluns.statusProduto;
         }
         else {
-            produto.statusProduto = updateProdutoDto.statusProduto;
+            if (updateProdutoDto.statusProduto === 0) {
+                if (produtoNaEtiqueta === idProduto) {
+                    throw new common_1.HttpException("Esse produto está sendo ultilizado na etiqueta", common_1.HttpStatus.FORBIDDEN);
+                }
+                else {
+                    produto.statusProduto = updateProdutoDto.statusProduto;
+                }
+            }
+            else {
+                produto.statusProduto = updateProdutoDto.statusProduto;
+            }
         }
         if (updateProdutoDto.alas === undefined || updateProdutoDto.alas.toString() === '') {
             produto.alas = coluns.alas;
@@ -221,7 +236,9 @@ let ProdutoService = class ProdutoService {
 ProdutoService = __decorate([
     (0, common_1.Injectable)(),
     __param(0, (0, typeorm_1.InjectRepository)(produto_entity_1.Produto)),
-    __metadata("design:paramtypes", [typeorm_2.Repository])
+    __param(1, (0, typeorm_1.InjectRepository)(produtoEtiqueta_1.ProdutoEtiqueta)),
+    __metadata("design:paramtypes", [typeorm_2.Repository,
+        typeorm_2.Repository])
 ], ProdutoService);
 exports.ProdutoService = ProdutoService;
 //# sourceMappingURL=produto.service.js.map
