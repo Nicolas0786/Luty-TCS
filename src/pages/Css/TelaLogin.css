@@ -1,0 +1,29 @@
+.entrar{
+    visibility: visible !important;
+    color: white !important;
+    background-color: blue !important;
+    --bs-btn-padding-x: 5.10rem;
+}
+
+.telLog{
+    height: 100vh;    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgb(255, 253, 249);
+}
+
+.areaLogin{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.imgLogin{
+    height: auto;
+    width: 450px;
+}
+
+.inputsLogin{
+    margin-right: 30%;
+}

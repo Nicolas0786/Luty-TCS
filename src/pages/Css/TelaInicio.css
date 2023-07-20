@@ -1,0 +1,62 @@
+
+.areaPrincipalInicio{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #091D66;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+}
+
+.inicioContainer {
+  width: 100em;
+  height: 55em;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+	background-size: cover;
+  justify-content: center;
+  background-repeat: no-repeat;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/imagens/ImgPrinc.png");
+}
+
+.botoesInicio {
+  font-size: 20px;
+  width: 180px;
+  height: 46px;
+  display: flex;
+  justify-content: center;
+  transition: all .3s;
+  border-radius: 10rem;
+  background: #091D66;
+  box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+}
+
+.botoesPrincipais{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.botaoGerente{
+  margin-top: 5%;
+}
+
+.imgIni{
+	display: inline-block;            
+  width: 300px;
+  height: 70px;
+  cursor: pointer;
+}
+
+.exit{
+  width: 35px;
+  height: 35px;
+  cursor: pointer;
+}
+
+.btnContainer{
+  display: flex;
+}

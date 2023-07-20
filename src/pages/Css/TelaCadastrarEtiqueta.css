@@ -1,0 +1,51 @@
+.telaEditEtiqueta {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #091D66;
+}
+
+.formsEditEtiqueta{
+    width: 40%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    border-radius: 10px;
+    background: #FCF4F4;
+    background-size: 100%;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+}
+
+.formEtiqueta{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.areaBotoesEditEtiqueta{
+    width: 30%;
+    margin-top: 2%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.btns{
+    display: flex;
+    margin: 0 1em; 
+    font-size: 20px;
+    width: 180px;
+    height: 46px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-color: #FCF4F4 !important;
+    color: black !important;
+    font-weight: bold !important;
+}

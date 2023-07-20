@@ -1,0 +1,64 @@
+.row{
+  background-color:  #FCF4F4 !important;
+}
+
+.telaInicio {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #091D66;
+  }
+  
+  .areaBotoes{
+      list-style: none;
+    display: flex;
+  }
+  
+  .btns{
+    display: flex;
+    margin: 0 1em; 
+    font-size: 20px;
+    width: 180px;
+    height: 46px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-color: #FCF4F4 !important;
+    color: black !important;
+    font-weight: bold !important;
+  }
+  
+  .areaPesquisa{
+    width: 100%;
+    height: 46px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    border-radius: 6px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+  }
+  
+  .areaTable{
+    width: 90%;
+    height: 86%;
+    display: flex;
+    flex-direction: column;
+    margin-top: 3%;
+  }
+  
+  .table {
+   
+  }
+  
+  .teEt{
+    border-radius: 10px;
+    height: 100%;
+    background: #FCF4F4;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.5);
+  }
+
+  .btsAdd{
+    display: flex;
+    justify-content: flex-end;
+  }

@@ -1,0 +1,66 @@
+.rowGro{
+    background-color: #FCF4F4;
+
+   margin-right: 0;
+    margin-left: 0%;
+}
+
+.descricao{
+    margin-left: 0;
+}
+    
+    
+.fundo {
+        
+        margin-top: 10%;
+    border-radius: 5px !important;
+    width: 90% !important;
+    height: 50% !important;
+    background: #FCF4F4 !important;
+    
+     display: flex; 
+    margin-left: 5%;
+    background-color: rgb(255, 247, 247);
+    top: 50% !important;
+    left: 100 !important;
+    height: 250px;
+    width: 500px;
+    text-align: center;
+    display: block !important;
+    margin-right: 5%;
+       
+      }
+    
+     
+      .tituloGrupo{
+    
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    
+      }
+    
+.botaoGrup{
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 1em;
+        font-size: 20px;
+        width: 180px;
+        height: 46px;
+        box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+        margin-top: 2%;
+        background-color: #FCF4F4 !important;
+        color: black !important;
+        font-weight: bold !important;
+    
+    }  
+    
+    .bbGrup{
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+    }

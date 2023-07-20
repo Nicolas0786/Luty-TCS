@@ -1,0 +1,74 @@
+.cadastroUsuario{
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    background-color: #091D66;
+}
+
+.areaCadastro{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.divCadastroUsuario{
+    width: 45em;
+    height: 30em;
+    border-radius: 2%;
+    background-color: #FCF4F4 !important;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.campos{
+    display: flex;
+    flex-wrap: wrap;
+    width: 90%;
+}
+
+.permissoes{
+    width: 45em;
+    height: 30em;
+    border-radius: 2%;
+    background-color: #FCF4F4 !important;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.areaBotoes{
+	list-style: none;
+    display: flex;
+}
+
+.btns{
+    display: flex;
+    margin: 0 1em; 
+    font-size: 20px;
+    width: 180px;
+    height: 46px;
+    box-shadow: 2px 2px 12px rgba(0,0,0,0.2);
+    margin-top: 1%;
+    margin-bottom: 1%;
+    background-color: #FCF4F4 !important;
+    color: black !important;
+    font-weight: bold !important;
+}
+
+.rasiosArea{
+    margin-top: 10%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
+
+.descricaoPer{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5%;
+}
